@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">中新與情</string>
+    <string name="logo_tip">大数据时代的舆情管家和决策参谋</string>
+    <string name="login_user_hint">用户名/邮箱/手机号</string>
+    <string name="login_pwd_hint">登录密码</string>
+    <string name="login">登&#160;录</string>
+    <string name="login_register">申请账号</string>
+    <string name="login_forget_pwd">忘记密码</string>
 </resources>
