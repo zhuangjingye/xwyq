@@ -3,4 +3,8 @@
     <color name="c_00000000">#00000000</color>
     <color name="c_88000000">#88000000</color>
     <color name="c_010310">#010310</color>
+    <color name="c_f8f8f8">#f8f8f8</color>
+    <color name="c_eeeeee">#eeeeee</color>
+    <color name="c_e3e3e3">#e3e3e3</color>
+    <color name="c_070c0f">#070c0f</color>
 </resources>

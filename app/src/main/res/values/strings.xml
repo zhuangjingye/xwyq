@@ -6,4 +6,8 @@
     <string name="login">登&#160;录</string>
     <string name="login_register">申请账号</string>
     <string name="login_forget_pwd">忘记密码</string>
+    <string name="name">姓名</string>
+    <string name="name_hint">请填写您的姓名</string>
+    <string name="company">单位</string>
+    <string name="company_hint">请填写您所在的单位</string>
 </resources>
