@@ -7,23 +7,26 @@
 
     <LinearLayout
         android:padding="10dp"
-        android:background="@color/c_f2f2f2"
-        android:orientation="horizontal"
+        android:background="@drawable/sharp_rectangle_f2f2f2"
+        android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:gravity="center_vertical"
         android:layout_height="wrap_content">
         <ProgressBar
-            style="?android:attr/progressBarStyleSmall"
-            android:layout_gravity="center_vertical"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/progressBar" />
         <TextView
-            android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
-            android:layout_width="wrap_content"
+            android:gravity="center_horizontal"
+            android:textColor="@color/c_212121"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/frame_loading"/>
+            android:text="@string/frame_loading"
+            android:layout_marginBottom="10dp"/>
     </LinearLayout>
 
 </LinearLayout>

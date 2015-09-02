@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="c_00000000">#00000000</color>
-    <color name="c_88000000">#88000000</color>
     <color name="c_010310">#010310</color>
     <color name="c_f8f8f8">#f8f8f8</color>
     <color name="c_eeeeee">#eeeeee</color>
     <color name="c_e3e3e3">#e3e3e3</color>
     <color name="c_070c0f">#070c0f</color>
-
+    <color name="c_b9b9b9">#b9b9b9</color>
+    <color name="c_258fe3">#258fe3</color>
+    <color name="c_258fff">#258fff</color>
 </resources>

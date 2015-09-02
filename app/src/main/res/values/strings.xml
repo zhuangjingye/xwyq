@@ -7,7 +7,17 @@
     <string name="login_register">申请账号</string>
     <string name="login_forget_pwd">忘记密码</string>
     <string name="name">姓名</string>
+    <string name="name_err">请输入姓名</string>
     <string name="name_hint">请填写您的姓名</string>
     <string name="company">单位</string>
+    <string name="company_err">请输入单位名称</string>
     <string name="company_hint">请填写您所在的单位</string>
+    <string name="tel">电话</string>
+    <string name="tel_err">请输入电话号吗</string>
+    <string name="tel_hint">请填写您的手机号码</string>
+    <string name="email">邮箱</string>
+    <string name="email_err">请输入电子邮箱</string>
+    <string name="email_hint">请填写您的电子邮箱</string>
+    <string name="regist_tip">注：请您如实填写您的个人信息，以便我们给您匹配专人账号，及推送更精确更专业的内容。</string>
+    <string name="submit_regist">提交申请</string>
 </resources>
