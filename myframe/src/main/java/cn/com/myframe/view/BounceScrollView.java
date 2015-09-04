@@ -46,10 +46,20 @@ public class BounceScrollView extends ScrollView {
 
     public BounceScrollView(Context context) {
         super(context);
+        initView();
     }
 
     public BounceScrollView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        initView();
+    }
+
+    /**
+     * 初始化控键
+     */
+    private void initView () {
+        setFadingEdgeLength(0);
+        setVerticalFadingEdgeEnabled(false);
     }
 
     @SuppressLint("MissingSuperCall")
@@ -80,6 +90,8 @@ public class BounceScrollView extends ScrollView {
         if (contentView == null) {
             return super.dispatchTouchEvent(ev);
         }
+
+        boolean dispatchResult = super.dispatchTouchEvent(ev);
 
         int action = ev.getAction();
 
@@ -128,7 +140,7 @@ public class BounceScrollView extends ScrollView {
 
                 //计算手指移动的距离
                 float nowY = ev.getY();
-                int deltaY = (int) (nowY - startY);
+                int deltaY = (int) (nowY - startY)/2;
 
                 //是否应该移动布局
                 boolean shouldMove =
@@ -152,7 +164,7 @@ public class BounceScrollView extends ScrollView {
                 break;
         }
 
-        return super.dispatchTouchEvent(ev);
+        return dispatchResult;
     }
 
 

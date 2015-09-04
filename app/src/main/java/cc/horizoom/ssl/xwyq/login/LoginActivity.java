@@ -2,19 +2,25 @@ package cc.horizoom.ssl.xwyq.login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.ArrayList;
+
+import cc.horizoom.ssl.xwyq.DataManager.NewListUnLoginData;
+import cc.horizoom.ssl.xwyq.DataManager.entity.NewEntity;
 import cc.horizoom.ssl.xwyq.MyBaseActivity;
 import cc.horizoom.ssl.xwyq.R;
 import cn.com.myframe.view.BounceListView;
+import cn.com.myframe.view.MyBounceListView.MyBounceListview;
 
 /**
  * 登录页
  */
 public class LoginActivity extends MyBaseActivity implements View.OnClickListener{
 
-    private BounceListView newList;//新闻列表
+    private MyBounceListview newList;//新闻列表
 
     private EditText nameEt;//名字输入框
 
@@ -26,11 +32,13 @@ public class LoginActivity extends MyBaseActivity implements View.OnClickListene
 
     private Button forgetBtn;//忘记密码
 
+    private NewsListAdapter newsListAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        newList = (BounceListView) findViewById(R.id.newList);
+        newList = (MyBounceListview) findViewById(R.id.newList);
         nameEt = (EditText) findViewById(R.id.nameEt);
         pwdEt = (EditText) findViewById(R.id.pwdEt);
         longinBtn = (Button) findViewById(R.id.loginBtn);
@@ -46,7 +54,15 @@ public class LoginActivity extends MyBaseActivity implements View.OnClickListene
      * 更新页面数据
      */
     private void updataView () {
+        ArrayList<NewEntity> data = NewListUnLoginData.getInstance().getNewsData(this);
+        newsListAdapter = new NewsListAdapter(this,data);
+        newList.setAdapter(newsListAdapter);
+        newList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+            }
+        });
     }
 
     @Override

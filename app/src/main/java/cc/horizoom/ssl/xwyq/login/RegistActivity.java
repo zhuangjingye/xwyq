@@ -16,6 +16,7 @@ import java.util.HashMap;
 import cc.horizoom.ssl.xwyq.MyBaseActivity;
 import cc.horizoom.ssl.xwyq.Protocol;
 import cc.horizoom.ssl.xwyq.R;
+import cc.horizoom.ssl.xwyq.dialog.ApplyDialog;
 import cn.com.myframe.MyUtils;
 import cn.com.myframe.network.volley.VolleyError;
 
@@ -69,7 +70,6 @@ public class RegistActivity extends MyBaseActivity implements View.OnClickListen
      * 请求注册
      */
     private void submitRegistBtn() {
-
         String name = nameEt.getText().toString();
         String company = companyEt.getText().toString();
         String tel = telEt.getText().toString();
@@ -100,9 +100,10 @@ public class RegistActivity extends MyBaseActivity implements View.OnClickListen
         doRequestString(url, map, new RequestResult() {
             @Override
             public void onResponse(String str) {
-                MyUtils.log(RegistActivity.class,"str="+str);
+                MyUtils.log(RegistActivity.class, "str=" + str);
+                hideWaitDialog();
                 onRequestSuccessed(str);
-                hideDialog();
+
             }
 
             @Override
@@ -122,12 +123,17 @@ public class RegistActivity extends MyBaseActivity implements View.OnClickListen
             JSONObject jsonObject = jsonArray.optJSONObject(0);
             String message = jsonObject.getString("message");
             boolean success = jsonObject.getBoolean("success");
-            showToast(message);
-            if (success) {
-                closeActivity(RegistActivity.class.getName());
-            }
+            showAppleyDialog(success,message);
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 显示结果框
+     */
+    private void showAppleyDialog(boolean result,String message) {
+        ApplyDialog applyDialog = new ApplyDialog(this,false,message);
+        showDialog(applyDialog);
     }
 }

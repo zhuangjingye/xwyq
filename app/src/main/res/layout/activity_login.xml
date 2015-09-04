@@ -124,17 +124,18 @@
 
         </LinearLayout>
         <LinearLayout
-            android:layout_marginTop="20dp"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="10dp"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <cn.com.myframe.view.BounceListView
+            <cn.com.myframe.view.MyBounceListView.MyBounceListview
                 android:id="@+id/newList"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </cn.com.myframe.view.BounceListView>
+                android:layout_height="match_parent">
+            </cn.com.myframe.view.MyBounceListView.MyBounceListview>
         </LinearLayout>
 
     </LinearLayout>

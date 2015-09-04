@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <cn.com.myframe.view.BounceScrollView
+        android:scrollbars="none"
+        android:fadingEdge="none"
+        android:overScrollMode="never"
+        android:fadingEdgeLength="0px"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <cn.com.myframe.view.MyBounceListView.ListViewForScrollView
+            android:id="@+id/myListView"
+            android:drawSelectorOnTop="false"
+            android:scrollbars="none"
+            android:divider="@color/c_00000000"
+            android:listSelector="@color/c_00000000"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </cn.com.myframe.view.MyBounceListView.ListViewForScrollView>
+    </cn.com.myframe.view.BounceScrollView>
+</merge>

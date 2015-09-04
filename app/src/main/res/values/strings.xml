@@ -20,4 +20,6 @@
     <string name="email_hint">请填写您的电子邮箱</string>
     <string name="regist_tip">注：请您如实填写您的个人信息，以便我们给您匹配专人账号，及推送更精确更专业的内容。</string>
     <string name="submit_regist">提交申请</string>
+    <string name="apply_ok">提交成功！</string>
+    <string name="apply_no">提交失败！</string>
 </resources>
