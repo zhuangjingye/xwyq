@@ -32,7 +32,7 @@ public class MyBounceListview extends LinearLayout {
     private void initView() {
         LayoutInflater layoutInflater = LayoutInflater.from(mContext);
         View view = layoutInflater.inflate(R.layout.view_bounce_list,this);
-        listViewForScrollView = (ListViewForScrollView) view.findViewById(R.id.myListView);
+        listViewForScrollView = (ListViewForScrollView) view.findViewById(R.id.listViewBounce);
     }
 
     /**
@@ -50,6 +50,22 @@ public class MyBounceListview extends LinearLayout {
      */
     public void setOnItemClickListener(AdapterView.OnItemClickListener myOnItemClickListener){
         listViewForScrollView.setOnItemClickListener(myOnItemClickListener);
+
     }
 
+    /**
+     * 添加页脚
+     * @param v
+     */
+    public void addFooterView(View v) {
+        if (null != v) listViewForScrollView.addFooterView(v);
+    }
+
+    /**
+     * 添加头
+     * @param v
+     */
+    public void addHeaderView(View v){
+        if (null != v) listViewForScrollView.addHeaderView(v);
+    }
 }

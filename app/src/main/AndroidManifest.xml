@@ -32,6 +32,11 @@
             android:windowSoftInputMode="adjustResize|stateHidden"
             android:name=".login.RegistActivity" >
         </activity>
+        <activity
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:name=".MainNewsPage.BaseMainNewsActivity" >
+        </activity>
     </application>
 
 </manifest>

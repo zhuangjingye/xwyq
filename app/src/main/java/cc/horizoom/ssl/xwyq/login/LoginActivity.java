@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import cc.horizoom.ssl.xwyq.DataManager.NewListUnLoginData;
 import cc.horizoom.ssl.xwyq.DataManager.entity.NewEntity;
+import cc.horizoom.ssl.xwyq.MainNewsPage.BaseMainNewsActivity;
 import cc.horizoom.ssl.xwyq.MyBaseActivity;
 import cc.horizoom.ssl.xwyq.R;
 import cn.com.myframe.view.BounceListView;
@@ -60,7 +61,7 @@ public class LoginActivity extends MyBaseActivity implements View.OnClickListene
         newList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+                startBaseMainNewsActivity();
             }
         });
     }
@@ -102,5 +103,11 @@ public class LoginActivity extends MyBaseActivity implements View.OnClickListene
      */
     private void startFrogetActivity() {
 
+    }
+
+    private void startBaseMainNewsActivity() {
+        Intent intent = new Intent();
+        intent.setClass(this,BaseMainNewsActivity.class);
+        startActivity(intent);
     }
 }

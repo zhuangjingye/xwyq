@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <cn.com.myframe.view.MyBounceListView.ListViewForScrollView
-            android:id="@+id/myListView"
+            android:id="@+id/listViewBounce"
             android:drawSelectorOnTop="false"
             android:scrollbars="none"
             android:divider="@color/c_00000000"
