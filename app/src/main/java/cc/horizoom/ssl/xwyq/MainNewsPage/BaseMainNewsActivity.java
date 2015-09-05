@@ -43,8 +43,6 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
 
     private ImageView newHeadImg;//list到头图片
 
-    private ImageView headbgIv;//背景
-
     private int originalHeadBgIvHeight;//背景imageview默认初始化高度
 
     private Bitmap headBitmap;//头图像
@@ -65,10 +63,11 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
             = new BounceScrollView.BounceScrollViewListener() {
         @Override
         public void onScroll(int offset) {
+            MyUtils.log(BaseMainNewsActivity.class,"offset="+offset);
             if (offset >= 0) {
                 scrollDown(offset);
             } else {
-                scrollUp(offset);
+//                scrollUp(offset);
             }
         }
 
@@ -82,21 +81,21 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base_main_news);
-        headbgIv = (ImageView) findViewById(R.id.headbgIv);
         myListView = (MyBounceListview) findViewById(R.id.myListView);
         titleRl = (RelativeLayout) findViewById(R.id.titleRl);
+        titleRl.setVisibility(View.VISIBLE);
         titleBackRl = (RelativeLayout) findViewById(R.id.titleBackRl);
         titleBackRl.setOnClickListener(this);
         data = new ArrayList<>();
         newsAdapter = new NewsAdapter(this,data);
         myListView.setAdapter(newsAdapter);
         headBitmap = resizeImage(getResources().getDrawable(R.mipmap.bg_list01));
-        headbgIv.setImageBitmap(headBitmap);
         headView = getHeadview(headBitmap);
         myListView.addHeaderView(headView);
         myListView.addFooterView(getFooter());
         myListView.setBounceScrollViewListener(bounceScrollViewListener);
-        originalHeadBgIvHeight = headbgIv.getLayoutParams().height;
+
+        updataView();
     }
 
     /**
@@ -107,10 +106,12 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
         int[] titleListRlPosition = new int[2];
         titleRl.getLocationOnScreen(titleRlPosition);
         titleListRl.getLocationOnScreen(titleListRlPosition);
-        if (titleListRlPosition[1] <= titleRlPosition[1]) {
+        if (titleListRlPosition[1] < titleRlPosition[1]) {
             titleRl.setVisibility(View.INVISIBLE);
+            titleListRl.setVisibility(View.VISIBLE);
         } else {
             titleRl.setVisibility(View.VISIBLE);
+            titleListRl.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -123,7 +124,9 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         View v = layoutInflater.inflate(R.layout.view_news_head, null);
         newHeadImg = (ImageView) v.findViewById(R.id.newsHeadImg);
+        originalHeadBgIvHeight = newHeadImg.getLayoutParams().height;
         titleListRl = (RelativeLayout) v.findViewById(R.id.titleListRl);
+        titleListRl.setVisibility(View.INVISIBLE);
         newHeadImg.setImageBitmap(headBitmap);
         return v;
     }
@@ -177,38 +180,32 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
      * @param offset
      */
     private void scrollDown(int offset) {
-        if (offset == 0) {
-            newHeadImg.setVisibility(View.VISIBLE);
-            headbgIv.setVisibility(View.INVISIBLE);
-        } else {
-            newHeadImg.setVisibility(View.INVISIBLE);
-            headbgIv.setVisibility(View.VISIBLE);
-        }
-
-        ViewGroup.LayoutParams layoutParams = headbgIv.getLayoutParams();
+        ViewGroup.LayoutParams layoutParams = newHeadImg.getLayoutParams();
         layoutParams.height = originalHeadBgIvHeight+offset;
-        headbgIv.setLayoutParams(layoutParams);
+        MyUtils.log(BaseMainNewsActivity.class,"layoutParams.height="+layoutParams.height);
+        newHeadImg.setLayoutParams(layoutParams);
 
-    }
-
-    /**
-     * 向上移动
-     * @param offset
-     */
-    private void scrollUp(int offset) {
-        newHeadImg.setVisibility(View.VISIBLE);
-        headbgIv.setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.loadTv://加载更多
+                loadMore();
                 break;
             case R.id.titleBackRl:
                 closeActivity(BaseMainNewsActivity.class.getName());
                 break;
 
         }
+    }
+
+    /**
+     * 加载更多
+     */
+    private void loadMore() {
+        ArrayList<NewEntity> dataTmp = NewListUnLoginData.getInstance().getNewsData(this);
+        data.addAll(dataTmp);
+        newsAdapter.notifyDataSetChanged();
     }
 }

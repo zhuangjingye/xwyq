@@ -161,7 +161,7 @@ public class BounceScrollView extends ScrollView {
 
                 //计算手指移动的距离
                 float nowY = ev.getY();
-                int deltaY = (int) (nowY - startY)/2;
+                int deltaY = (int) (nowY - startY);
 
                 //是否应该移动布局
                 boolean shouldMove =

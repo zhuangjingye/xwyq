@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 
@@ -20,6 +21,7 @@ public class MyBounceListview extends LinearLayout {
     private Context mContext;
     private ListViewForScrollView listViewForScrollView;
     private BounceScrollView bounceScrollView;
+    private FrameLayout headFl;
     public MyBounceListview(Context context) {
         super(context);
         this.mContext = context;
@@ -37,6 +39,7 @@ public class MyBounceListview extends LinearLayout {
         View view = layoutInflater.inflate(R.layout.view_bounce_list,this);
         listViewForScrollView = (ListViewForScrollView) view.findViewById(R.id.listViewBounce);
         bounceScrollView = (BounceScrollView) view.findViewById(R.id.bounceScrollView);
+        headFl = (FrameLayout) view.findViewById(R.id.headFl);
     }
 
     /**
@@ -78,6 +81,9 @@ public class MyBounceListview extends LinearLayout {
      * @param v
      */
     public void addHeaderView(View v){
-        if (null != v) listViewForScrollView.addHeaderView(v);
+        if (null != v){
+            headFl.removeAllViews();
+            headFl.addView(v);
+        }
     }
 }

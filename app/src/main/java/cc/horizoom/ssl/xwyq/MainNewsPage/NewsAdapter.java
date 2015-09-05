@@ -54,7 +54,7 @@ public class NewsAdapter extends BaseAdapter{
             holderView.outLl = (LinearLayout) view.findViewById(R.id.outLl);
             holderView.contentTv = (TextView) view.findViewById(R.id.contentTv);
             holderView.numTv = (TextView) view.findViewById(R.id.numTv);
-            holderView.timeTv = (TextView) view.findViewById(R.id.titleTv);
+            holderView.timeTv = (TextView) view.findViewById(R.id.timeTv);
             holderView.smallBellIv = (ImageView) view.findViewById(R.id.smallBellIv);
             view.setTag(holderView);
         } else {
