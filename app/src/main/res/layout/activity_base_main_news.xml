@@ -3,9 +3,40 @@
     android:layout_width="match_parent"
     android:background="@color/c_f8f8f8"
     android:layout_height="match_parent">
-
+    <ImageView
+        android:id="@+id/headbgIv"
+        android:layout_width="match_parent"
+        android:layout_height="254dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/bg_list01"/>
     <cn.com.myframe.view.MyBounceListView.MyBounceListview
         android:id="@+id/myListView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></cn.com.myframe.view.MyBounceListView.MyBounceListview>
+        android:layout_height="match_parent">
+    </cn.com.myframe.view.MyBounceListView.MyBounceListview>
+    <RelativeLayout
+        android:id="@+id/titleRl"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:id="@+id/titleBackRl"
+            android:layout_alignParentLeft="true"
+            android:gravity="top"
+            android:layout_width="45dp"
+            android:layout_height="45dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/news_page_back"/>
+        </RelativeLayout>
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/logo_start"/>
+    </RelativeLayout>
+
 </RelativeLayout>

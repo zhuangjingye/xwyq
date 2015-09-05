@@ -10,6 +10,8 @@ import android.widget.LinearLayout;
 
 
 import cn.com.myframe.R;
+import cn.com.myframe.view.BounceListView;
+import cn.com.myframe.view.BounceScrollView;
 
 /**
  * Created by pi on 15-9-4.
@@ -17,6 +19,7 @@ import cn.com.myframe.R;
 public class MyBounceListview extends LinearLayout {
     private Context mContext;
     private ListViewForScrollView listViewForScrollView;
+    private BounceScrollView bounceScrollView;
     public MyBounceListview(Context context) {
         super(context);
         this.mContext = context;
@@ -33,6 +36,7 @@ public class MyBounceListview extends LinearLayout {
         LayoutInflater layoutInflater = LayoutInflater.from(mContext);
         View view = layoutInflater.inflate(R.layout.view_bounce_list,this);
         listViewForScrollView = (ListViewForScrollView) view.findViewById(R.id.listViewBounce);
+        bounceScrollView = (BounceScrollView) view.findViewById(R.id.bounceScrollView);
     }
 
     /**
@@ -51,6 +55,14 @@ public class MyBounceListview extends LinearLayout {
     public void setOnItemClickListener(AdapterView.OnItemClickListener myOnItemClickListener){
         listViewForScrollView.setOnItemClickListener(myOnItemClickListener);
 
+    }
+
+    /**
+     * 设置滚动监听器
+     * @param bounceScrollViewListener
+     */
+    public void setBounceScrollViewListener(BounceScrollView.BounceScrollViewListener bounceScrollViewListener) {
+        bounceScrollView.setBounceScrollViewListener(bounceScrollViewListener);
     }
 
     /**

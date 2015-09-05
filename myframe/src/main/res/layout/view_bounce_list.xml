@@ -3,6 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <cn.com.myframe.view.BounceScrollView
+        android:id="@+id/bounceScrollView"
         android:scrollbars="none"
         android:fadingEdge="none"
         android:overScrollMode="never"

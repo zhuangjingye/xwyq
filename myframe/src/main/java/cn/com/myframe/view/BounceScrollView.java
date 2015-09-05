@@ -5,10 +5,14 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.util.AttributeSet;
+import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.TranslateAnimation;
 import android.widget.ScrollView;
+import android.widget.Scroller;
+
+import cn.com.myframe.MyUtils;
 
 /**
  * Created by pi on 15-9-2.
@@ -44,22 +48,29 @@ public class BounceScrollView extends ScrollView {
     //在手指滑动的过程中记录是否移动了布局
     private boolean isMoved = false;
 
+    private int myOffset;//动画记录偏移位置
+
+    private Scroller myScroller;
+
+    private BounceScrollViewListener bounceScrollViewListener;//监听器
+
     public BounceScrollView(Context context) {
         super(context);
-        initView();
+        initView(context);
     }
 
     public BounceScrollView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initView();
+        initView(context);
     }
 
     /**
      * 初始化控键
      */
-    private void initView () {
+    private void initView (Context context) {
         setFadingEdgeLength(0);
         setVerticalFadingEdgeEnabled(false);
+        myScroller = new Scroller(context);
     }
 
     @SuppressLint("MissingSuperCall")
@@ -93,6 +104,10 @@ public class BounceScrollView extends ScrollView {
 
         boolean dispatchResult = super.dispatchTouchEvent(ev);
 
+        if (myScroller.computeScrollOffset()) {
+            return  dispatchResult;
+        }
+
         int action = ev.getAction();
 
         switch (action) {
@@ -110,16 +125,19 @@ public class BounceScrollView extends ScrollView {
 
                 if(!isMoved) break;  //如果没有移动布局， 则跳过执行
 
-                // 开启动画
-                TranslateAnimation anim = new TranslateAnimation(0, 0, contentView.getTop(),
-                        originalRect.top);
-                anim.setDuration(ANIM_TIME);
+                myOffset = contentView.getTop() - originalRect.top;
+                myScroller.startScroll(0,0,0,myOffset,ANIM_TIME);
+                invalidate();
+//                // 开启动画
+//                TranslateAnimation anim = new TranslateAnimation(0, 0, contentView.getTop(),
+//                        originalRect.top);
+//                anim.setDuration(ANIM_TIME);
+//
+//                contentView.startAnimation(anim);
 
-                contentView.startAnimation(anim);
-
-                // 设置回到正常的布局位置
-                contentView.layout(originalRect.left, originalRect.top,
-                        originalRect.right, originalRect.bottom);
+//                // 设置回到正常的布局位置
+//                contentView.layout(originalRect.left, originalRect.top,
+//                        originalRect.right, originalRect.bottom);
 
                 //将标志位设回false
                 canPullDown = false;
@@ -128,7 +146,10 @@ public class BounceScrollView extends ScrollView {
 
                 break;
             case MotionEvent.ACTION_MOVE:
+                if (bounceScrollViewListener!=null) {
+                    bounceScrollViewListener.onViewChange();
 
+                }
                 //在移动的过程中， 既没有滚动到可以上拉的程度， 也没有滚动到可以下拉的程度
                 if(!canPullDown && !canPullUp) {
                     startY = ev.getY();
@@ -155,6 +176,9 @@ public class BounceScrollView extends ScrollView {
                     //随着手指的移动而移动布局
                     contentView.layout(originalRect.left, originalRect.top + offset,
                             originalRect.right, originalRect.bottom + offset);
+                    if (bounceScrollViewListener!=null) {
+                        bounceScrollViewListener.onScroll(offset);
+                    }
 
                     isMoved = true;  //记录移动了布局
                 }
@@ -183,4 +207,43 @@ public class BounceScrollView extends ScrollView {
         return  contentView.getHeight() <= getHeight() + getScrollY();
     }
 
+    /**
+     * 设置滚动监听器
+     * @param bounceScrollViewListener
+     */
+    public void setBounceScrollViewListener(BounceScrollViewListener bounceScrollViewListener) {
+        if (bounceScrollViewListener == null) return;
+        this.bounceScrollViewListener = bounceScrollViewListener;
+    }
+
+    @Override
+    public void computeScroll() {
+
+        if (myScroller.computeScrollOffset()) {
+            int dx = myOffset - myScroller.getCurrY();
+            contentView.layout(originalRect.left, originalRect.top + dx,
+                    originalRect.right, originalRect.bottom + dx);
+
+            if(myScroller.isFinished()) {
+                contentView.layout(originalRect.left, originalRect.top,
+                        originalRect.right, originalRect.bottom);
+                dx = 0;
+            }
+            if (bounceScrollViewListener!=null) {
+                bounceScrollViewListener.onScroll(dx);
+                bounceScrollViewListener.onViewChange();
+
+            }
+            postInvalidate();
+        }
+        super.computeScroll();
+    }
+
+    /**
+     * 滚动监听器
+     */
+    public interface BounceScrollViewListener {
+        public void onScroll(int offset);
+        public void onViewChange();
+    }
 }
