@@ -63,7 +63,12 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
             = new BounceScrollView.BounceScrollViewListener() {
         @Override
         public void onScroll(int offset) {
-            MyUtils.log(BaseMainNewsActivity.class,"offset="+offset);
+
+            int[] titleRlPosition = new int[2];
+            int[] titleListRlPosition = new int[2];
+            titleRl.getLocationOnScreen(titleRlPosition);
+            titleListRl.getLocationOnScreen(titleListRlPosition);
+            MyUtils.log(BaseMainNewsActivity.class, "titleListRlPosition=" + titleListRlPosition[1]);
             if (offset >= 0) {
                 scrollDown(offset);
             } else {
@@ -182,7 +187,6 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
     private void scrollDown(int offset) {
         ViewGroup.LayoutParams layoutParams = newHeadImg.getLayoutParams();
         layoutParams.height = originalHeadBgIvHeight+offset;
-        MyUtils.log(BaseMainNewsActivity.class,"layoutParams.height="+layoutParams.height);
         newHeadImg.setLayoutParams(layoutParams);
 
     }

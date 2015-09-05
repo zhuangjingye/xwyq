@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
@@ -66,5 +67,4 @@ public class ListViewForScrollView extends ListView {
             e.printStackTrace();
         }
     }
-
 }
