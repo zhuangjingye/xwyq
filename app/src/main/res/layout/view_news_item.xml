@@ -13,34 +13,38 @@
         android:background="@drawable/color_btn_00000000"
         android:layout_height="wrap_content">
         <TextView
+            android:layout_marginTop="2dp"
             android:id="@+id/numTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
             android:gravity="center"
             android:textColor="@color/c_1353c1"
-            android:text="999"
+            android:text=""
             android:background="@drawable/design_blue_point"/>
         <LinearLayout
             android:orientation="vertical"
             android:layout_marginLeft="7dp"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/contentTv"
+                android:paddingRight="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="12sp"
+                android:textSize="15sp"
                 android:text="就哦为 i 而我今儿论文竟然了我快加入了危机我巨额利润空间饿了热认为日理万机儿"
                 android:textColor="@color/c_070c0f"
                 android:lines="2"/>
             <LinearLayout
                 android:layout_marginTop="7dp"
+                android:paddingRight="5dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/timeTv"
-                    android:textSize="8sp"
+                    android:textSize="10sp"
                     android:layout_weight="1"
                     android:textColor="@color/c_3b3b3b"
                     android:text="2015-02-08 10:20"

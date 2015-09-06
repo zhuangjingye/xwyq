@@ -61,7 +61,7 @@ public class NewsAdapter extends BaseAdapter{
             holderView = (HolderView) view.getTag();
         }
         NewEntity newEntity = data.get(i);
-        holderView.numTv.setText(i+"");
+//        holderView.numTv.setText(i+"");
         holderView.contentTv.setText(newEntity.getTitle());
         holderView.timeTv.setText(newEntity.getPublishTime());
         return view;

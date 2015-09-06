@@ -52,8 +52,6 @@ public class BounceScrollView extends ScrollView {
 
     private Scroller myScroller;
 
-    private BounceScrollViewListener bounceScrollViewListener;//监听器
-
     public BounceScrollView(Context context) {
         super(context);
         initView(context);
@@ -146,10 +144,6 @@ public class BounceScrollView extends ScrollView {
 
                 break;
             case MotionEvent.ACTION_MOVE:
-                if (bounceScrollViewListener!=null) {
-                    bounceScrollViewListener.onViewChange();
-
-                }
                 //在移动的过程中， 既没有滚动到可以上拉的程度， 也没有滚动到可以下拉的程度
                 if(!canPullDown && !canPullUp) {
                     startY = ev.getY();
@@ -176,9 +170,6 @@ public class BounceScrollView extends ScrollView {
                     //随着手指的移动而移动布局
                     contentView.layout(originalRect.left, originalRect.top + offset,
                             originalRect.right, originalRect.bottom + offset);
-                    if (bounceScrollViewListener!=null) {
-                        bounceScrollViewListener.onScroll(offset);
-                    }
 
                     isMoved = true;  //记录移动了布局
                 }
@@ -207,14 +198,6 @@ public class BounceScrollView extends ScrollView {
         return  contentView.getHeight() <= getHeight() + getScrollY();
     }
 
-    /**
-     * 设置滚动监听器
-     * @param bounceScrollViewListener
-     */
-    public void setBounceScrollViewListener(BounceScrollViewListener bounceScrollViewListener) {
-        if (bounceScrollViewListener == null) return;
-        this.bounceScrollViewListener = bounceScrollViewListener;
-    }
 
     @Override
     public void computeScroll() {
@@ -229,21 +212,17 @@ public class BounceScrollView extends ScrollView {
                         originalRect.right, originalRect.bottom);
                 dx = 0;
             }
-            if (bounceScrollViewListener!=null) {
-                bounceScrollViewListener.onScroll(dx);
-                bounceScrollViewListener.onViewChange();
 
-            }
             postInvalidate();
         }
         super.computeScroll();
     }
 
-    /**
-     * 滚动监听器
-     */
-    public interface BounceScrollViewListener {
-        public void onScroll(int offset);
-        public void onViewChange();
-    }
+//    /**
+//     * 滚动监听器
+//     */
+//    public interface BounceScrollViewListener {
+//        public void onScroll(int offset);
+//        public void onViewChange();
+//    }
 }

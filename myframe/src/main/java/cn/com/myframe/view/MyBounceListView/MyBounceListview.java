@@ -1,6 +1,7 @@
 package cn.com.myframe.view.MyBounceListView;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -11,6 +12,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 
+import cn.com.myframe.MyUtils;
 import cn.com.myframe.R;
 import cn.com.myframe.view.BounceListView;
 import cn.com.myframe.view.BounceScrollView;
@@ -59,14 +61,6 @@ public class MyBounceListview extends LinearLayout {
     public void setOnItemClickListener(AdapterView.OnItemClickListener myOnItemClickListener){
         listViewForScrollView.setOnItemClickListener(myOnItemClickListener);
 
-    }
-
-    /**
-     * 设置滚动监听器
-     * @param bounceScrollViewListener
-     */
-    public void setBounceScrollViewListener(BounceScrollView.BounceScrollViewListener bounceScrollViewListener) {
-        bounceScrollView.setBounceScrollViewListener(bounceScrollViewListener);
     }
 
     /**

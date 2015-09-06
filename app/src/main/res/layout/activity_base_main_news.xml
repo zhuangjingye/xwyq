@@ -1,36 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/c_f8f8f8"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/c_f8f8f8">
+
     <cn.com.myframe.view.MyBounceListView.MyBounceListview
         android:id="@+id/myListView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </cn.com.myframe.view.MyBounceListView.MyBounceListview>
+        android:layout_height="match_parent"></cn.com.myframe.view.MyBounceListView.MyBounceListview>
+
+    <ImageView
+        android:id="@+id/headImg"
+        android:layout_width="match_parent"
+        android:layout_height="254dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/bg_list01" />
+    <!--基础标准线，标志head可移动的距离-->
+    <TextView
+        android:id="@+id/headImgLine"
+        android:layout_marginTop="130dp"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/base_line"/>
+
+    <!--可以移动的标题-->
     <RelativeLayout
         android:id="@+id/titleRl"
-        android:layout_marginTop="10dp"
-        android:paddingLeft="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="254dp">
         <RelativeLayout
-            android:id="@+id/titleBackRl"
-            android:layout_alignParentLeft="true"
-            android:gravity="top"
-            android:layout_width="45dp"
-            android:layout_height="45dp">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="10dp">
+            <TextView
+                android:id="@+id/bgTitleLine"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/base_line"/>
+            <RelativeLayout
+                android:id="@+id/titleBackRl"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_alignParentLeft="true"
+                android:gravity="top">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/news_page_back" />
+            </RelativeLayout>
+
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:layout_centerInParent="true"
-                android:src="@mipmap/news_page_back"/>
+                android:src="@mipmap/logo_start" />
         </RelativeLayout>
-        <ImageView
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+    </RelativeLayout>
+
+
+    <!--搜获框-->
+    <RelativeLayout
+        android:id="@+id/searchRl"
+        android:layout_width="match_parent"
+        android:layout_height="254dp">
+        <LinearLayout
             android:layout_centerInParent="true"
-            android:src="@mipmap/logo_start"/>
+            android:layout_width="243dp"
+            android:orientation="horizontal"
+            android:background="@drawable/sharp_rectangle_5b5955"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/searchEt"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:textSize="13sp"
+                android:background="@color/c_00000000"
+                android:textColor="@color/c_070c0f"
+                android:text="今日热带"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <RelativeLayout
+                android:id="@+id/classifyRl"
+                android:clickable="true"
+                android:layout_width="60dp"
+                android:gravity="center"
+                android:background="@drawable/color_btn_00000000"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:src="@mipmap/arrow_down"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+        </LinearLayout>
     </RelativeLayout>
 
 </RelativeLayout>
