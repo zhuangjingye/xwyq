@@ -12,18 +12,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import java.util.ArrayList;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import cc.horizoom.ssl.xwyq.DataManager.FunctionListData;
 import cc.horizoom.ssl.xwyq.DataManager.NewListUnLoginData;
+import cc.horizoom.ssl.xwyq.DataManager.entity.FunctionEntity;
 import cc.horizoom.ssl.xwyq.DataManager.entity.NewEntity;
 import cc.horizoom.ssl.xwyq.MyBaseActivity;
+import cc.horizoom.ssl.xwyq.Protocol;
 import cc.horizoom.ssl.xwyq.R;
 import cc.horizoom.ssl.xwyq.login.NewsListAdapter;
 import cn.com.myframe.MyUtils;
+import cn.com.myframe.network.volley.VolleyError;
 import cn.com.myframe.view.MyBounceListView.MyBounceListview;
 
 /**
@@ -305,6 +317,7 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
                 closeActivity(BaseMainNewsActivity.class.getName());
                 break;
             case R.id.classifyRl://查询分类
+                getFunctionList();
                 break;
 
         }
@@ -351,5 +364,62 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
                 handler.sendEmptyMessage(1);
             }
         }
+    }
+
+    /**
+     * 获得功能列表
+     */
+    private void getFunctionList() {
+        String url = Protocol.UNLOGINFUNCTIONLIST;
+        Map<String,String> map = new HashMap<String,String>();
+        showWaitDialog();
+        doRequestString(url, map, new RequestResult() {
+            @Override
+            public void onResponse(String str) {
+                try {
+                    JSONArray jsonArray = new JSONArray(str);
+                    JSONObject jsonObject = jsonArray.optJSONObject(0);
+                    boolean success = jsonObject.optBoolean("success");
+                    String message = jsonObject.optString("message");
+                    if (success) {
+                        functionListSuccessed(str);
+                    } else {
+                        showToast(message);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                hideWaitDialog();
+            }
+
+            @Override
+            public void onErrResponse(VolleyError error) {
+                hideWaitDialog();
+            }
+        });
+    }
+
+    /**
+     * 功能列表请求成功
+     * @param json
+     */
+    private void functionListSuccessed(String json) {
+        FunctionListData.getInstance().saveData(this, json);
+        ArrayList<FunctionEntity> data = FunctionListData.getInstance().getData();
+        showFunctionPopUp(data);
+    }
+
+    /**
+     * 弹出功能框
+     */
+    private void showFunctionPopUp(ArrayList<FunctionEntity> data) {
+        FunctionListPopUpWindow functionListPopUpWindow = new FunctionListPopUpWindow(this,data);
+        functionListPopUpWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                MyUtils.log(BaseMainNewsActivity.class,"l="+l);
+            }
+        });
+        functionListPopUpWindow.showAsDropDown(searchRl);
     }
 }

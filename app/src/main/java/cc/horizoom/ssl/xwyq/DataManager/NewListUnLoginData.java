@@ -15,7 +15,7 @@ import cn.com.myframe.Mysharedperferences;
  * Created by pi on 15-9-3.
  * 未登录新闻列表
  */
-public class NewListUnLoginData {
+public class NewListUnLoginData implements DataInterface{
     private static NewListUnLoginData ourInstance = new NewListUnLoginData();
 
     public static NewListUnLoginData getInstance() {
@@ -53,6 +53,15 @@ public class NewListUnLoginData {
     }
 
     /**
+     * 清除缓存数据
+     * @param baseActivity
+     */
+    public void clearSaveData(BaseActivity baseActivity) {
+        Mysharedperferences.getIinstance().putString(baseActivity,key,"");
+        ourInstance = null;
+    }
+
+    /**
      * 清空数据
      */
     public void clearData() {
@@ -64,7 +73,7 @@ public class NewListUnLoginData {
     /**
      * 解析数据
      */
-    private void analyze(BaseActivity baseActivity) {
+    public void analyze(BaseActivity baseActivity) {
         String json = Mysharedperferences.getIinstance().getString(baseActivity,key);
         try {
             JSONArray jsonArray = new JSONArray(json);

@@ -22,7 +22,7 @@ public class NewEntity {
 
     private String source;
 
-    private String pupushLevel;
+    private int pupushLevel;
 
     private String publishTime;
 
@@ -34,7 +34,7 @@ public class NewEntity {
             newsId = jsonObject.optString("news_id");
             title = jsonObject.optString("title");
             source = jsonObject.optString("source");
-            pupushLevel = jsonObject.optString("push_level");
+            pupushLevel = jsonObject.optInt("push_level");
             publishTime = jsonObject.optString("publish_time");
             status = jsonObject.optString("status");
         } catch (JSONException e) {
@@ -54,7 +54,7 @@ public class NewEntity {
         return source;
     }
 
-    public String getPupushLevel() {
+    public int getPupushLevel() {
         return pupushLevel;
     }
 

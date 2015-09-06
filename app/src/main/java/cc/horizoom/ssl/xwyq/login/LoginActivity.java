@@ -6,13 +6,22 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import cc.horizoom.ssl.xwyq.DataManager.NewListUnLoginData;
+import cc.horizoom.ssl.xwyq.DataManager.UserData;
 import cc.horizoom.ssl.xwyq.DataManager.entity.NewEntity;
 import cc.horizoom.ssl.xwyq.MainNewsPage.BaseMainNewsActivity;
 import cc.horizoom.ssl.xwyq.MyBaseActivity;
+import cc.horizoom.ssl.xwyq.Protocol;
 import cc.horizoom.ssl.xwyq.R;
+import cn.com.myframe.MyUtils;
+import cn.com.myframe.network.volley.VolleyError;
 import cn.com.myframe.view.BounceListView;
 import cn.com.myframe.view.MyBounceListView.MyBounceListview;
 
@@ -86,8 +95,55 @@ public class LoginActivity extends MyBaseActivity implements View.OnClickListene
      * 登录
      */
     private void loginRequest() {
+        String name = nameEt.getText().toString();
+        String pwd = pwdEt.getText().toString();
+        String url = Protocol.LOGIN;
+        if (MyUtils.isEmpty(name)) {
+            showToast(R.string.name_err);
+            return;
+        }
+        if (MyUtils.isEmpty(pwd)) {
+            showToast(R.string.pwd_err);
+            return;
+        }
+        HashMap<String,String> hashMap = new HashMap<String,String>();
+        hashMap.put("username",name);
+        hashMap.put("password",pwd);
+        showWaitDialog();
+        doRequestString(url, hashMap, new RequestResult() {
+            @Override
+            public void onResponse(String str) {
+                try {
+                    JSONArray jsonArray = new JSONArray(str);
+                    JSONObject jsonObject = jsonArray.optJSONObject(0);
+                    boolean success = jsonObject.optBoolean("success");
+                    String message = jsonObject.optString("message");
+                    if (success) {
+                        loginSuccessed(str);
+                    } else {
+                        showToast(message);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                hideWaitDialog();
+            }
 
+            @Override
+            public void onErrResponse(VolleyError error) {
+                hideWaitDialog();
+            }
+        });
     }
+
+    /**
+     * 登录成功
+     * @param json
+     */
+    private void loginSuccessed(String json) {
+        UserData.getInstance().saveData(this,json);
+    }
+
 
     /**
      * 打开注册页面

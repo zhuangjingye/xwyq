@@ -8,11 +8,17 @@ public class Protocol {
 
     public static final String HOST = "http://api-mobile.horizoom.cc/";
 
+    public static final String PLAT = "private/xwyq_iphone/";
+
     //注册
-    public static final String APPLYACCOUNT = HOST + "private/xwyq_iphone/api.customer_apply_account.php";
+    public static final String APPLYACCOUNT = HOST + PLAT + "api.customer_apply_account.php";
+
+    //登录
+    public static final String LOGIN = HOST+"public/api.customer_login.php";
 
     //未登陆用户文章【分类】接口
-    public static final String UNLOGINFUNCTIONLIST = HOST + "private/xwyq_andriod_phone/api.unlogin_function_list.php";
+    public static final String UNLOGINFUNCTIONLIST = HOST + PLAT + "api.unlogin_function_list.php";
+
     //未登陆用户文章【列表】接口：
-    public static final String UNLOGINPUSHCONTENTLIST = HOST + "private/xwyq_iphone/api.unlogin_push_content_list.php";
+    public static final String UNLOGINPUSHCONTENTLIST = HOST + PLAT + "api.unlogin_push_content_list.php";
 }

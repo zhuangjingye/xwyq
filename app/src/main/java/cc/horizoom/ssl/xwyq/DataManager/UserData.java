@@ -12,7 +12,7 @@ import cn.com.myframe.Mysharedperferences;
  * Created by pi on 15-9-3.
  * 用户信息管理
  */
-public class UserData {
+public class UserData implements DataInterface{
     private static UserData ourInstance = new UserData();
 
     public static UserData getInstance() {
@@ -40,10 +40,14 @@ public class UserData {
         analyze(baseActivity);
     }
 
+    @Override
+    public void clearData() {
+    }
+
     /**
      * 解析数据
      */
-    private void analyze(BaseActivity baseActivity) {
+    public void analyze(BaseActivity baseActivity) {
         String json = Mysharedperferences.getIinstance().getString(baseActivity,key);
         try {
             JSONArray jsonArray = new JSONArray(json);
@@ -54,6 +58,12 @@ public class UserData {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void clearSaveData(BaseActivity baseActivity) {
+        Mysharedperferences.getIinstance().putString(baseActivity,key,"");
+        ourInstance = null;
     }
 
     public String getCustomerId(BaseActivity baseActivity) {

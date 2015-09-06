@@ -64,6 +64,11 @@ public class NewsAdapter extends BaseAdapter{
 //        holderView.numTv.setText(i+"");
         holderView.contentTv.setText(newEntity.getTitle());
         holderView.timeTv.setText(newEntity.getPublishTime());
+        if (newEntity.getPupushLevel() >= 5) {
+            holderView.smallBellIv.setVisibility(View.VISIBLE);
+        } else {
+            holderView.smallBellIv.setVisibility(View.INVISIBLE);
+        }
         return view;
     }
 
