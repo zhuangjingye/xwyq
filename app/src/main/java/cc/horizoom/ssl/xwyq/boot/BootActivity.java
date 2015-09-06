@@ -1,7 +1,6 @@
 package cc.horizoom.ssl.xwyq.boot;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -9,7 +8,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
-import cc.horizoom.ssl.xwyq.DataManager.NewListUnLoginData;
+import cc.horizoom.ssl.xwyq.DataManager.NewsListData;
 import cc.horizoom.ssl.xwyq.DataManager.UserData;
 import cc.horizoom.ssl.xwyq.MyBaseActivity;
 import cc.horizoom.ssl.xwyq.Protocol;
@@ -45,7 +44,8 @@ public class BootActivity extends MyBaseActivity {
      */
     private void unLoginPushContentList() {
         String url = Protocol.UNLOGINPUSHCONTENTLIST;
-        doRequestString(url, new RequestResult() {
+        HashMap<String,String> hashMap = new HashMap<String,String>();
+        doRequestString(url,hashMap,new RequestResult() {
             @Override
             public void onResponse(String str) {
                 try {
@@ -53,8 +53,8 @@ public class BootActivity extends MyBaseActivity {
                     JSONObject jsonObject = jsonArray.optJSONObject(0);
                     boolean success = jsonObject.optBoolean("success");
                     if (success){
-                        NewListUnLoginData.getInstance().clearData();
-                        NewListUnLoginData.getInstance().saveData(BootActivity.this,str);
+                        NewsListData.getInstance().clearData();
+                        NewsListData.getInstance().saveData(BootActivity.this,str);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

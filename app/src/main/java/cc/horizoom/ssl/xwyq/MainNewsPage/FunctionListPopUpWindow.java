@@ -12,9 +12,11 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import cc.horizoom.ssl.xwyq.DataManager.FunctionListData;
 import cc.horizoom.ssl.xwyq.DataManager.entity.FunctionEntity;
 import cc.horizoom.ssl.xwyq.R;
 import cn.com.myframe.BaseActivity;
+import cn.com.myframe.MyUtils;
 import cn.com.myframe.popupWindow.MyPopupWindow;
 
 /**
@@ -25,21 +27,20 @@ public class FunctionListPopUpWindow extends MyPopupWindow {
 
     private ListView myList;
 
-    private ArrayList<FunctionEntity> data;//数据
-
     private FunctionListAdapter functionListAdapter;//适配器
 
-    public FunctionListPopUpWindow(BaseActivity baseActivity, ArrayList<FunctionEntity> data) {
+    public FunctionListPopUpWindow(BaseActivity baseActivity) {
         super(baseActivity);
-        this.data = data;
     }
 
     @Override
     public View getContentView() {
+        ArrayList<FunctionEntity> data = FunctionListData.getInstance().getData(baseActivity);
+
         LayoutInflater layoutInflater = LayoutInflater.from(baseActivity);
         View contentView = layoutInflater.inflate(R.layout.list_function,null);
         myList = (ListView) contentView.findViewById(R.id.functionList);
-        functionListAdapter = new FunctionListAdapter();
+        functionListAdapter = new FunctionListAdapter(data);
         myList.setAdapter(functionListAdapter);
         return contentView;
     }
@@ -54,14 +55,20 @@ public class FunctionListPopUpWindow extends MyPopupWindow {
 
     class FunctionListAdapter extends BaseAdapter{
 
+        private ArrayList<FunctionEntity> mydata;
+
+        public FunctionListAdapter(ArrayList<FunctionEntity> data) {
+            mydata = data;
+        }
+
         @Override
         public int getCount() {
-            return data.size();
+            return mydata.size();
         }
 
         @Override
         public Object getItem(int i) {
-            return data.get(i);
+            return mydata.get(i);
         }
 
         @Override
@@ -72,7 +79,7 @@ public class FunctionListPopUpWindow extends MyPopupWindow {
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
             HolderView holderView;
-            if (null != view) {
+            if (null == view) {
                 holderView = new HolderView();
                 LayoutInflater layoutInflater = LayoutInflater.from(baseActivity);
                 view = layoutInflater.inflate(R.layout.list_item_function,null);
@@ -82,7 +89,7 @@ public class FunctionListPopUpWindow extends MyPopupWindow {
             } else {
                 holderView = (HolderView) view.getTag();
             }
-            FunctionEntity functionEntity = data.get(i);
+            FunctionEntity functionEntity = mydata.get(i);
             String functionId = functionEntity.getFunctionId();
             if ("37".equals(functionId) || "38".equals(functionId)) {
                 holderView.headImg.setImageResource(R.mipmap.icon_list_07);

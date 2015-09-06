@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
     android:gravity="center_vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <ImageView
         android:id="@+id/headImg"
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@mipmap/icon_list_07"/>
@@ -18,7 +20,7 @@
         android:layout_height="30dp"
         android:singleLine="true"
         android:gravity="center_vertical"
-        android:textSize="13sp"
+        android:textSize="15sp"
         android:text="测试"
         android:textColor="@color/c_bbbbbb"/>
 </LinearLayout>

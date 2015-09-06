@@ -9,7 +9,7 @@
         <ListView
             android:id="@+id/functionList"
             android:scrollbars="none"
-            android:divider="@color/c_3f4242"
+            android:divider="@color/c_ffffff"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </ListView>

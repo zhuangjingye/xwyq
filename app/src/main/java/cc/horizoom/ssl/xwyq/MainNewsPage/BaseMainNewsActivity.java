@@ -15,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -27,7 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cc.horizoom.ssl.xwyq.DataManager.FunctionListData;
-import cc.horizoom.ssl.xwyq.DataManager.NewListUnLoginData;
+import cc.horizoom.ssl.xwyq.DataManager.NewsListData;
 import cc.horizoom.ssl.xwyq.DataManager.entity.FunctionEntity;
 import cc.horizoom.ssl.xwyq.DataManager.entity.NewEntity;
 import cc.horizoom.ssl.xwyq.MyBaseActivity;
@@ -99,6 +100,10 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
 
     private EditText searchEt;//搜索编辑框
 
+    private LinearLayout searchLl;//编辑框布局
+
+    private FunctionEntity selectFunctionEntity;//选中的功能
+
     private Handler myHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -123,10 +128,13 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
         searchRl = (RelativeLayout) findViewById(R.id.searchRl);
         classifyRl = (RelativeLayout) findViewById(R.id.classifyRl);//分类查询按钮
         searchEt = (EditText) findViewById(R.id.searchEt);//搜索编辑框
+        searchLl = (LinearLayout) findViewById(R.id.searchLl);
         classifyRl.setOnClickListener(this);
         titleBackRl.setOnClickListener(this);
         headImg = (ImageView) findViewById(R.id.headImg);
-        data = new ArrayList<>();
+        NewsListData.getInstance().clearData();
+        data = NewsListData.getInstance().getNewsData(this);
+        data.clear();
         newsAdapter = new NewsAdapter(this,data);
         myListView.setAdapter(newsAdapter);
 
@@ -148,6 +156,11 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
         if (!frameRunnable.isRunning()) {
             frameRunnable.setIsRunning(true);
             new Thread(frameRunnable).start();
+        }
+
+        if (data.size() == 0) {//获得数据
+            HashMap<String,String> map = new HashMap<String,String>();
+            requestNewsList(map);
         }
     }
 
@@ -177,7 +190,6 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
      */
     private void updataHeadImgView () {
         int dy=currentBottomLinePositon[1] - originalBottomLinePositon[1];
-        MyUtils.log(BaseMainNewsActivity.class,"dy="+dy);
         if (dy >= 0) {
             ViewGroup.LayoutParams layoutParams = headImg.getLayoutParams();
             layoutParams.height = originalHeadBgIvHeight+dy;
@@ -211,7 +223,6 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
      */
     private void updataSearchRl() {
         int dy=currentBottomLinePositon[1] - originalBottomLinePositon[1];
-        MyUtils.log(BaseMainNewsActivity.class,"dy="+dy);
         if (dy >= 0) {
             searchRl.scrollTo(0, 0);
         } else {
@@ -323,13 +334,16 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
         }
     }
 
+
+
     /**
      * 加载更多
      */
     private void loadMore() {
-        ArrayList<NewEntity> dataTmp = NewListUnLoginData.getInstance().getNewsData(this);
-        data.addAll(dataTmp);
-        newsAdapter.notifyDataSetChanged();
+//        ArrayList<NewEntity> dataTmp = NewListUnLoginData.getInstance().getNewsData(this);
+//        data.addAll(dataTmp);
+//        newsAdapter.notifyDataSetChanged();
+        requestNewsList("");
     }
 
     /**
@@ -404,22 +418,86 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
      * @param json
      */
     private void functionListSuccessed(String json) {
+        FunctionListData.getInstance().clearData();
         FunctionListData.getInstance().saveData(this, json);
-        ArrayList<FunctionEntity> data = FunctionListData.getInstance().getData();
-        showFunctionPopUp(data);
+        showFunctionPopUp();
     }
 
     /**
      * 弹出功能框
      */
-    private void showFunctionPopUp(ArrayList<FunctionEntity> data) {
-        FunctionListPopUpWindow functionListPopUpWindow = new FunctionListPopUpWindow(this,data);
+    private void showFunctionPopUp() {
+        final FunctionListPopUpWindow functionListPopUpWindow = new FunctionListPopUpWindow(this);
+        final ArrayList<FunctionEntity> functionListData = FunctionListData.getInstance().getData(this);
         functionListPopUpWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                MyUtils.log(BaseMainNewsActivity.class,"l="+l);
+                functionListPopUpWindow.dismiss();
+                selectFunctionEntity = functionListData.get((int) l);
+                setSearchEt();
+                requestNewsList(selectFunctionEntity.getFunctionId());
             }
         });
-        functionListPopUpWindow.showAsDropDown(searchRl);
+        functionListPopUpWindow.showAsDropDown(searchLl);
+    }
+
+    /**
+     * 设置搜索选项
+     */
+    private void setSearchEt() {
+        if(selectFunctionEntity != null) {
+            searchEt.setText(selectFunctionEntity.getName());
+        }
+
+    }
+
+    /**
+     * 获得新闻列表
+     * 如果functionid为空，则说名使新的类型加载需要清空数据，否则就加载跟多
+     */
+    private void requestNewsList(String functionId) {
+        HashMap<String,String> map = new HashMap<String,String>();
+        if (!MyUtils.isEmpty(functionId)) {
+            map.put("function_id",functionId);
+            NewsListData.getInstance().clearData();
+            newsAdapter.notifyDataSetChanged();
+        } else {
+            String fId = NewsListData.getInstance().getFunctionId(this);
+            long page = NewsListData.getInstance().getPage(this);
+            map.put("function_id",fId);
+            map.put("page",(page+1)+"");
+        }
+        requestNewsList(map);
+    }
+    /**
+     * 获得新闻列表
+     */
+    private void requestNewsList(HashMap<String,String> map) {
+        String url = Protocol.UNLOGINPUSHCONTENTLIST;
+
+        showWaitDialog();
+        doRequestString(url, map, new RequestResult() {
+            @Override
+            public void onResponse(String str) {
+                try {
+                    MyUtils.log(BaseMainNewsActivity.class, "str=" + str);
+                    JSONArray jsonArray = new JSONArray(str);
+                    JSONObject jsonObject = jsonArray.optJSONObject(0);
+                    boolean success = jsonObject.optBoolean("success");
+                    if (success) {
+                        NewsListData.getInstance().saveData(BaseMainNewsActivity.this, str);
+                        newsAdapter.notifyDataSetChanged();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                hideWaitDialog();
+            }
+
+            @Override
+            public void onErrResponse(VolleyError error) {
+                hideWaitDialog();
+            }
+        });
     }
 }

@@ -67,6 +67,7 @@
         android:layout_width="match_parent"
         android:layout_height="254dp">
         <LinearLayout
+            android:id="@+id/searchLl"
             android:layout_centerInParent="true"
             android:layout_width="243dp"
             android:orientation="horizontal"
@@ -81,7 +82,8 @@
                 android:textSize="13sp"
                 android:background="@color/c_00000000"
                 android:textColor="@color/c_070c0f"
-                android:text="今日热带"
+                android:textColorHint="@color/c_070c0f"
+                android:hint="全部"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <RelativeLayout

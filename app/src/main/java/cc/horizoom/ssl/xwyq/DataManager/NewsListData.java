@@ -15,14 +15,14 @@ import cn.com.myframe.Mysharedperferences;
  * Created by pi on 15-9-3.
  * 未登录新闻列表
  */
-public class NewListUnLoginData implements DataInterface{
-    private static NewListUnLoginData ourInstance = new NewListUnLoginData();
+public class NewsListData implements DataInterface{
+    private static NewsListData ourInstance = new NewsListData();
 
-    public static NewListUnLoginData getInstance() {
+    public static NewsListData getInstance() {
         return ourInstance;
     }
 
-    private NewListUnLoginData() {
+    private NewsListData() {
         if (null == newsData) {
             newsData = new ArrayList<NewEntity>();
         }
@@ -34,7 +34,7 @@ public class NewListUnLoginData implements DataInterface{
 //            "page": "0",
 //    "list": [
 
-    private String key = NewListUnLoginData.class.getName();
+    private String key = NewsListData.class.getName();
 
     private String functionId;
 

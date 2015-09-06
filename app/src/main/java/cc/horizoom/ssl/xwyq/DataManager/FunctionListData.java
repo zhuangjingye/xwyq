@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import cc.horizoom.ssl.xwyq.DataManager.entity.FunctionEntity;
 import cn.com.myframe.BaseActivity;
+import cn.com.myframe.MyUtils;
 import cn.com.myframe.Mysharedperferences;
 
 /**
@@ -34,7 +35,10 @@ public class FunctionListData implements DataInterface {
         analyze(baseActivity);
     }
 
-    public ArrayList<FunctionEntity> getData() {
+    public ArrayList<FunctionEntity> getData(BaseActivity baseActivity) {
+        if (data.size() == 0) {
+            analyze(baseActivity);
+        }
         return data;
     }
 

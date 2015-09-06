@@ -34,8 +34,8 @@ public abstract class MyPopupWindow {
 
         // 如果不设置PopupWindow的背景，无论是点击外部区域还是Back键都无法dismiss弹框
         // 我觉得这里是API的一个bug
-//        popupWindow.setBackgroundDrawable(baseActivity.getResources().getColor(R.color.c_00000000)));
-        popupWindow.setBackgroundDrawable(baseActivity.getResources().getDrawable(R.drawable.sharp_rectangle_00000000));
+//        popupWindow.setBackgroundDrawable(null);
+        popupWindow.setBackgroundDrawable(baseActivity.getResources().getDrawable(R.drawable.sharp_rectangle_popup_bg));
     }
 
     /**
@@ -47,6 +47,15 @@ public abstract class MyPopupWindow {
             popupWindow.showAsDropDown(view);
         }
     }
+
+    /**
+     * 关闭
+     */
+    public void dismiss() {
+        if (null != popupWindow)
+        popupWindow.dismiss();
+    }
+
 
     public abstract View getContentView();
 }

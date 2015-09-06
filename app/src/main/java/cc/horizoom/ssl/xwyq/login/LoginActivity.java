@@ -13,7 +13,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import cc.horizoom.ssl.xwyq.DataManager.NewListUnLoginData;
+import cc.horizoom.ssl.xwyq.DataManager.NewsListData;
 import cc.horizoom.ssl.xwyq.DataManager.UserData;
 import cc.horizoom.ssl.xwyq.DataManager.entity.NewEntity;
 import cc.horizoom.ssl.xwyq.MainNewsPage.BaseMainNewsActivity;
@@ -22,7 +22,6 @@ import cc.horizoom.ssl.xwyq.Protocol;
 import cc.horizoom.ssl.xwyq.R;
 import cn.com.myframe.MyUtils;
 import cn.com.myframe.network.volley.VolleyError;
-import cn.com.myframe.view.BounceListView;
 import cn.com.myframe.view.MyBounceListView.MyBounceListview;
 
 /**
@@ -64,7 +63,7 @@ public class LoginActivity extends MyBaseActivity implements View.OnClickListene
      * 更新页面数据
      */
     private void updataView () {
-        ArrayList<NewEntity> data = NewListUnLoginData.getInstance().getNewsData(this);
+        ArrayList<NewEntity> data = NewsListData.getInstance().getNewsData(this);
         newsListAdapter = new NewsListAdapter(this,data);
         newList.setAdapter(newsListAdapter);
         newList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
