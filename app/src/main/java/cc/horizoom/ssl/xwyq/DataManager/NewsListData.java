@@ -51,6 +51,16 @@ public class NewsListData implements DataInterface{
 
         analyze(baseActivity);
     }
+    /**
+    * 保存数据
+    * @param baseActivity
+    * @param json
+    */
+    public void addData(BaseActivity baseActivity,String json) {
+        Mysharedperferences.getIinstance().putString(baseActivity,key,json);
+
+        analyze(baseActivity);
+    }
 
     /**
      * 清除缓存数据

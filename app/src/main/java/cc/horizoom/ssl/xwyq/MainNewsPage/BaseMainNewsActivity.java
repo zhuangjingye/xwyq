@@ -509,7 +509,7 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
                     boolean success = jsonObject.optBoolean("success");
                     String message = jsonObject.optString("message");
                     if (success) {
-                        NewsListData.getInstance().saveData(BaseMainNewsActivity.this, str);
+                        NewsListData.getInstance().addData(BaseMainNewsActivity.this, str);
                         newsAdapter.notifyDataSetChanged();
                     } else {
                         showToast(message);

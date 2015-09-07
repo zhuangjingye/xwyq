@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import cc.horizoom.ssl.xwyq.DataManager.entity.NewsEntity;
 import cc.horizoom.ssl.xwyq.R;
 import cn.com.myframe.BaseActivity;
+import cn.com.myframe.MyUtils;
 
 /**
  * Created by pi on 15-9-3.
@@ -22,9 +23,10 @@ public class NewsListAdapter extends BaseAdapter{
 
     private ArrayList<NewsEntity> data;
 
-    public NewsListAdapter(BaseActivity baseActivity,ArrayList<NewsEntity> data) {
+    public NewsListAdapter(BaseActivity baseActivity,ArrayList<NewsEntity> dataTmp) {
         this.baseActivity = baseActivity;
-        this.data = data;
+        data = new ArrayList<NewsEntity>();
+        data.addAll(dataTmp);
     }
     @Override
     public int getCount() {
