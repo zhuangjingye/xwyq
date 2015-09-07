@@ -69,5 +69,21 @@
         android:layout_height="match_parent"></WebView>
     </cn.com.myframe.view.BounceScrollView>
 
-
+    <RelativeLayout
+        android:id="@+id/myCheckBoxRl"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="5dp"
+        android:gravity="center"
+        android:layout_width="45dp"
+        android:layout_height="45dp">
+        <CheckBox
+            android:id="@+id/myCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/my_check_box"
+            android:button="@null"
+            android:checked="true"/>
+    </RelativeLayout>
 </RelativeLayout>
