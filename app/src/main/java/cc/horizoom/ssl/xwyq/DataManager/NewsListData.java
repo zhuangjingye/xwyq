@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import cc.horizoom.ssl.xwyq.DataManager.entity.NewEntity;
+import cc.horizoom.ssl.xwyq.DataManager.entity.NewsEntity;
 import cn.com.myframe.BaseActivity;
 import cn.com.myframe.MyUtils;
 import cn.com.myframe.Mysharedperferences;
@@ -24,7 +24,7 @@ public class NewsListData implements DataInterface{
 
     private NewsListData() {
         if (null == newsData) {
-            newsData = new ArrayList<NewEntity>();
+            newsData = new ArrayList<NewsEntity>();
         }
     }
 
@@ -40,7 +40,7 @@ public class NewsListData implements DataInterface{
 
     private long page = -1;
 
-    private ArrayList<NewEntity> newsData;
+    private ArrayList<NewsEntity> newsData;
     /**
      * 保存数据
      * @param baseActivity
@@ -83,8 +83,8 @@ public class NewsListData implements DataInterface{
             JSONArray newsDataArray = jsonObject.optJSONArray("list");
             for (int i=0;i<newsDataArray.length();i++) {
                 JSONObject jsonObject1 = newsDataArray.optJSONObject(i);
-                NewEntity newEntity = new NewEntity(jsonObject1.toString());
-                newsData.add(newEntity);
+                NewsEntity newsEntity = new NewsEntity(jsonObject1.toString());
+                newsData.add(newsEntity);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -105,7 +105,7 @@ public class NewsListData implements DataInterface{
         return page;
     }
 
-    public ArrayList<NewEntity> getNewsData(BaseActivity baseActivity) {
+    public ArrayList<NewsEntity> getNewsData(BaseActivity baseActivity) {
         if (newsData.size() == 0) {
             analyze(baseActivity);
         }

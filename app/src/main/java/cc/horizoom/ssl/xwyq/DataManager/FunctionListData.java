@@ -67,6 +67,6 @@ public class FunctionListData implements DataInterface {
     @Override
     public void clearSaveData(BaseActivity baseActivity) {
         Mysharedperferences.getIinstance().putString(baseActivity,key,"");
-        ourInstance = null;
+        data.clear();
     }
 }

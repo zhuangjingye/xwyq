@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import cc.horizoom.ssl.xwyq.DataManager.entity.NewEntity;
+import cc.horizoom.ssl.xwyq.DataManager.entity.NewsEntity;
 import cc.horizoom.ssl.xwyq.R;
 import cn.com.myframe.BaseActivity;
 
@@ -20,11 +20,11 @@ import cn.com.myframe.BaseActivity;
  */
 public class NewsAdapter extends BaseAdapter{
 
-    private ArrayList<NewEntity> data;
+    private ArrayList<NewsEntity> data;
 
     private BaseActivity baseActivity;
 
-    public NewsAdapter(BaseActivity baseActivity,ArrayList<NewEntity> data) {
+    public NewsAdapter(BaseActivity baseActivity,ArrayList<NewsEntity> data) {
         this.baseActivity = baseActivity;
         this.data = data;
     }
@@ -60,11 +60,11 @@ public class NewsAdapter extends BaseAdapter{
         } else {
             holderView = (HolderView) view.getTag();
         }
-        NewEntity newEntity = data.get(i);
+        NewsEntity newsEntity = data.get(i);
 //        holderView.numTv.setText(i+"");
-        holderView.contentTv.setText(newEntity.getTitle());
-        holderView.timeTv.setText(newEntity.getPublishTime());
-        if (newEntity.getPupushLevel() >= 5) {
+        holderView.contentTv.setText(newsEntity.getTitle());
+        holderView.timeTv.setText(newsEntity.getPublishTime());
+        if (newsEntity.getPupushLevel() >= 5) {
             holderView.smallBellIv.setVisibility(View.VISIBLE);
         } else {
             holderView.smallBellIv.setVisibility(View.INVISIBLE);

@@ -37,6 +37,11 @@
             android:windowSoftInputMode="adjustResize|stateHidden"
             android:name=".MainNewsPage.BaseMainNewsActivity" >
         </activity>
+        <activity
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:name=".MainNewsPage.NewsPageActivity" >
+        </activity>
     </application>
 
 </manifest>

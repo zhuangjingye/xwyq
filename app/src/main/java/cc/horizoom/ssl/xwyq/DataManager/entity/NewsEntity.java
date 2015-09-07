@@ -7,7 +7,7 @@ import org.json.JSONObject;
  * Created by pi on 15-9-3.
  * 新闻实体类
  */
-public class NewEntity {
+public class NewsEntity {
 
 //    "news_id": "150870",
 //            "title": "湖南临湘市长涉嫌吸毒被查 消息称其产生幻觉后报警",
@@ -28,7 +28,7 @@ public class NewEntity {
 
     private String status;
 
-    public NewEntity(String json) {
+    public NewsEntity(String json) {
         try {
             JSONObject jsonObject = new JSONObject(json);
             newsId = jsonObject.optString("news_id");

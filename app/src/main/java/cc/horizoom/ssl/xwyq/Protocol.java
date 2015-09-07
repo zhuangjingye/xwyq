@@ -21,4 +21,7 @@ public class Protocol {
 
     //未登陆用户文章【列表】接口：
     public static final String UNLOGINPUSHCONTENTLIST = HOST + PLAT + "api.unlogin_push_content_list.php";
+
+    //未登陆用户文章【内容】接口：
+    public static final String UNLOGINPUSHCONTENTDETAIL = HOST + PLAT + "api.unlogin_push_content_detail.php";
 }

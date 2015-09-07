@@ -1,5 +1,6 @@
 package cc.horizoom.ssl.xwyq.MainNewsPage;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
@@ -28,14 +29,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cc.horizoom.ssl.xwyq.DataManager.FunctionListData;
+import cc.horizoom.ssl.xwyq.DataManager.NewsData;
 import cc.horizoom.ssl.xwyq.DataManager.NewsListData;
 import cc.horizoom.ssl.xwyq.DataManager.entity.FunctionEntity;
-import cc.horizoom.ssl.xwyq.DataManager.entity.NewEntity;
+import cc.horizoom.ssl.xwyq.DataManager.entity.NewsEntity;
 import cc.horizoom.ssl.xwyq.MyBaseActivity;
 import cc.horizoom.ssl.xwyq.Protocol;
 import cc.horizoom.ssl.xwyq.R;
 import cc.horizoom.ssl.xwyq.login.NewsListAdapter;
 import cn.com.myframe.MyUtils;
+import cn.com.myframe.network.httpmime_4_2_6.apache.http.entity.mime.content.StringBody;
 import cn.com.myframe.network.volley.VolleyError;
 import cn.com.myframe.view.MyBounceListView.MyBounceListview;
 
@@ -46,7 +49,7 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
 
     private MyBounceListview myListView;
 
-    private ArrayList<NewEntity> data;
+    private ArrayList<NewsEntity> data;
 
     private NewsListAdapter newsListAdapter;
 
@@ -116,9 +119,20 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
         }
     };
 
+    private AdapterView.OnItemClickListener myListOnItemClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            if (data.size() > 0) {
+                NewsEntity newsEntity = data.get((int)l);
+                requestNews(newsEntity);
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        clearData();//每次开启是数据要从新获取
         setContentView(R.layout.activity_base_main_news);
         myListView = (MyBounceListview) findViewById(R.id.myListView);
         titleRl = (RelativeLayout) findViewById(R.id.titleRl);
@@ -132,9 +146,7 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
         classifyRl.setOnClickListener(this);
         titleBackRl.setOnClickListener(this);
         headImg = (ImageView) findViewById(R.id.headImg);
-        NewsListData.getInstance().clearData();
         data = NewsListData.getInstance().getNewsData(this);
-        data.clear();
         newsAdapter = new NewsAdapter(this,data);
         myListView.setAdapter(newsAdapter);
 
@@ -145,7 +157,10 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
         headView = getHeadview(headBitmap);
         myListView.addHeaderView(headView);
         myListView.addFooterView(getFooter());
+        myListView.setOnItemClickListener(myListOnItemClickListener);
+
     }
+
 
     @Override
     protected void onResume() {
@@ -170,6 +185,13 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
         if (frameRunnable != null && frameRunnable.isRunning()) {
             frameRunnable.setIsRunning(false);
         }
+    }
+
+    /**
+     * 清空数据
+     */
+    private void clearData() {
+        FunctionListData.getInstance().clearSaveData(this);
     }
 
     /**
@@ -214,7 +236,7 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
         if (dy <= 0) {
             titleRl.scrollTo(0,-dy);
         } else {
-            titleRl.scrollTo(0,0);
+            titleRl.scrollTo(0, 0);
         }
     }
 
@@ -340,9 +362,6 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
      * 加载更多
      */
     private void loadMore() {
-//        ArrayList<NewEntity> dataTmp = NewListUnLoginData.getInstance().getNewsData(this);
-//        data.addAll(dataTmp);
-//        newsAdapter.notifyDataSetChanged();
         requestNewsList("");
     }
 
@@ -384,6 +403,11 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
      * 获得功能列表
      */
     private void getFunctionList() {
+        ArrayList<FunctionEntity> dataTmp = FunctionListData.getInstance().getData(this);
+        if (dataTmp.size() != 0) {//如果有数据，则直接显示，不请求
+            showFunctionPopUp();
+            return;
+        }
         String url = Protocol.UNLOGINFUNCTIONLIST;
         Map<String,String> map = new HashMap<String,String>();
         showWaitDialog();
@@ -465,7 +489,7 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
             String fId = NewsListData.getInstance().getFunctionId(this);
             long page = NewsListData.getInstance().getPage(this);
             map.put("function_id",fId);
-            map.put("page",(page+1)+"");
+            map.put("page", (page + 1) + "");
         }
         requestNewsList(map);
     }
@@ -480,13 +504,15 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
             @Override
             public void onResponse(String str) {
                 try {
-                    MyUtils.log(BaseMainNewsActivity.class, "str=" + str);
                     JSONArray jsonArray = new JSONArray(str);
                     JSONObject jsonObject = jsonArray.optJSONObject(0);
                     boolean success = jsonObject.optBoolean("success");
+                    String message = jsonObject.optString("message");
                     if (success) {
                         NewsListData.getInstance().saveData(BaseMainNewsActivity.this, str);
                         newsAdapter.notifyDataSetChanged();
+                    } else {
+                        showToast(message);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -499,5 +525,54 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
                 hideWaitDialog();
             }
         });
+    }
+
+    /**
+     * 获取新闻
+     * @param newsEntity
+     */
+    private void requestNews(NewsEntity newsEntity) {
+        if (null == newsEntity) {
+            return;
+        }
+        String url = Protocol.UNLOGINPUSHCONTENTDETAIL;
+        HashMap<String,String> map = new HashMap<String,String>();
+        String news_id = newsEntity.getNewsId();
+        map.put("news_id",news_id);
+        showWaitDialog();
+        doRequestString(url, map, new RequestResult() {
+            @Override
+            public void onResponse(String str) {
+                try {
+                    JSONArray jsonArray = new JSONArray(str);
+                    JSONObject jsonObject = jsonArray.optJSONObject(0);
+                    boolean success = jsonObject.optBoolean("success");
+                    String message = jsonObject.optString("message");
+                    if (success) {
+                        NewsData.getInstance(BaseMainNewsActivity.this).saveData(BaseMainNewsActivity.this, str);
+                        startNewsActivity();
+                    } else {
+                        showToast(message);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                hideWaitDialog();
+            }
+
+            @Override
+            public void onErrResponse(VolleyError error) {
+                hideWaitDialog();
+            }
+        });
+    }
+
+    /**
+     * 打开新闻页
+     */
+    private void startNewsActivity() {
+        Intent intent = new Intent();
+        intent.setClass(this,NewsPageActivity.class);
+        startActivity(intent);
     }
 }

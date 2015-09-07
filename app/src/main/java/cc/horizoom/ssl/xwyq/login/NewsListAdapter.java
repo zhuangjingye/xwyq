@@ -4,12 +4,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import cc.horizoom.ssl.xwyq.DataManager.entity.NewEntity;
+import cc.horizoom.ssl.xwyq.DataManager.entity.NewsEntity;
 import cc.horizoom.ssl.xwyq.R;
 import cn.com.myframe.BaseActivity;
 
@@ -21,9 +20,9 @@ public class NewsListAdapter extends BaseAdapter{
 
     private BaseActivity baseActivity;
 
-    private ArrayList<NewEntity> data;
+    private ArrayList<NewsEntity> data;
 
-    public NewsListAdapter(BaseActivity baseActivity,ArrayList<NewEntity> data) {
+    public NewsListAdapter(BaseActivity baseActivity,ArrayList<NewsEntity> data) {
         this.baseActivity = baseActivity;
         this.data = data;
     }
@@ -54,8 +53,8 @@ public class NewsListAdapter extends BaseAdapter{
         } else {
             holderView = (HolderView) view.getTag();
         }
-        NewEntity newEntity = data.get(i);
-        holderView.newsTv.setText(newEntity.getTitle());
+        NewsEntity newsEntity = data.get(i);
+        holderView.newsTv.setText(newsEntity.getTitle());
         return view;
     }
 

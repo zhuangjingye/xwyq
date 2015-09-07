@@ -77,8 +77,9 @@ public class MyBounceListview extends LinearLayout {
      */
     public void addHeaderView(View v){
         if (null != v){
-            headFl.removeAllViews();
-            headFl.addView(v);
+//            headFl.removeAllViews();
+//            headFl.addView(v);
+            listViewForScrollView.addHeaderView(v);
         }
     }
 }

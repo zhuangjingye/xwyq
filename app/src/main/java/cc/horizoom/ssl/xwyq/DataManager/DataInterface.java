@@ -1,12 +1,6 @@
 package cc.horizoom.ssl.xwyq.DataManager;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import cc.horizoom.ssl.xwyq.DataManager.entity.NewEntity;
 import cn.com.myframe.BaseActivity;
-import cn.com.myframe.Mysharedperferences;
 
 /**
  * Created by pizhuang on 2015/9/6.
