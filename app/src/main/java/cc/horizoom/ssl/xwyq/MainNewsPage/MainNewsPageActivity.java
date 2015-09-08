@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -17,9 +18,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import cc.horizoom.ssl.xwyq.DataManager.CardData;
+import cc.horizoom.ssl.xwyq.DataManager.FunctionListData;
 import cc.horizoom.ssl.xwyq.DataManager.NewsListData;
 import cc.horizoom.ssl.xwyq.DataManager.UserData;
 import cc.horizoom.ssl.xwyq.DataManager.entity.CardEntity;
+import cc.horizoom.ssl.xwyq.DataManager.entity.FunctionEntity;
 import cc.horizoom.ssl.xwyq.MainNewsPage.view.CardsView;
 import cc.horizoom.ssl.xwyq.Protocol;
 import cc.horizoom.ssl.xwyq.R;
@@ -52,9 +55,6 @@ public class MainNewsPageActivity extends BaseActivity implements View.OnClickLi
             switch (msg.what) {
                 case 1://请求分类卡片 如果数据为空则需要从新加载
                     requestCCCPCL();
-                    break;
-                case 2:
-                    updataView();
                     break;
             }
         }
@@ -147,6 +147,7 @@ public class MainNewsPageActivity extends BaseActivity implements View.OnClickLi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.settingRl:
+                showSettingPopUpWindow();
                 break;
             case R.id.leftRl:
                 cardsView.scrollToLeft();
@@ -155,6 +156,14 @@ public class MainNewsPageActivity extends BaseActivity implements View.OnClickLi
                 cardsView.scrollToRight();
                 break;
         }
+    }
+
+    /**
+     * 显示设置窗口
+     */
+    private void showSettingPopUpWindow() {
+        SettingPopUpWindow settingPopUpWindow = new SettingPopUpWindow(this);
+        settingPopUpWindow.showAsDropDown(settingIv);
     }
 
     /**

@@ -24,4 +24,8 @@
     <string name="apply_no">提交失败！</string>
     <string name="loading_more">加载更多...</string>
     <string name="pwd_err">请输入密码</string>
+    <string name="setting_waring">&#160;&#160;與情预警</string>
+    <string name="setting_preference">&#160;&#160;偏好设置</string>
+    <string name="setting_collection">&#160;&#160;收藏夹</string>
+    <string name="setting_more">&#160;&#160;更多</string>
 </resources>
