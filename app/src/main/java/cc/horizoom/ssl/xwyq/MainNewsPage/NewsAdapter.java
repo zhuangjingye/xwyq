@@ -8,11 +8,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import cc.horizoom.ssl.xwyq.DataManager.NewsData;
 import cc.horizoom.ssl.xwyq.DataManager.entity.NewsEntity;
+import cc.horizoom.ssl.xwyq.Protocol;
 import cc.horizoom.ssl.xwyq.R;
 import cn.com.myframe.BaseActivity;
+import cn.com.myframe.network.volley.VolleyError;
 
 /**
  * Created by pi on 15-9-5.
@@ -20,9 +28,9 @@ import cn.com.myframe.BaseActivity;
  */
 public class NewsAdapter extends BaseAdapter{
 
-    private ArrayList<NewsEntity> data;
+    protected ArrayList<NewsEntity> data;
 
-    private BaseActivity baseActivity;
+    protected BaseActivity baseActivity;
 
     public NewsAdapter(BaseActivity baseActivity,ArrayList<NewsEntity> data) {
         this.baseActivity = baseActivity;
@@ -79,4 +87,5 @@ public class NewsAdapter extends BaseAdapter{
         TextView timeTv;//时间
         ImageView smallBellIv;//铃铛
     }
+
 }

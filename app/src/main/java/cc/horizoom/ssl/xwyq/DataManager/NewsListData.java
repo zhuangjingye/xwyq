@@ -40,6 +40,8 @@ public class NewsListData implements DataInterface{
 
     private long page = -1;
 
+    private String keyWord;//关键字
+
     private ArrayList<NewsEntity> newsData;
     /**
      * 保存数据
@@ -68,7 +70,7 @@ public class NewsListData implements DataInterface{
      */
     public void clearSaveData(BaseActivity baseActivity) {
         Mysharedperferences.getIinstance().putString(baseActivity,key,"");
-        ourInstance = null;
+        clearData();
     }
 
     /**
@@ -77,6 +79,9 @@ public class NewsListData implements DataInterface{
     public void clearData() {
         if(newsData != null) {
             newsData.clear();
+            functionId = "";
+            page = -1;
+            keyWord = "";
         }
     }
 
@@ -88,9 +93,10 @@ public class NewsListData implements DataInterface{
         try {
             JSONArray jsonArray = new JSONArray(json);
             JSONObject jsonObject = jsonArray.optJSONObject(0);
-            functionId = jsonObject.optString("function_id");
+            functionId = jsonObject.optString("function_id","");
             page = jsonObject.optInt("page");
             JSONArray newsDataArray = jsonObject.optJSONArray("list");
+            if (null == newsDataArray || newsDataArray.length() == 0) return;
             for (int i=0;i<newsDataArray.length();i++) {
                 JSONObject jsonObject1 = newsDataArray.optJSONObject(i);
                 NewsEntity newsEntity = new NewsEntity(jsonObject1.toString());
@@ -112,6 +118,7 @@ public class NewsListData implements DataInterface{
         if (page == -1) {
             analyze(baseActivity);
         }
+
         return page;
     }
 
@@ -120,5 +127,16 @@ public class NewsListData implements DataInterface{
             analyze(baseActivity);
         }
         return newsData;
+    }
+
+    public String getKeyWord() {
+        if (MyUtils.isEmpty(keyWord)) {
+            return "全部";
+        }
+        return keyWord;
+    }
+
+    public void setKeyWord(String keyWord) {
+        this.keyWord = keyWord;
     }
 }

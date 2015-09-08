@@ -16,7 +16,8 @@ import java.util.HashMap;
 import cc.horizoom.ssl.xwyq.DataManager.NewsListData;
 import cc.horizoom.ssl.xwyq.DataManager.UserData;
 import cc.horizoom.ssl.xwyq.DataManager.entity.NewsEntity;
-import cc.horizoom.ssl.xwyq.MainNewsPage.BaseMainNewsActivity;
+import cc.horizoom.ssl.xwyq.MainNewsPage.MainNewsPageActivity;
+import cc.horizoom.ssl.xwyq.MainNewsPage.UnLoginNewsActivity;
 import cc.horizoom.ssl.xwyq.MyBaseActivity;
 import cc.horizoom.ssl.xwyq.Protocol;
 import cc.horizoom.ssl.xwyq.R;
@@ -69,7 +70,7 @@ public class LoginActivity extends MyBaseActivity implements View.OnClickListene
         newList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                startBaseMainNewsActivity();
+                startUnLoginActivity();
             }
         });
     }
@@ -141,6 +142,9 @@ public class LoginActivity extends MyBaseActivity implements View.OnClickListene
      */
     private void loginSuccessed(String json) {
         UserData.getInstance().saveData(this,json);
+        Intent intent = new Intent(this, MainNewsPageActivity.class);
+        startActivity(intent);
+        closeActivity(LoginActivity.class.getName());
     }
 
 
@@ -160,9 +164,12 @@ public class LoginActivity extends MyBaseActivity implements View.OnClickListene
 
     }
 
-    private void startBaseMainNewsActivity() {
+    /**
+     * 未登录新闻列表
+     */
+    private void startUnLoginActivity() {
         Intent intent = new Intent();
-        intent.setClass(this,BaseMainNewsActivity.class);
+        intent.setClass(this,UnLoginNewsActivity.class);
         startActivity(intent);
     }
 }

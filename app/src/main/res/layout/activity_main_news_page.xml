@@ -1,0 +1,67 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg_card">
+
+    <!--内容-->
+    <FrameLayout
+        android:id="@+id/contentFl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></FrameLayout>
+
+    <!--设置-->
+    <RelativeLayout
+        android:id="@+id/settingRl"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/color_btn_00000000"
+        android:clickable="true"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/settingIv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_card_set" />
+
+    </RelativeLayout>
+
+    <!--向左箭头-->
+    <RelativeLayout
+        android:id="@+id/leftRl"
+        android:clickable="true"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:layout_alignParentLeft="true"
+        android:layout_centerInParent="true"
+        android:background="@drawable/color_btn_00000000">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_card_left" />
+    </RelativeLayout>
+
+    <!--向右箭头-->
+    <RelativeLayout
+        android:id="@+id/rightRl"
+        android:clickable="true"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true"
+        android:background="@drawable/color_btn_00000000">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_card_right" />
+    </RelativeLayout>
+</RelativeLayout>

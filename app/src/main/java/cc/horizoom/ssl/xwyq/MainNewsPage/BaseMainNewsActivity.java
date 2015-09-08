@@ -36,7 +36,6 @@ import cc.horizoom.ssl.xwyq.DataManager.entity.NewsEntity;
 import cc.horizoom.ssl.xwyq.MyBaseActivity;
 import cc.horizoom.ssl.xwyq.Protocol;
 import cc.horizoom.ssl.xwyq.R;
-import cc.horizoom.ssl.xwyq.login.NewsListAdapter;
 import cn.com.myframe.MyUtils;
 import cn.com.myframe.network.httpmime_4_2_6.apache.http.entity.mime.content.StringBody;
 import cn.com.myframe.network.volley.VolleyError;
@@ -45,13 +44,11 @@ import cn.com.myframe.view.MyBounceListView.MyBounceListview;
 /**
  * Created by pi on 15-9-4.
  */
-public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClickListener{
+public abstract class BaseMainNewsActivity extends MyBaseActivity implements View.OnClickListener{
 
     private MyBounceListview myListView;
 
     private ArrayList<NewsEntity> data;
-
-    private NewsListAdapter newsListAdapter;
 
     private ImageView newHeadImg;//list到头图片
 
@@ -59,7 +56,7 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
 
     private Bitmap headBitmap;//头图像
 
-    private NewsAdapter newsAdapter;//新闻适配起
+    protected NewsAdapter newsAdapter;//新闻适配起
 
     private RelativeLayout titleRl;//标题栏
 
@@ -122,7 +119,7 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
     private AdapterView.OnItemClickListener myListOnItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            if (data.size() > 0) {
+            if (data.size() > 0 && l>=0) {
                 NewsEntity newsEntity = data.get((int)l);
                 requestNews(newsEntity);
             }
@@ -158,7 +155,7 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
         myListView.addHeaderView(headView);
         myListView.addFooterView(getFooter());
         myListView.setOnItemClickListener(myListOnItemClickListener);
-
+        onUpdataSearchEt(searchEt);
     }
 
 
@@ -218,7 +215,6 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
             headImg.setLayoutParams(layoutParams);
             headImg.scrollTo(0, 0);
         } else {
-
             if ( currentBottomLinePositon[1] <= originalheadImgLinePositon[1]) {
                 int dy1 = originalheadImgLinePositon[1] - originalBottomLinePositon[1];
                 headImg.scrollTo(0,-dy1);
@@ -347,7 +343,7 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
                 loadMore();
                 break;
             case R.id.titleBackRl:
-                closeActivity(BaseMainNewsActivity.class.getName());
+                closeActivity(getCurrentClassName());
                 break;
             case R.id.classifyRl://查询分类
                 getFunctionList();
@@ -361,7 +357,7 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
     /**
      * 加载更多
      */
-    private void loadMore() {
+    protected void loadMore() {
         requestNewsList("");
     }
 
@@ -408,8 +404,8 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
             showFunctionPopUp();
             return;
         }
-        String url = Protocol.UNLOGINFUNCTIONLIST;
-        Map<String,String> map = new HashMap<String,String>();
+        String url = getFunctionListUrl();
+        Map<String,String> map = getFunctionParameter();
         showWaitDialog();
         doRequestString(url, map, new RequestResult() {
             @Override
@@ -436,6 +432,12 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
             }
         });
     }
+
+    /**
+     * 获得新闻分类的请求参数
+     * @return
+     */
+    public abstract HashMap<String,String> getFunctionParameter();
 
     /**
      * 功能列表请求成功
@@ -480,7 +482,7 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
      * 如果functionid为空，则说名使新的类型加载需要清空数据，否则就加载跟多
      */
     private void requestNewsList(String functionId) {
-        HashMap<String,String> map = new HashMap<String,String>();
+        HashMap<String,String> map = getNewsListParameter();
         if (!MyUtils.isEmpty(functionId)) {
             map.put("function_id",functionId);
             NewsListData.getInstance().clearData();
@@ -497,7 +499,7 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
      * 获得新闻列表
      */
     private void requestNewsList(HashMap<String,String> map) {
-        String url = Protocol.UNLOGINPUSHCONTENTLIST;
+        String url = getNewsListUrl();
 
         showWaitDialog();
         doRequestString(url, map, new RequestResult() {
@@ -526,6 +528,11 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
             }
         });
     }
+    /**
+     * 获得新闻列表的请求参数
+     * @return
+     */
+    public abstract HashMap<String,String> getNewsListParameter();
 
     /**
      * 获取新闻
@@ -535,8 +542,8 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
         if (null == newsEntity) {
             return;
         }
-        String url = Protocol.UNLOGINPUSHCONTENTDETAIL;
-        HashMap<String,String> map = new HashMap<String,String>();
+        String url = getNewsUrl();
+        HashMap<String,String> map = getNewsParameter();
         String news_id = newsEntity.getNewsId();
         map.put("news_id",news_id);
         showWaitDialog();
@@ -568,11 +575,46 @@ public class BaseMainNewsActivity extends MyBaseActivity implements View.OnClick
     }
 
     /**
+     * 获得新闻的请求参数
+     * @return
+     */
+    public abstract HashMap<String,String> getNewsParameter();
+    /**
      * 打开新闻页
      */
     private void startNewsActivity() {
         Intent intent = new Intent();
-        intent.setClass(this,NewsPageActivity.class);
+        intent.setClass(this, NewsPageActivity.class);
         startActivity(intent);
     }
+
+    /**
+     * 获得新闻请求的url
+     * @return
+     */
+    public abstract String getNewsUrl();
+
+    /**
+     * 获得新闻列表请求的url
+     * @return
+     */
+    public abstract String getNewsListUrl();
+
+    /**
+     * 获得功能分类url
+     * @return
+     */
+    public abstract String getFunctionListUrl();
+
+    /**
+     * 获得当前类名
+     * @return
+     */
+    public abstract String getCurrentClassName();
+
+    /**
+     * 更新文本框设置
+     * @param searchEt
+     */
+    public abstract void onUpdataSearchEt(final EditText searchEt);
 }

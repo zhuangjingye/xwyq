@@ -10,6 +10,7 @@ import java.util.HashMap;
 
 import cc.horizoom.ssl.xwyq.DataManager.NewsListData;
 import cc.horizoom.ssl.xwyq.DataManager.UserData;
+import cc.horizoom.ssl.xwyq.MainNewsPage.MainNewsPageActivity;
 import cc.horizoom.ssl.xwyq.MyBaseActivity;
 import cc.horizoom.ssl.xwyq.Protocol;
 import cc.horizoom.ssl.xwyq.R;
@@ -32,11 +33,7 @@ public class BootActivity extends MyBaseActivity {
 //        startLoginActivity();
         startTim = System.currentTimeMillis();
         String customerId = UserData.getInstance().getCustomerId(this);
-        if (MyUtils.isEmpty(customerId)) {//未登录获取未登录的新闻列表
-            unLoginPushContentList();
-        } else {//已登录的话获取文章分类接口
-
-        }
+        unLoginPushContentList();
     }
 
     /**
@@ -45,16 +42,16 @@ public class BootActivity extends MyBaseActivity {
     private void unLoginPushContentList() {
         String url = Protocol.UNLOGINPUSHCONTENTLIST;
         HashMap<String,String> hashMap = new HashMap<String,String>();
-        doRequestString(url,hashMap,new RequestResult() {
+        doRequestString(url, hashMap, new RequestResult() {
             @Override
             public void onResponse(String str) {
                 try {
                     JSONArray jsonArray = new JSONArray(str);
                     JSONObject jsonObject = jsonArray.optJSONObject(0);
                     boolean success = jsonObject.optBoolean("success");
-                    if (success){
+                    if (success) {
                         NewsListData.getInstance().clearData();
-                        NewsListData.getInstance().saveData(BootActivity.this,str);
+                        NewsListData.getInstance().saveData(BootActivity.this, str);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -73,6 +70,7 @@ public class BootActivity extends MyBaseActivity {
      * 加载结束
      */
     private void loadingFinish() {
+
         long currentTime = System.currentTimeMillis();
         long sleepTim = 1500-(currentTime-startTim);//当前要睡眠的时间，保证loading页面 停留3秒
         if (sleepTim > 0 ) {
@@ -82,11 +80,13 @@ public class BootActivity extends MyBaseActivity {
                 e.printStackTrace();
             }
         }
+
         String customerId = UserData.getInstance().getCustomerId(this);
         if (MyUtils.isEmpty(customerId)) {//未登录跳转到登录页
             startLoginActivity();
         } else {//已登录的话获取文章分类接口
-
+            Intent intent = new Intent(this, MainNewsPageActivity.class);
+            startActivity(intent);
         }
         closeActivity(BootActivity.class.getName());
     }
