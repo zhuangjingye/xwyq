@@ -1,0 +1,126 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/c_fafafa">
+    <!--标题-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@mipmap/bg_top">
+
+        <RelativeLayout
+            android:id="@+id/backRl"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:background="@drawable/color_btn_00000000"
+            android:clickable="true"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:scaleType="center"
+                android:src="@mipmap/arrow_left_title" />
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/titleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/help"
+            android:textColor="@color/c_ffffff"
+            android:textSize="17sp" />
+        <TextView
+            android:layout_alignParentBottom="true"
+            android:background="@color/c_b9b9b9"
+            android:layout_width="match_parent"
+            android:layout_height="2dp" />
+    </RelativeLayout>
+    <cn.com.myframe.view.BounceScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="23dp"
+                android:textSize="15sp"
+                android:textColor="#707070"
+                android:text="常见问题"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_marginTop="30dp"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textSize="12sp"
+                    android:textColor="#191919"
+                    android:text="1、如何设置关键词？"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:textSize="12sp"
+                    android:textColor="#898989"
+                    android:text="登录后，在个性化推荐内容页面右上角的“更多里边，点击“偏好设置”，即可设置关键词。"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:textSize="12sp"
+                    android:textColor="#191919"
+                    android:text="2、如何联系/反馈我们？"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:textSize="12sp"
+                    android:textColor="#898989"
+                    android:text="在全部内容页面，右上角的“更多”里边，点击“意见反馈”，输入内容，或者拨打电话，即可联系到我们。"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:textSize="12sp"
+                    android:textColor="#191919"
+                    android:text="3、如何查看公司地址？"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:textSize="12sp"
+                    android:textColor="#898989"
+                    android:text="在全部内容页面，右上角的“更多”里边，点击“意见反馈”，输入内容，或者拨打电话，即可联系到我们。"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:textSize="12sp"
+                    android:textColor="#191919"
+                    android:text="4、如何查看公司地址？"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:textSize="12sp"
+                    android:textColor="#898989"
+                    android:text="在全部内容页面，右上角的“更多”里边，点击“意见反馈”，输入内容，或者拨打电话，即可联系到我们"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+    </cn.com.myframe.view.BounceScrollView>
+
+
+</LinearLayout>

@@ -1,5 +1,6 @@
 package cc.horizoom.ssl.xwyq.setting.more;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -79,6 +80,7 @@ public class MoreActivity extends BaseActivity implements View.OnClickListener{
             case R.id.feedBackLl:
                 break;
             case R.id.helpLl:
+                startHelpActivity();
                 break;
             case R.id.aboutLl:
                 break;
@@ -88,5 +90,14 @@ public class MoreActivity extends BaseActivity implements View.OnClickListener{
                 closeActivity(MoreActivity.class.getName());
                 break;
         }
+    }
+
+    /**
+     * 打开关于页面
+     */
+    private void startHelpActivity() {
+        Intent intent = new Intent();
+        intent.setClass(this,HelpActivity.class);
+        startActivity(intent);
     }
 }

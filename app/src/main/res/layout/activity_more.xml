@@ -28,7 +28,14 @@
                 android:scaleType="center"
                 android:src="@mipmap/arrow_left_title" />
         </RelativeLayout>
-
+        <TextView
+            android:id="@+id/titleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/more"
+            android:textColor="@color/c_ffffff"
+            android:textSize="17sp" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="1dp"
