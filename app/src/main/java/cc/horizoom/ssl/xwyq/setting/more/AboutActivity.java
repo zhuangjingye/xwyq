@@ -8,20 +8,22 @@ import cc.horizoom.ssl.xwyq.R;
 import cn.com.myframe.BaseActivity;
 
 /**
- * Created by pizhuang on 2015/9/9.
- * 帮助
+ * Created by pi on 15-9-9.
+ * 关于
  */
-public class HelpActivity extends BaseActivity {
+public class AboutActivity extends BaseActivity{
+
     private RelativeLayout backRl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_help);
+        setContentView(R.layout.activity_about);
         backRl = (RelativeLayout) findViewById(R.id.backRl);
         backRl.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                closeActivity(HelpActivity.class.getName());
+            public void onClick(View v) {
+                closeActivity(AboutActivity.class.getName());
             }
         });
     }

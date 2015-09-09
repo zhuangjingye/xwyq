@@ -78,11 +78,13 @@ public class MoreActivity extends BaseActivity implements View.OnClickListener{
             case R.id.wordSizeLl:
                 break;
             case R.id.feedBackLl:
+                startFeedBackActivity();
                 break;
             case R.id.helpLl:
                 startHelpActivity();
                 break;
             case R.id.aboutLl:
+                startAboutActivity();
                 break;
             case R.id.logoutBtn:
                 break;
@@ -98,6 +100,23 @@ public class MoreActivity extends BaseActivity implements View.OnClickListener{
     private void startHelpActivity() {
         Intent intent = new Intent();
         intent.setClass(this,HelpActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * 打开关于页面
+     */
+    private void startAboutActivity() {
+        Intent intent = new Intent();
+        intent.setClass(this,AboutActivity.class);
+        startActivity(intent);
+    }
+    /**
+     * 打开意见反馈
+     */
+    private void startFeedBackActivity() {
+        Intent intent = new Intent();
+        intent.setClass(this,FeedBackActivity.class);
         startActivity(intent);
     }
 }

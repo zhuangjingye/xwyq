@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="@string/help"
+            android:text="@string/about"
             android:textColor="@color/c_ffffff"
             android:textSize="17sp" />
         <TextView
@@ -46,79 +46,24 @@
         android:layout_height="match_parent">
         <LinearLayout
             android:orientation="vertical"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:layout_marginLeft="15dp"
                 android:layout_marginTop="23dp"
-                android:textSize="15sp"
-                android:textColor="#707070"
-                android:text="常见问题"
+                android:textSize="17sp"
+                android:textColor="@color/c_1a1a1a"
+                android:text="关于我们"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-            <LinearLayout
-                android:layout_marginTop="30dp"
-                android:paddingLeft="25dp"
-                android:paddingRight="25dp"
-                android:orientation="vertical"
+            <TextView
+                android:layout_marginTop="15dp"
+                android:textSize="14sp"
+                android:textColor="@color/c_1a1a1a"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:textSize="12sp"
-                    android:textColor="#191919"
-                    android:text="1、如何设置关键词？"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:layout_marginTop="5dp"
-                    android:textSize="12sp"
-                    android:textColor="#898989"
-                    android:text="登录后，在个性化推荐内容页面右上角的“更多里边，点击“偏好设置”，即可设置关键词。"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:textColor="#191919"
-                    android:text="2、如何联系/反馈我们？"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:layout_marginTop="5dp"
-                    android:textSize="12sp"
-                    android:textColor="#898989"
-                    android:text="在全部内容页面，右上角的“更多”里边，点击“意见反馈”，输入内容，或者拨打电话，即可联系到我们。"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:textColor="#191919"
-                    android:text="3、如何查看公司地址？"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:layout_marginTop="5dp"
-                    android:textSize="12sp"
-                    android:textColor="#898989"
-                    android:text="在全部内容页面，右上角的“更多”里边，点击“意见反馈”，输入内容，或者拨打电话，即可联系到我们。"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:layout_marginTop="10dp"
-                    android:textSize="12sp"
-                    android:textColor="#191919"
-                    android:text="4、如何查看公司地址？"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:layout_marginTop="5dp"
-                    android:textSize="12sp"
-                    android:textColor="#898989"
-                    android:text="在全部内容页面，右上角的“更多”里边，点击“意见反馈”，输入内容，或者拨打电话，即可联系到我们"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
+                android:layout_height="match_parent"
+                android:text="@string/about_content"/>
         </LinearLayout>
     </cn.com.myframe.view.BounceScrollView>
 

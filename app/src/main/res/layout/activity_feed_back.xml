@@ -1,0 +1,129 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/c_fafafa">
+    <!--标题-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@mipmap/bg_top">
+
+        <RelativeLayout
+            android:id="@+id/backRl"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:background="@drawable/color_btn_00000000"
+            android:clickable="true"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:scaleType="center"
+                android:src="@mipmap/arrow_left_title" />
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/titleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/feed_back"
+            android:textColor="@color/c_ffffff"
+            android:textSize="17sp" />
+        <TextView
+            android:layout_alignParentBottom="true"
+            android:background="@color/c_b9b9b9"
+            android:layout_width="match_parent"
+            android:layout_height="2dp" />
+    </RelativeLayout>
+    <cn.com.myframe.view.BounceScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textSize="15sp"
+                    android:textColor="@color/c_515151"
+                    android:text="问题和建议"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/sharp_rectangle_e2e2e2"
+                    android:layout_width="match_parent"
+                    android:layout_height="95dp">
+                    <EditText
+                        android:id="@+id/feedbackEt"
+                        android:textSize="12sp"
+                        android:hint="请描述您遇到的问题。"
+                        android:textColorHint="@color/c_969696"
+                        android:textColor="@color/c_969696"
+                        android:background="@color/c_00000000"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <Button
+                    android:id="@+id/commitBtn"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:background="@drawable/blue_btn"
+                    android:textColor="@color/c_ffffff"
+                    android:text="@string/commit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="55dp"
+                android:paddingBottom="35dp"
+                android:background="@color/c_4e4e4e"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="15dp"
+                    android:textColor="@color/c_ffffff"
+                    android:textSize="15sp"
+                    android:text="@string/call_our"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="58dp"
+                    android:textColor="@color/c_ffffff"
+                    android:textSize="10sp"
+                    android:text="@string/call_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="58dp"
+                    android:textColor="@color/c_ffffff"
+                    android:textSize="10sp"
+                    android:text="@string/call_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </cn.com.myframe.view.BounceScrollView>
+
+
+</LinearLayout>
