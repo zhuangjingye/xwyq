@@ -28,4 +28,10 @@
     <string name="setting_preference">&#160;&#160;偏好设置</string>
     <string name="setting_collection">&#160;&#160;收藏夹</string>
     <string name="setting_more">&#160;&#160;更多</string>
+    <string name="user_info">用户信息</string>
+    <string name="word_size">文字大小</string>
+    <string name="feed_back">意见反馈</string>
+    <string name="help">使用帮助</string>
+    <string name="about">关于我们</string>
+    <string name="logout">退出登录</string>
 </resources>

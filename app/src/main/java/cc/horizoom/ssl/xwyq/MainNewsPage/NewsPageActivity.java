@@ -1,10 +1,13 @@
 package cc.horizoom.ssl.xwyq.MainNewsPage;
 
+import android.net.http.SslError;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.RelativeLayout;
@@ -49,6 +52,8 @@ public class NewsPageActivity extends BaseActivity implements View.OnClickListen
         summaryTv = (TextView) findViewById(R.id.summaryTv);
         titleTv = (TextView) findViewById(R.id.titleTv);
         contentWebView = (WebView) findViewById(R.id.contentWebView);
+        contentWebView.getSettings().setJavaScriptEnabled(true);
+        contentWebView.setWebViewClient(new MyWebViewClient());
         titleBackRl.setOnClickListener(this);
         myCheckBoxRl = (RelativeLayout) findViewById(R.id.myCheckBoxRl);
         myCheckBox = (CheckBox) findViewById(R.id.myCheckBox);
@@ -73,6 +78,9 @@ public class NewsPageActivity extends BaseActivity implements View.OnClickListen
         writeFile("context.html", content);
         String path = "file://"+getFilesDir()+"/context.html";
         contentWebView.loadUrl(path) ;
+//        contentWebView.loadData(content,"text/html", "UTF-8");
+//        contentWebView.loadDataWithBaseURL("", content, "text/html","utf-8", null);
+//        contentWebView.loadUrl("http://baidu.com");
         String customerId = UserData.getInstance().getCustomerId(this);
         if (MyUtils.isEmpty(customerId)) {
             myCheckBoxRl.setVisibility(View.GONE);
@@ -140,5 +148,14 @@ public class NewsPageActivity extends BaseActivity implements View.OnClickListen
      */
     private void requestFavorite() {
 
+    }
+
+    class MyWebViewClient extends WebViewClient{
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            MyUtils.log(NewsPageActivity.class,"url="+url);
+            view.loadUrl(url);
+            return true;
+        }
     }
 }

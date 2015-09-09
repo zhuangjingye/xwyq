@@ -1,6 +1,7 @@
 package cc.horizoom.ssl.xwyq.MainNewsPage;
 
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import cc.horizoom.ssl.xwyq.DataManager.FunctionListData;
 import cc.horizoom.ssl.xwyq.DataManager.entity.FunctionEntity;
 import cc.horizoom.ssl.xwyq.R;
+import cc.horizoom.ssl.xwyq.setting.more.MoreActivity;
 import cn.com.myframe.BaseActivity;
 import cn.com.myframe.popupWindow.MyPopupWindow;
 
@@ -63,7 +65,17 @@ public class SettingPopUpWindow extends MyPopupWindow implements View.OnClickLis
             case R.id.collectionRl:
                 break;
             case R.id.moreRl:
+                startMoreActivity();
                 break;
         }
+        dismiss();
+    }
+
+    /**
+     * 打开更多页面
+     */
+    private void startMoreActivity() {
+        Intent intent = new Intent(baseActivity, MoreActivity.class);
+        baseActivity.startActivity(intent);
     }
 }

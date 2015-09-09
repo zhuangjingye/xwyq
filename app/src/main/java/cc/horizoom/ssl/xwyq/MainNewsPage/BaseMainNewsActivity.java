@@ -31,6 +31,7 @@ import java.util.Map;
 import cc.horizoom.ssl.xwyq.DataManager.FunctionListData;
 import cc.horizoom.ssl.xwyq.DataManager.NewsData;
 import cc.horizoom.ssl.xwyq.DataManager.NewsListData;
+import cc.horizoom.ssl.xwyq.DataManager.UserData;
 import cc.horizoom.ssl.xwyq.DataManager.entity.FunctionEntity;
 import cc.horizoom.ssl.xwyq.DataManager.entity.NewsEntity;
 import cc.horizoom.ssl.xwyq.MyBaseActivity;
@@ -172,6 +173,12 @@ public abstract class BaseMainNewsActivity extends MyBaseActivity implements Vie
 
         if (data.size() == 0) {//获得数据
             HashMap<String,String> map = new HashMap<String,String>();
+            String customer_id = UserData.getInstance().getCustomerId(this);
+            if (!MyUtils.isEmpty(customer_id)) {
+                map.put("customer_id",customer_id);
+                String keyword = NewsListData.getInstance().getKeyWord();
+                map.put("keyword",keyword);
+            }
             requestNewsList(map);
         }
     }

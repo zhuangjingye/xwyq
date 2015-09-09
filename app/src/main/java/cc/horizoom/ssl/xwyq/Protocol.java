@@ -39,4 +39,7 @@ public class Protocol {
 
     //客户文章【搜索列表】接口：
     public static final String CPCSL = HOST + PLAT + "api.customer_push_content_search_list.php";
+
+    //收藏
+    public static final String CFO = HOST + PLAT + "api.customer_favorite_operate.php";
 }

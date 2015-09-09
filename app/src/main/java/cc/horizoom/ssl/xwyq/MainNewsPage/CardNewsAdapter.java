@@ -51,6 +51,7 @@ public class CardNewsAdapter extends NewsAdapter implements View.OnClickListener
 //        holderView.numTv.setText(i+"");
         holderView.contentTv.setText(newsEntity.getTitle());
         holderView.timeTv.setText(newsEntity.getPublishTime());
+        holderView.contentTv.setTextColor(baseActivity.getResources().getColor(R.color.c_fafafa));
         if (newsEntity.getPupushLevel() >= 5) {
             holderView.smallBellIv.setVisibility(View.VISIBLE);
         } else {
