@@ -10,7 +10,9 @@ import android.widget.RelativeLayout;
 import android.widget.Scroller;
 import android.widget.TextView;
 
+import cn.com.myframe.MyUtils;
 import cn.com.myframe.R;
+import cn.com.myframe.view.MyBounceListView.MyBounceListview;
 
 /**
  * Created by pizhuang on 2015/9/10.

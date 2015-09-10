@@ -75,7 +75,7 @@
         <activity
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden"
-            android:name=".setting.FavoriteNewsActivity" >
+            android:name=".setting.favoriteNews.FavoriteNewsActivity" >
         </activity>
     </application>
 

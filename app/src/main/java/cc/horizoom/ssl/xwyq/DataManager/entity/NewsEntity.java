@@ -3,11 +3,13 @@ package cc.horizoom.ssl.xwyq.DataManager.entity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import cn.com.myframe.view.deletelistview.MessageItem;
+
 /**
  * Created by pi on 15-9-3.
  * 新闻实体类
  */
-public class NewsEntity {
+public class NewsEntity extends MessageItem{
 
 //    "news_id": "150870",
 //            "title": "湖南临湘市长涉嫌吸毒被查 消息称其产生幻觉后报警",

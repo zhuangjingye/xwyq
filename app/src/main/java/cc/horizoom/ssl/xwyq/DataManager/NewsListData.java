@@ -50,7 +50,6 @@ public class NewsListData implements DataInterface{
      */
     public void saveData(BaseActivity baseActivity,String json) {
         Mysharedperferences.getIinstance().putString(baseActivity,key,json);
-
         analyze(baseActivity);
     }
     /**
@@ -96,7 +95,10 @@ public class NewsListData implements DataInterface{
             functionId = jsonObject.optString("function_id","");
             page = jsonObject.optInt("page");
             JSONArray newsDataArray = jsonObject.optJSONArray("list");
-            if (null == newsDataArray || newsDataArray.length() == 0) return;
+            if (null == newsDataArray || newsDataArray.length() == 0) {
+                newsDataArray = jsonObject.optJSONArray("result");
+            }
+            if (null == newsDataArray || newsDataArray.length() == 0)return;
             for (int i=0;i<newsDataArray.length();i++) {
                 JSONObject jsonObject1 = newsDataArray.optJSONObject(i);
                 NewsEntity newsEntity = new NewsEntity(jsonObject1.toString());

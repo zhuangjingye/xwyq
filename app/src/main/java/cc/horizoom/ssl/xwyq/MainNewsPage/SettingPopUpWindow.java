@@ -4,30 +4,23 @@ package cc.horizoom.ssl.xwyq.MainNewsPage;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
-import cc.horizoom.ssl.xwyq.DataManager.FunctionListData;
 import cc.horizoom.ssl.xwyq.DataManager.NewsListData;
 import cc.horizoom.ssl.xwyq.DataManager.UserData;
-import cc.horizoom.ssl.xwyq.DataManager.entity.FunctionEntity;
 import cc.horizoom.ssl.xwyq.Protocol;
 import cc.horizoom.ssl.xwyq.R;
-import cc.horizoom.ssl.xwyq.setting.FavoriteNewsActivity;
+import cc.horizoom.ssl.xwyq.setting.favoriteNews.FavoriteNewsActivity;
+import cc.horizoom.ssl.xwyq.setting.favoriteNews.FavoriteNewsAdapter;
 import cc.horizoom.ssl.xwyq.setting.more.MoreActivity;
 import cn.com.myframe.BaseActivity;
+import cn.com.myframe.MyUtils;
 import cn.com.myframe.network.volley.VolleyError;
 import cn.com.myframe.popupWindow.MyPopupWindow;
 

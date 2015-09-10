@@ -4,13 +4,15 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ListView;
 
+import cn.com.myframe.MyUtils;
 import cn.com.myframe.view.MyBounceListView.ListViewForScrollView;
 
 /**
  * Created by pizhuang on 2015/9/10.
  */
-public class ListViewCompat extends ListViewForScrollView {
+public class ListViewCompat extends ListView {
     private static final String TAG = "ListViewCompat";
 
     private SlideView mFocusedItemView;
@@ -54,7 +56,6 @@ public class ListViewCompat extends ListViewForScrollView {
             default:
                 break;
         }
-
         if (mFocusedItemView != null) {
             mFocusedItemView.onRequireTouchEvent(event);
         }
