@@ -25,6 +25,7 @@ import cc.horizoom.ssl.xwyq.DataManager.UserData;
 import cc.horizoom.ssl.xwyq.DataManager.entity.FunctionEntity;
 import cc.horizoom.ssl.xwyq.Protocol;
 import cc.horizoom.ssl.xwyq.R;
+import cc.horizoom.ssl.xwyq.setting.FavoriteNewsActivity;
 import cc.horizoom.ssl.xwyq.setting.more.MoreActivity;
 import cn.com.myframe.BaseActivity;
 import cn.com.myframe.network.volley.VolleyError;
@@ -84,6 +85,14 @@ public class SettingPopUpWindow extends MyPopupWindow implements View.OnClickLis
     /**
      * 打开更多页面
      */
+    private void startFavoriteNewsActivity() {
+        Intent intent = new Intent(baseActivity, FavoriteNewsActivity.class);
+        baseActivity.startActivity(intent);
+    }
+
+    /**
+     * 打开更多页面
+     */
     private void startMoreActivity() {
         Intent intent = new Intent(baseActivity, MoreActivity.class);
         baseActivity.startActivity(intent);
@@ -113,6 +122,7 @@ public class SettingPopUpWindow extends MyPopupWindow implements View.OnClickLis
                     boolean success = jsonObject.getBoolean("success");
                     if (success) {
                         NewsListData.getInstance().saveData(baseActivity,str);
+                        startFavoriteNewsActivity();
                     } else {
                         baseActivity.showToast(message);
                     }

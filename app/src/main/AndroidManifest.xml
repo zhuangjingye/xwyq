@@ -72,6 +72,11 @@
             android:windowSoftInputMode="adjustResize|stateHidden"
             android:name=".setting.more.UserInfoActivity" >
         </activity>
+        <activity
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:name=".setting.FavoriteNewsActivity" >
+        </activity>
     </application>
 
 </manifest>
