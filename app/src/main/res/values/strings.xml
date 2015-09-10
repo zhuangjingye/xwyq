@@ -30,6 +30,10 @@
     <string name="setting_more">&#160;&#160;更多</string>
     <string name="user_info">用户信息</string>
     <string name="word_size">文字大小</string>
+    <string name="word_size_0">(%1$s)</string>
+    <string name="word_size_1">大</string>
+    <string name="word_size_2">中</string>
+    <string name="word_size_3">小</string>
     <string name="feed_back">意见反馈</string>
     <string name="help">使用帮助</string>
     <string name="about">关于我们</string>
@@ -41,4 +45,9 @@
     <string name="call_our">联系我们</string>
     <string name="call_phone">联系电话：010-53528000</string>
     <string name="call_email">电子邮箱：kefu@horizoom.com.cn</string>
+    <string name="feed_back_err">请输入反馈意见！</string>
+    <string name="user_name">用户名：</string>
+    <string name="user_custom_name">客户名称：</string>
+    <string name="user_sell_name">对口销售称：</string>
+    <string name="user_custom_tip">客户简介：</string>
 </resources>

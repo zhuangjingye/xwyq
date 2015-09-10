@@ -37,7 +37,9 @@ import cc.horizoom.ssl.xwyq.DataManager.entity.NewsEntity;
 import cc.horizoom.ssl.xwyq.MyBaseActivity;
 import cc.horizoom.ssl.xwyq.Protocol;
 import cc.horizoom.ssl.xwyq.R;
+import cc.horizoom.ssl.xwyq.setting.more.MoreActivity;
 import cn.com.myframe.MyUtils;
+import cn.com.myframe.Mysharedperferences;
 import cn.com.myframe.network.httpmime_4_2_6.apache.http.entity.mime.content.StringBody;
 import cn.com.myframe.network.volley.VolleyError;
 import cn.com.myframe.view.MyBounceListView.MyBounceListview;
@@ -553,6 +555,11 @@ public abstract class BaseMainNewsActivity extends MyBaseActivity implements Vie
         HashMap<String,String> map = getNewsParameter();
         String news_id = newsEntity.getNewsId();
         map.put("news_id",news_id);
+        String font_size = Mysharedperferences.getIinstance().getString(this, MoreActivity.key);
+        if (MyUtils.isEmpty(font_size)) {
+            font_size = MoreActivity.SMALL;
+        }
+        map.put("font_size",font_size);
         showWaitDialog();
         doRequestString(url, map, new RequestResult() {
             @Override

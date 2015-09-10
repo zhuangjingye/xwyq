@@ -14,17 +14,25 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.apache.http.util.EncodingUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
 
 import cc.horizoom.ssl.xwyq.DataManager.NewsData;
 import cc.horizoom.ssl.xwyq.DataManager.UserData;
+import cc.horizoom.ssl.xwyq.Protocol;
 import cc.horizoom.ssl.xwyq.R;
+import cc.horizoom.ssl.xwyq.setting.more.MoreActivity;
 import cn.com.myframe.BaseActivity;
 import cn.com.myframe.MyUtils;
+import cn.com.myframe.Mysharedperferences;
+import cn.com.myframe.network.volley.VolleyError;
 
 /**
  * Created by pizhuang on 2015/9/7.
@@ -82,12 +90,13 @@ public class NewsPageActivity extends BaseActivity implements View.OnClickListen
 //        contentWebView.loadDataWithBaseURL("", content, "text/html","utf-8", null);
 //        contentWebView.loadUrl("http://baidu.com");
         String customerId = UserData.getInstance().getCustomerId(this);
+        updataCheckBox();
         if (MyUtils.isEmpty(customerId)) {
             myCheckBoxRl.setVisibility(View.GONE);
         } else {
             myCheckBoxRl.setVisibility(View.VISIBLE);
         }
-        updataCheckBox();
+
     }
 
     /**
@@ -147,7 +156,48 @@ public class NewsPageActivity extends BaseActivity implements View.OnClickListen
      * 请求收藏
      */
     private void requestFavorite() {
+        String url = Protocol.CFO;
+        String customer_id = UserData.getInstance().getCustomerId(this);
+        String product_id = "1";
+        String indexes_id = NewsData.getInstance(this).getNews_id();
+        HashMap<String,String> hashMap = new HashMap<String,String>();
+        hashMap.put("customer_id",customer_id);
+        hashMap.put("product_id",product_id);
+        hashMap.put("indexes_id",indexes_id);
+        showWaitDialog();
+        doRequestString(url, hashMap, new RequestResult() {
+            @Override
+            public void onResponse(String str) {
+                hideWaitDialog();
+                onRequestFavoriteSuccessed(str);
+            }
 
+            @Override
+            public void onErrResponse(VolleyError error) {
+                hideWaitDialog();
+            }
+        });
+    }
+
+    /**
+     * 请求成功处理
+     * @param str
+     */
+    private void onRequestFavoriteSuccessed(String str) {
+        try {
+            JSONArray jsonArray = new JSONArray(str);
+            JSONObject jsonObject = jsonArray.optJSONObject(0);
+            String message = jsonObject.getString("message");
+            boolean success = jsonObject.getBoolean("success");
+            if (success) {
+                boolean is_favorite = jsonObject.optBoolean("is_favorite");
+                NewsData.getInstance(this).setIs_favorite(this, is_favorite);
+            }
+            showToast(message);
+            updataCheckBox();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     class MyWebViewClient extends WebViewClient{

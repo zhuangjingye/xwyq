@@ -12,13 +12,22 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import cc.horizoom.ssl.xwyq.DataManager.FunctionListData;
+import cc.horizoom.ssl.xwyq.DataManager.NewsListData;
+import cc.horizoom.ssl.xwyq.DataManager.UserData;
 import cc.horizoom.ssl.xwyq.DataManager.entity.FunctionEntity;
+import cc.horizoom.ssl.xwyq.Protocol;
 import cc.horizoom.ssl.xwyq.R;
 import cc.horizoom.ssl.xwyq.setting.more.MoreActivity;
 import cn.com.myframe.BaseActivity;
+import cn.com.myframe.network.volley.VolleyError;
 import cn.com.myframe.popupWindow.MyPopupWindow;
 
 /**
@@ -63,6 +72,7 @@ public class SettingPopUpWindow extends MyPopupWindow implements View.OnClickLis
             case R.id.preferenceRl:
                 break;
             case R.id.collectionRl:
+                requestFavoriteNews();
                 break;
             case R.id.moreRl:
                 startMoreActivity();
@@ -77,5 +87,44 @@ public class SettingPopUpWindow extends MyPopupWindow implements View.OnClickLis
     private void startMoreActivity() {
         Intent intent = new Intent(baseActivity, MoreActivity.class);
         baseActivity.startActivity(intent);
+    }
+
+    /**
+     * 获取收藏新闻
+     * customer_id  （客户id,必填）
+     * page（分页id,默认为0）
+     */
+    private void requestFavoriteNews() {
+        NewsListData.getInstance().clearSaveData(baseActivity);
+        String customer_id = UserData.getInstance().getCustomerId(baseActivity);
+        String url = Protocol.CFR;
+        HashMap<String,String> hashMap = new HashMap<String,String>();
+        hashMap.put("customer_id",customer_id);
+        hashMap.put("page","0");
+        baseActivity.showWaitDialog();
+        baseActivity.doRequestString(url, hashMap, new BaseActivity.RequestResult() {
+            @Override
+            public void onResponse(String str) {
+                baseActivity.hideWaitDialog();
+                try {
+                    JSONArray jsonArray = new JSONArray(str);
+                    JSONObject jsonObject = jsonArray.optJSONObject(0);
+                    String message = jsonObject.getString("message");
+                    boolean success = jsonObject.getBoolean("success");
+                    if (success) {
+                        NewsListData.getInstance().saveData(baseActivity,str);
+                    } else {
+                        baseActivity.showToast(message);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onErrResponse(VolleyError error) {
+                baseActivity.hideWaitDialog();
+            }
+        });
     }
 }

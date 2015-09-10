@@ -100,7 +100,6 @@ public class RegistActivity extends MyBaseActivity implements View.OnClickListen
         doRequestString(url, map, new RequestResult() {
             @Override
             public void onResponse(String str) {
-                MyUtils.log(RegistActivity.class, "str=" + str);
                 hideWaitDialog();
                 onRequestSuccessed(str);
 
@@ -133,7 +132,7 @@ public class RegistActivity extends MyBaseActivity implements View.OnClickListen
      * 显示结果框
      */
     private void showAppleyDialog(boolean result,String message) {
-        ApplyDialog applyDialog = new ApplyDialog(this,false,message);
+        ApplyDialog applyDialog = new ApplyDialog(this,result,message);
         showDialog(applyDialog);
     }
 }

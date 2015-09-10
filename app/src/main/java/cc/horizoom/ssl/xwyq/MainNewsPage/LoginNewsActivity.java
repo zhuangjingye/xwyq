@@ -19,6 +19,7 @@ import cn.com.myframe.network.volley.VolleyError;
 
 /**
  * Created by pizhuang on 2015/9/8.
+ * 登录后的消息查询页
  */
 public class LoginNewsActivity extends BaseMainNewsActivity {
     @Override

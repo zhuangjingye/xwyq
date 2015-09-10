@@ -21,6 +21,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import cc.horizoom.ssl.xwyq.MainNewsPage.NewsPageActivity;
 import cn.com.myframe.BaseActivity;
 import cn.com.myframe.MyUtils;
 import cn.com.myframe.Mysharedperferences;
@@ -145,5 +146,19 @@ public class NewsData implements DataInterface{
 
     public String getSource_url() {
         return source_url;
+    }
+
+    public void setIs_favorite(BaseActivity baseActivity,boolean is_favorite) {
+        this.is_favorite = is_favorite;
+        String json = Mysharedperferences.getIinstance().getString(baseActivity,key);
+        try {
+            JSONArray jsonArray = new JSONArray(json);
+            JSONObject jsonObject = jsonArray.optJSONObject(0);
+            jsonObject.put("is_favorite",is_favorite);
+            json = jsonArray.toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Mysharedperferences.getIinstance().putString(baseActivity,key,json);
     }
 }

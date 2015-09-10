@@ -14,7 +14,7 @@
             android:gravity="center"
             android:layout_width="match_parent"
             android:orientation="vertical"
-            android:layout_height="74dp">
+            android:layout_height="70dp">
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
@@ -37,11 +37,11 @@
             <TextView
                 android:id="@+id/contentTv"
                 android:textSize="12sp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_gravity="center"
                 android:textColor="@color/c_0a0008"
                 android:text="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-                android:layout_marginBottom="7dp"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -53,7 +53,7 @@
             android:textColor="@drawable/color_apply_0082f3"
             android:textSize="15sp"
             android:text="确认"
-            android:layout_height="27dp">
+            android:layout_height="40dp">
 
         </Button>
 

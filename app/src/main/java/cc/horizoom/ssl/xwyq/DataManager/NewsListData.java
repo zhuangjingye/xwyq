@@ -70,7 +70,7 @@ public class NewsListData implements DataInterface{
      */
     public void clearSaveData(BaseActivity baseActivity) {
         Mysharedperferences.getIinstance().putString(baseActivity,key,"");
-        clearData();
+        ourInstance = new NewsListData();
     }
 
     /**

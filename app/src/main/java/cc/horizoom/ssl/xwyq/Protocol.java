@@ -42,4 +42,10 @@ public class Protocol {
 
     //收藏
     public static final String CFO = HOST + PLAT + "api.customer_favorite_operate.php";
+
+    //已登陆客户【意见反馈】接口：
+    public static final String CFB = HOST + PLAT + "api.customer_feedback.php";
+
+    //已登陆客户【用户收藏之 收藏列表】接口：
+    public static final String CFR = HOST + PLAT + "api.customer_favorite_news_list.php";
 }

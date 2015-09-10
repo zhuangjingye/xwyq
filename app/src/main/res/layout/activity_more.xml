@@ -28,6 +28,7 @@
                 android:scaleType="center"
                 android:src="@mipmap/arrow_left_title" />
         </RelativeLayout>
+
         <TextView
             android:id="@+id/titleTv"
             android:layout_width="wrap_content"
@@ -36,6 +37,7 @@
             android:text="@string/more"
             android:textColor="@color/c_ffffff"
             android:textSize="17sp" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -44,17 +46,17 @@
     </RelativeLayout>
 
     <cn.com.myframe.view.BounceScrollView
-        android:scrollbars="none"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/titleRl"
-        android:background="@color/c_fafafa">
+        android:background="@color/c_fafafa"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="60dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="60dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -86,7 +88,6 @@
                     android:layout_marginTop="20dp"
                     android:background="@color/c_f8f8f8" />
             </LinearLayout>
-
 
 
             <LinearLayout
@@ -129,6 +130,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
+                    android:layout_marginLeft="20dp"
                     android:background="@color/c_fafafa" />
 
                 <!--文字大小-->
@@ -148,19 +150,85 @@
                         android:src="@mipmap/word_size" />
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
-                        android:layout_weight="1"
                         android:text="@string/word_size"
                         android:textColor="@color/c_0b0c0e"
                         android:textSize="15sp" />
+                    <TextView
+                        android:id="@+id/textSizeShowTv"
+                        android:layout_marginLeft="3dp"
+                        android:paddingTop="3dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/word_size_0"
+                        android:textColor="@color/c_979797"
+                        android:textSize="12sp" />
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="15dp"
                         android:src="@mipmap/icon_card_right" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/textSizeSelectLl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="20dp"
+                        android:background="@color/c_fafafa" />
+                    <TextView
+                        android:id="@+id/size1TV"
+                        android:clickable="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/color_btn_00000000"
+                        android:gravity="center"
+                        android:text="@string/word_size_1"
+                        android:textColor="@color/c_0b0c0e"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="20dp"
+                        android:background="@color/c_fafafa" />
+
+                    <TextView
+                        android:id="@+id/size2TV"
+                        android:clickable="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/color_btn_00000000"
+                        android:gravity="center"
+                        android:text="@string/word_size_2"
+                        android:textColor="@color/c_0b0c0e"
+                        android:textSize="15sp" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="20dp"
+                        android:background="@color/c_fafafa" />
+                    <TextView
+                        android:id="@+id/size3TV"
+                        android:clickable="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/color_btn_00000000"
+                        android:gravity="center"
+                        android:text="@string/word_size_3"
+                        android:textColor="@color/c_0b0c0e"
+                        android:textSize="15sp" />
                 </LinearLayout>
 
                 <TextView
@@ -203,6 +271,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
+                    android:layout_marginLeft="20dp"
                     android:background="@color/c_fafafa" />
 
                 <!--使用帮助-->
@@ -276,16 +345,17 @@
             </LinearLayout>
         </LinearLayout>
     </cn.com.myframe.view.BounceScrollView>
+
     <Button
         android:id="@+id/logoutBtn"
-        android:background="@drawable/red_btn"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:textSize="15sp"
+        android:background="@drawable/red_btn"
         android:text="@string/logout"
         android:textColor="@color/c_ffffff"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="45dp" />
+        android:textSize="15sp" />
 </RelativeLayout>

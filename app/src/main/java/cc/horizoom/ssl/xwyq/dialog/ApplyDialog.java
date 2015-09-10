@@ -73,7 +73,7 @@ public class ApplyDialog extends MyBasicDialog {
             @Override
             public void onClick(View view) {
                 baseActivity.hideDialog();
-                baseActivity.closeActivity(RegistActivity.class.getName());
+                baseActivity.closeActivity(baseActivity.getClass().getName());
             }
         });
     }

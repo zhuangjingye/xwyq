@@ -16,11 +16,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import cc.horizoom.ssl.xwyq.DataManager.NewsData;
+import cc.horizoom.ssl.xwyq.DataManager.UserData;
 import cc.horizoom.ssl.xwyq.DataManager.entity.NewsEntity;
 import cc.horizoom.ssl.xwyq.MainNewsPage.NewsAdapter;
 import cc.horizoom.ssl.xwyq.Protocol;
 import cc.horizoom.ssl.xwyq.R;
+import cc.horizoom.ssl.xwyq.setting.more.MoreActivity;
 import cn.com.myframe.BaseActivity;
+import cn.com.myframe.MyUtils;
+import cn.com.myframe.Mysharedperferences;
 import cn.com.myframe.network.volley.VolleyError;
 
 /**
@@ -80,8 +84,15 @@ public class CardNewsAdapter extends NewsAdapter implements View.OnClickListener
         }
         String url = Protocol.CPCD;
         HashMap<String,String> map = new HashMap<String,String>();
+        String customer_id = UserData.getInstance().getCustomerId(baseActivity);
         String news_id = newsEntity.getNewsId();
         map.put("news_id",news_id);
+        String font_size = Mysharedperferences.getIinstance().getString(baseActivity, MoreActivity.key);
+        if (MyUtils.isEmpty(font_size)) {
+            font_size = MoreActivity.SMALL;
+        }
+        map.put("font_size",font_size);
+        map.put("customer_id",customer_id);
         baseActivity.showWaitDialog();
         baseActivity.doRequestString(url, map, new BaseActivity.RequestResult() {
             @Override
