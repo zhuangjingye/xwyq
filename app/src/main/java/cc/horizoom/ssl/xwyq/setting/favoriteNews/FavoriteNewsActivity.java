@@ -2,12 +2,14 @@ package cc.horizoom.ssl.xwyq.setting.favoriteNews;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,7 +57,14 @@ public class FavoriteNewsActivity extends BaseActivity implements View.OnClickLi
         favoriteNewsAdapter = new FavoriteNewsAdapter(this,newsEntities);
         mListView.setAdapter(favoriteNewsAdapter);
         mListView.setOnItemClickListener(this);
+        mListView.addFooterView(getFooter());
 //        setListViewHeight(mListView);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updataData();
     }
 
     /**
@@ -88,6 +97,9 @@ public class FavoriteNewsActivity extends BaseActivity implements View.OnClickLi
         switch (view.getId()) {
             case R.id.backRl:
                 closeActivity(FavoriteNewsActivity.class.getName());
+                break;
+            case R.id.loadTv:
+                requestFavoriteNews();
                 break;
         }
     }
@@ -145,5 +157,85 @@ public class FavoriteNewsActivity extends BaseActivity implements View.OnClickLi
                 hideWaitDialog();
             }
         });
+    }
+
+
+    /**
+     * 获得list眉脚
+     * @return
+     */
+    private View getFooter() {
+        LayoutInflater layoutInflater = LayoutInflater.from(this);
+        View v = layoutInflater.inflate(R.layout.view_news_footer, null);
+        TextView loadTv = (TextView) v.findViewById(R.id.loadTv);
+        loadTv.setOnClickListener(this);
+        return v;
+    }
+
+    /**
+     * 获取收藏新闻
+     * customer_id  （客户id,必填）
+     * page（分页id,默认为0）
+     */
+    private void requestFavoriteNews() {
+        String customer_id = UserData.getInstance().getCustomerId(this);
+        String url = Protocol.CFR;
+        long page = NewsListData.getInstance().getPage(this);
+        HashMap<String,String> hashMap = new HashMap<String,String>();
+        hashMap.put("customer_id",customer_id);
+        hashMap.put("page",(page+1)+"");
+        showWaitDialog();
+        doRequestString(url, hashMap, new BaseActivity.RequestResult() {
+            @Override
+            public void onResponse(String str) {
+                hideWaitDialog();
+                try {
+                    JSONArray jsonArray = new JSONArray(str);
+                    JSONObject jsonObject = jsonArray.optJSONObject(0);
+                    String message = jsonObject.getString("message");
+                    boolean success = jsonObject.getBoolean("success");
+                    if (success) {
+//                        NewsListData.getInstance().saveData(baseActivity, str);
+                        if ("没有更多内容了！".equals(message)) {
+                            showToast(message);
+                            return;
+                        }
+                        NewsListData.getInstance().addData(FavoriteNewsActivity.this, str);
+                        favoriteNewsAdapter.notifyDataSetChanged();
+                    } else {
+                        showToast(message);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onErrResponse(VolleyError error) {
+                hideWaitDialog();
+            }
+        });
+    }
+
+    /**
+     * 去除多余的数据
+     */
+    private void updataData() {
+        if(newsEntities == null || newsEntities.size() == 0) {
+            mListView.setVisibility(View.GONE);
+            return;
+        } else {
+            mListView.setVisibility(View.VISIBLE);
+        }
+
+        for (int i=0;i<newsEntities.size();i++) {
+            NewsEntity newsEntity = newsEntities.get(i);
+            if (newsEntity.getNewsId().equals(NewsData.getInstance(this).getNews_id()) && !NewsData.getInstance(this).is_favorite()) {
+                newsEntities.remove(newsEntity);
+                if(favoriteNewsAdapter != null) {
+                    favoriteNewsAdapter.notifyDataSetChanged();
+                }
+            }
+        }
     }
 }

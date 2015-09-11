@@ -49,7 +49,6 @@ public class FavoriteNewsAdapter extends NewsAdapter implements SlideView.OnSlid
             View newsView = layoutInflater.inflate(R.layout.view_news_item, null);
             slideView = new SlideView(baseActivity);
             slideView.setContentView(newsView);
-            slideView.scrollTo(MyUtils.dipToPx(baseActivity, 120), 0);
             holderView = new HolderView(slideView);
             slideView.setOnSlideListener(this);
             slideView.setTag(holderView);
@@ -71,11 +70,14 @@ public class FavoriteNewsAdapter extends NewsAdapter implements SlideView.OnSlid
             holderView.smallBellIv.setVisibility(View.GONE);
         }
         holderView.outLl.setTag(newsEntity);
+        holderView.outLl.setBackgroundColor(baseActivity.getResources().getColor(R.color.c_00000000));
+        holderView.deleteHolder.setTag(newsEntity);
         holderView.deleteHolder.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-                Toast.makeText(baseActivity, "删除第" + i + "个条目", Toast.LENGTH_LONG).show();
+                NewsEntity tmp = (NewsEntity) v.getTag();
+                requestFavorite(tmp);
+//                Toast.makeText(baseActivity, "删除第" + i + "个条目", Toast.LENGTH_LONG).show();
             }
         });
         return newsEntity.slideView;
@@ -90,6 +92,45 @@ public class FavoriteNewsAdapter extends NewsAdapter implements SlideView.OnSlid
         if (status == SLIDE_STATUS_ON) {
             mLastSlideViewWithStatusOn = (SlideView) view;
         }
+    }
+
+    /**
+     * 请求收藏
+     */
+    private void requestFavorite(final NewsEntity newsEntity) {
+        String url = Protocol.CFO;
+        String customer_id = UserData.getInstance().getCustomerId(baseActivity);
+        String product_id = "1";
+        String indexes_id = newsEntity.getNewsId();
+        HashMap<String,String> hashMap = new HashMap<String,String>();
+        hashMap.put("customer_id",customer_id);
+        hashMap.put("product_id",product_id);
+        hashMap.put("indexes_id",indexes_id);
+        baseActivity.showWaitDialog();
+        baseActivity.doRequestString(url, hashMap, new BaseActivity.RequestResult() {
+            @Override
+            public void onResponse(String str) {
+                baseActivity.hideWaitDialog();
+                try {
+                    JSONArray jsonArray = new JSONArray(str);
+                    JSONObject jsonObject = jsonArray.optJSONObject(0);
+                    String message = jsonObject.getString("message");
+                    boolean success = jsonObject.getBoolean("success");
+                    if (success) {
+                        data.remove(newsEntity);
+                        notifyDataSetChanged();
+                    }
+                    baseActivity.showToast(message);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onErrResponse(VolleyError error) {
+                baseActivity.hideWaitDialog();
+            }
+        });
     }
 
     class HolderView {

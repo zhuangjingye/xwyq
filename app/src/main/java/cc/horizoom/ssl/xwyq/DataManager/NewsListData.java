@@ -93,7 +93,7 @@ public class NewsListData implements DataInterface{
             JSONArray jsonArray = new JSONArray(json);
             JSONObject jsonObject = jsonArray.optJSONObject(0);
             functionId = jsonObject.optString("function_id","");
-            page = jsonObject.optInt("page");
+            page = jsonObject.optLong("page");
             JSONArray newsDataArray = jsonObject.optJSONArray("list");
             if (null == newsDataArray || newsDataArray.length() == 0) {
                 newsDataArray = jsonObject.optJSONArray("result");

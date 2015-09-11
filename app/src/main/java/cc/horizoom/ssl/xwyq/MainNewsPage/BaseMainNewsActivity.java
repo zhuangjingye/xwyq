@@ -520,6 +520,13 @@ public abstract class BaseMainNewsActivity extends MyBaseActivity implements Vie
                     boolean success = jsonObject.optBoolean("success");
                     String message = jsonObject.optString("message");
                     if (success) {
+
+                        if ("没有更多内容了！".equals(message)) {
+                            showToast(message);
+                            hideWaitDialog();
+                            return;
+                        }
+
                         NewsListData.getInstance().addData(BaseMainNewsActivity.this, str);
                         newsAdapter.notifyDataSetChanged();
                     } else {

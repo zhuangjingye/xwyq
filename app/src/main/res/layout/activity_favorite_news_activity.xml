@@ -48,6 +48,7 @@
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="match_parent">-->
             <cn.com.myframe.view.deletelistview.ListViewCompat
+                android:visibility="visible"
                 android:id="@+id/list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -55,10 +56,22 @@
                 android:divider="#dddbdb"
                 android:dividerHeight="1.0px"
                 android:drawSelectorOnTop="false"
-                android:listSelector="@android:color/transparent"
+                android:listSelector="@drawable/color_btn_00000000"
                 android:scrollbars="none" />
         <!--</LinearLayout>-->
 
     <!--</cn.com.myframe.view.BounceScrollView>-->
 
+    <RelativeLayout
+        android:id="@+id/emptyRl"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:text="空"
+            android:textSize="160sp"
+            android:textColor="@color/c_999999"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
 </LinearLayout>

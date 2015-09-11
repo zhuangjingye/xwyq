@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Scroller;
@@ -71,6 +72,7 @@ public class SlideView extends LinearLayout {
     }
 
     public void setContentView(View view) {
+        mViewContent.removeAllViews();
         mViewContent.addView(view);
     }
 
