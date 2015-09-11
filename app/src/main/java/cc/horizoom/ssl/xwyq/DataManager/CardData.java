@@ -70,7 +70,7 @@ public class CardData implements DataInterface {
     @Override
     public void clearSaveData(BaseActivity baseActivity) {
         Mysharedperferences.getIinstance().putString(baseActivity,key,"");
-        cardDatas.clear();
+        ourInstance = new CardData();
     }
 
     public String getCustomer_id(BaseActivity baseActivity) {

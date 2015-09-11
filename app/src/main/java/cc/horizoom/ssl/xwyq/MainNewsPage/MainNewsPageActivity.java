@@ -116,6 +116,7 @@ public class MainNewsPageActivity extends BaseActivity implements View.OnClickLi
                     boolean success = jsonObject.optBoolean("success");
                     String message = jsonObject.optString("message");
                     if (success) {
+                        CardData.getInstance().clearSaveData(MainNewsPageActivity.this);
                         CardData.getInstance().saveData(MainNewsPageActivity.this, str);
                         onRequestCCCPCLSuccess();
                     } else {
