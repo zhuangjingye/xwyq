@@ -19,6 +19,7 @@ import cc.horizoom.ssl.xwyq.R;
 import cc.horizoom.ssl.xwyq.setting.favoriteNews.FavoriteNewsActivity;
 import cc.horizoom.ssl.xwyq.setting.favoriteNews.FavoriteNewsAdapter;
 import cc.horizoom.ssl.xwyq.setting.more.MoreActivity;
+import cc.horizoom.ssl.xwyq.setting.waring.WaringActivity;
 import cn.com.myframe.BaseActivity;
 import cn.com.myframe.MyUtils;
 import cn.com.myframe.network.volley.VolleyError;
@@ -62,6 +63,7 @@ public class SettingPopUpWindow extends MyPopupWindow implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.waringRl:
+                startWaringActivity();
                 break;
             case R.id.preferenceRl:
                 break;
@@ -88,6 +90,14 @@ public class SettingPopUpWindow extends MyPopupWindow implements View.OnClickLis
      */
     private void startMoreActivity() {
         Intent intent = new Intent(baseActivity, MoreActivity.class);
+        baseActivity.startActivity(intent);
+    }
+
+    /**
+     * 打开舆情页面
+     */
+    private void startWaringActivity() {
+        Intent intent = new Intent(baseActivity, WaringActivity.class);
         baseActivity.startActivity(intent);
     }
 
