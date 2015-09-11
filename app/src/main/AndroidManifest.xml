@@ -80,7 +80,7 @@
         <activity
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden"
-            android:name=".setting.waring.WaringActivity" >
+            android:name=".setting.warning.WarningActivity" >
         </activity>
     </application>
 

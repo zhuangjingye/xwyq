@@ -12,16 +12,16 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
+import cc.horizoom.ssl.xwyq.DataManager.NewsData;
 import cc.horizoom.ssl.xwyq.DataManager.NewsListData;
 import cc.horizoom.ssl.xwyq.DataManager.UserData;
+import cc.horizoom.ssl.xwyq.DataManager.WarningParatmer;
 import cc.horizoom.ssl.xwyq.Protocol;
 import cc.horizoom.ssl.xwyq.R;
 import cc.horizoom.ssl.xwyq.setting.favoriteNews.FavoriteNewsActivity;
-import cc.horizoom.ssl.xwyq.setting.favoriteNews.FavoriteNewsAdapter;
 import cc.horizoom.ssl.xwyq.setting.more.MoreActivity;
-import cc.horizoom.ssl.xwyq.setting.waring.WaringActivity;
+import cc.horizoom.ssl.xwyq.setting.warning.WarningActivity;
 import cn.com.myframe.BaseActivity;
-import cn.com.myframe.MyUtils;
 import cn.com.myframe.network.volley.VolleyError;
 import cn.com.myframe.popupWindow.MyPopupWindow;
 
@@ -63,7 +63,8 @@ public class SettingPopUpWindow extends MyPopupWindow implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.waringRl:
-                startWaringActivity();
+//                startWaringActivity();
+                requestWarningParameter();
                 break;
             case R.id.preferenceRl:
                 break;
@@ -97,7 +98,7 @@ public class SettingPopUpWindow extends MyPopupWindow implements View.OnClickLis
      * 打开舆情页面
      */
     private void startWaringActivity() {
-        Intent intent = new Intent(baseActivity, WaringActivity.class);
+        Intent intent = new Intent(baseActivity, WarningActivity.class);
         baseActivity.startActivity(intent);
     }
 
@@ -124,7 +125,7 @@ public class SettingPopUpWindow extends MyPopupWindow implements View.OnClickLis
                     String message = jsonObject.getString("message");
                     boolean success = jsonObject.getBoolean("success");
                     if (success) {
-                        NewsListData.getInstance().saveData(baseActivity,str);
+                        NewsListData.getInstance().saveData(baseActivity, str);
                         startFavoriteNewsActivity();
                     } else {
                         baseActivity.showToast(message);
@@ -132,6 +133,67 @@ public class SettingPopUpWindow extends MyPopupWindow implements View.OnClickLis
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+            }
+
+            @Override
+            public void onErrResponse(VolleyError error) {
+                baseActivity.hideWaitDialog();
+            }
+        });
+    }
+
+    /**
+     * 获得安全参数
+     */
+    private void requestWarningParameter() {
+        String url = Protocol.CWP;
+        String customer_id = UserData.getInstance().getCustomerId(baseActivity);
+        HashMap<String,String> map = new HashMap<String,String>();
+        map.put("customer_id",customer_id);
+        baseActivity.showWaitDialog();
+        baseActivity.doRequestString(url, map, new BaseActivity.RequestResult() {
+            @Override
+            public void onResponse(String str) {
+                try {
+                    JSONArray jsonArray = new JSONArray(str);
+                    JSONObject jsonObject = jsonArray.optJSONObject(0);
+                    boolean success = jsonObject.optBoolean("success");
+                    String message = jsonObject.optString("message");
+                    if (success) {
+                        WarningParatmer.getInstance().saveData(baseActivity, str);
+                        requestWarningNewList();
+                    } else {
+                        baseActivity.showToast(message);
+                        baseActivity.hideWaitDialog();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    baseActivity.hideWaitDialog();
+                }
+            }
+
+            @Override
+            public void onErrResponse(VolleyError error) {
+                baseActivity.hideWaitDialog();
+            }
+        });
+    }
+
+    /**
+     * 请求预警新闻列表
+     */
+    private void requestWarningNewList() {
+        String url = Protocol.CWPCL;
+        String customer_id = UserData.getInstance().getCustomerId(baseActivity);
+        HashMap<String,String> map = new HashMap<String,String>();
+        map.put("customer_id",customer_id);
+        baseActivity.doRequestString(url, map, new BaseActivity.RequestResult() {
+            @Override
+            public void onResponse(String str) {
+                NewsListData.getInstance().clearSaveData(baseActivity);
+                NewsListData.getInstance().saveData(baseActivity,str);
+                baseActivity.hideWaitDialog();
+                startWaringActivity();
             }
 
             @Override

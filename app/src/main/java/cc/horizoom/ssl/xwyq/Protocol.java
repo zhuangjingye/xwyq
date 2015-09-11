@@ -48,4 +48,10 @@ public class Protocol {
 
     //已登陆客户【用户收藏之 收藏列表】接口：
     public static final String CFR = HOST + PLAT + "api.customer_favorite_news_list.php";
+
+    //预警参数
+    public static final String CWP = HOST + PLAT + "api.customer_warning_parameter.php";
+
+    //已登陆客户【预警文章列表】接口：
+    public static final String CWPCL = HOST + PLAT + "api.customer_warning_push_content_list.php";
 }
