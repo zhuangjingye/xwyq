@@ -20,8 +20,10 @@ import cc.horizoom.ssl.xwyq.Protocol;
 import cc.horizoom.ssl.xwyq.R;
 import cc.horizoom.ssl.xwyq.setting.favoriteNews.FavoriteNewsActivity;
 import cc.horizoom.ssl.xwyq.setting.more.MoreActivity;
+import cc.horizoom.ssl.xwyq.setting.preference.PreferenceActivity;
 import cc.horizoom.ssl.xwyq.setting.warning.WarningActivity;
 import cn.com.myframe.BaseActivity;
+import cn.com.myframe.Mysharedperferences;
 import cn.com.myframe.network.volley.VolleyError;
 import cn.com.myframe.popupWindow.MyPopupWindow;
 
@@ -67,6 +69,8 @@ public class SettingPopUpWindow extends MyPopupWindow implements View.OnClickLis
                 requestWarningParameter();
                 break;
             case R.id.preferenceRl:
+//                startPreferenceActivity();
+                requestCIB ();
                 break;
             case R.id.collectionRl:
                 requestFavoriteNews();
@@ -185,15 +189,96 @@ public class SettingPopUpWindow extends MyPopupWindow implements View.OnClickLis
     private void requestWarningNewList() {
         String url = Protocol.CWPCL;
         String customer_id = UserData.getInstance().getCustomerId(baseActivity);
+        HashMap<String,String> map = new HashMap<String, String>();
+        map.put("customer_id", customer_id);
+        baseActivity.doRequestString(url, map, new BaseActivity.RequestResult() {
+            @Override
+            public void onResponse(String str) {
+                NewsListData.getInstance().clearSaveData(baseActivity);
+                NewsListData.getInstance().saveData(baseActivity, str);
+                baseActivity.hideWaitDialog();
+                startWaringActivity();
+            }
+
+            @Override
+            public void onErrResponse(VolleyError error) {
+                baseActivity.hideWaitDialog();
+            }
+        });
+    }
+
+    /**
+     * 打开偏好设置页面
+     */
+    private void startPreferenceActivity() {
+        Intent intent = new Intent(baseActivity, PreferenceActivity.class);
+        baseActivity.startActivity(intent);
+    }
+
+    /**
+     * 请求基本词汇
+     */
+    private void requestCIB () {
+        String customer_id = UserData.getInstance().getCustomerId(baseActivity);
+        String url = Protocol.CIB;
+        HashMap<String,String> map = new HashMap<String,String>();
+        map.put("customer_id",customer_id);
+        baseActivity.showWaitDialog();
+        baseActivity.doRequestString(url, map, new BaseActivity.RequestResult() {
+            @Override
+            public void onResponse(String str) {
+                try {
+                    JSONArray jsonArray = new JSONArray(str);
+                    JSONObject jsonObject = jsonArray.getJSONObject(0);
+                    boolean success = jsonObject.optBoolean("success");
+                    String message = jsonObject.optString("message");
+                    String interests_base = jsonObject.optString("interests_base");
+                    if (success) {
+                        Mysharedperferences.getIinstance().putString(baseActivity,"interests_base",interests_base);
+                        requestCI();
+                    } else {
+                        baseActivity.showToast(message);
+                        baseActivity.hideWaitDialog();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onErrResponse(VolleyError error) {
+                baseActivity.hideWaitDialog();
+            }
+        });
+    }
+
+    /**
+     * 请求已选词汇
+     */
+    private void requestCI() {
+        String customer_id = UserData.getInstance().getCustomerId(baseActivity);
+        String url = Protocol.CI;
         HashMap<String,String> map = new HashMap<String,String>();
         map.put("customer_id",customer_id);
         baseActivity.doRequestString(url, map, new BaseActivity.RequestResult() {
             @Override
             public void onResponse(String str) {
-                NewsListData.getInstance().clearSaveData(baseActivity);
-                NewsListData.getInstance().saveData(baseActivity,str);
                 baseActivity.hideWaitDialog();
-                startWaringActivity();
+                try {
+                    JSONArray jsonArray = new JSONArray(str);
+                    JSONObject jsonObject = jsonArray.getJSONObject(0);
+                    boolean success = jsonObject.optBoolean("success");
+                    String message = jsonObject.optString("message");
+                    String interests = jsonObject.optString("interests");
+                    if (success) {
+                        Mysharedperferences.getIinstance().putString(baseActivity, "interests", interests);
+                        startPreferenceActivity();
+                    } else {
+                        baseActivity.showToast(message);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override

@@ -39,6 +39,7 @@ public class CardNewsAdapter extends NewsAdapter implements View.OnClickListener
     public View getView(int i, View view, ViewGroup viewGroup) {
         HolderView holderView;
         if (null == view) {
+            MyUtils.log(CardNewsAdapter.class,"ddfdfdfdfdfdfdfdf");
             holderView = new HolderView();
             LayoutInflater layoutInflater = LayoutInflater.from(baseActivity);
             view = layoutInflater.inflate(R.layout.view_news_card_item,null);

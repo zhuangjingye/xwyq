@@ -26,6 +26,7 @@
     <string name="pwd_err">请输入密码</string>
     <string name="setting_waring">&#160;&#160;與情预警</string>
     <string name="setting_preference">&#160;&#160;偏好设置</string>
+    <string name="setting_preference_1">偏好设置</string>
     <string name="setting_collection">&#160;&#160;收藏夹</string>
     <string name="setting_collection_1">收藏夹</string>
     <string name="setting_more">&#160;&#160;更多</string>
@@ -53,4 +54,9 @@
     <string name="user_custom_tip">客户简介：</string>
     <string name="security_score">安全得分</string>
     <string name="waring_news">预警新闻</string>
+    <string name="complate">完成</string>
+    <string name="my_word">我的关键词</string>
+    <string name="my_word_tip">点击删除</string>
+    <string name="base_word">备选关键词</string>
+    <string name="base_word_tip">点击增加关键词</string>
 </resources>

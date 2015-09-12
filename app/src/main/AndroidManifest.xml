@@ -82,6 +82,11 @@
             android:windowSoftInputMode="adjustResize|stateHidden"
             android:name=".setting.warning.WarningActivity" >
         </activity>
+        <activity
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:name=".setting.preference.PreferenceActivity" >
+        </activity>
     </application>
 
 </manifest>

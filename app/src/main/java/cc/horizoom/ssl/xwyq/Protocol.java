@@ -54,4 +54,13 @@ public class Protocol {
 
     //已登陆客户【预警文章列表】接口：
     public static final String CWPCL = HOST + PLAT + "api.customer_warning_push_content_list.php";
+
+    //已登陆客户【偏好设置之 偏好词库】接口： 基础词汇
+    public static final String CIB = HOST + PLAT +"api.customer_interests_base.php";
+
+    //已登陆客户【客户偏好词列表】接口：已选词汇
+    public static final String CI = HOST + PLAT +"api.customer_interests.php";
+
+    //已登陆客户【客户偏好词同步】接口：
+    public static final String CIS = HOST + PLAT +"api.customer_interests_sync.php";
 }

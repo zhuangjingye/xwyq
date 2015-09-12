@@ -1,0 +1,156 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/c_fafafa"
+    android:orientation="vertical">
+    <!--标题-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@mipmap/bg_top">
+
+        <RelativeLayout
+            android:id="@+id/backRl"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:background="@drawable/color_btn_00000000"
+            android:clickable="true"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:scaleType="center"
+                android:src="@mipmap/arrow_left_title" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/titleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/setting_preference_1"
+            android:textColor="@color/c_ffffff"
+            android:textSize="17sp" />
+
+        <RelativeLayout
+            android:id="@+id/complateRl"
+            android:layout_width="60dp"
+            android:layout_height="55dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:background="@drawable/color_btn_00000000"
+            android:clickable="true"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/complate"
+                android:textColor="@color/c_ffffff"
+                android:textSize="15sp" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/c_b9b9b9" />
+    </RelativeLayout>
+
+    <cn.com.myframe.view.BounceScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/outRl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/c_e4e4e4"
+                    android:gravity="bottom"
+                    android:orientation="horizontal"
+                    android:paddingBottom="9dp"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:paddingTop="9dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:text="@string/my_word"
+                        android:textColor="@color/c_3c3c3c"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:singleLine="true"
+                        android:text="@string/my_word_tip"
+                        android:textColor="@color/c_5e5e5e"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <cn.com.myframe.view.MyLinearLayout
+                    android:id="@+id/myWordMll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </cn.com.myframe.view.MyLinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1px"
+                    android:background="@color/c_e4e4e4"
+                    android:gravity="bottom"
+                    android:orientation="horizontal"
+                    android:paddingBottom="9dp"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:paddingTop="9dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:text="@string/base_word"
+                        android:textColor="@color/c_3c3c3c"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:singleLine="true"
+                        android:text="@string/base_word_tip"
+                        android:textColor="@color/c_5e5e5e"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <cn.com.myframe.view.MyLinearLayout
+                    android:id="@+id/baseWordMll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></cn.com.myframe.view.MyLinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </cn.com.myframe.view.BounceScrollView>
+
+
+</LinearLayout>
