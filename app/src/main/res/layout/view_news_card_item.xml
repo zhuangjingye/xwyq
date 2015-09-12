@@ -25,6 +25,7 @@
         <ImageView
             android:id="@+id/smallBellIv"
             android:scaleType="centerCrop"
+            android:layout_marginTop="3dp"
             android:layout_width="10dp"
             android:layout_height="10dp"
             android:src="@mipmap/small_bell_red"/>

@@ -35,13 +35,16 @@ public class CardsView extends LinearLayout implements ViewPager.OnPageChangeLis
     private LinearLayout indicatorLl;
 
     private MainNewsPageActivity mainNewsPageActivity;
-    ArrayList<View> viewContainter;
+
+    private ArrayList<View> viewContainter;
 
     private ArrayList<CardEntity> cardEntities = null;
 
     private int lastState = -1;
 
     private int currentPosition;
+
+    private MyPagerAdapter myPagerAdapter;
 
     public CardsView(Context context) {
         super(context);
@@ -71,7 +74,8 @@ public class CardsView extends LinearLayout implements ViewPager.OnPageChangeLis
     public void updateView(MainNewsPageActivity mainNewsPageActivity) {
         this.mainNewsPageActivity = mainNewsPageActivity;
         getViewContainter();
-        pager.setAdapter(new MyPagerAdapter());
+        myPagerAdapter = new MyPagerAdapter();
+        pager.setAdapter(myPagerAdapter);
         pager.setOnPageChangeListener(this);
         pager.setCurrentItem(1, false);
         updateIndicatorLl(0);

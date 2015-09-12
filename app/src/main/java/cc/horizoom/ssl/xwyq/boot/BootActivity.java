@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
+import cc.horizoom.ssl.xwyq.DataManager.CardData;
 import cc.horizoom.ssl.xwyq.DataManager.NewsListData;
 import cc.horizoom.ssl.xwyq.DataManager.UserData;
 import cc.horizoom.ssl.xwyq.MainNewsPage.MainNewsPageActivity;
@@ -34,6 +35,7 @@ public class BootActivity extends MyBaseActivity {
         startTim = System.currentTimeMillis();
         String customerId = UserData.getInstance().getCustomerId(this);
         unLoginPushContentList();
+        requestCCCPCL();
     }
 
     /**
@@ -98,5 +100,40 @@ public class BootActivity extends MyBaseActivity {
         Intent intent = new Intent();
         intent.setClass(this, LoginActivity.class);
         startActivity(intent);
+    }
+
+    /**
+     * 已登录用户卡片列表接口
+     */
+    private void requestCCCPCL() {
+        CardData.getInstance().clearSaveData(BootActivity.this);
+        String url = Protocol.CCCPCL;
+        HashMap<String,String> map = new HashMap<String,String>();
+        String customer_id = UserData.getInstance().getCustomerId(this);
+        map.put("customer_id", customer_id);
+        doRequestString(url, map, new RequestResult() {
+            @Override
+            public void onResponse(String str) {
+                try {
+                    JSONArray jsonArray = new JSONArray(str);
+                    JSONObject jsonObject = jsonArray.optJSONObject(0);
+                    boolean success = jsonObject.optBoolean("success");
+                    String message = jsonObject.optString("message");
+                    if (success) {
+                        CardData.getInstance().saveData(BootActivity.this, str);
+                    } else {
+                        showToast(message);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onErrResponse(VolleyError error) {
+
+            }
+        });
     }
 }
