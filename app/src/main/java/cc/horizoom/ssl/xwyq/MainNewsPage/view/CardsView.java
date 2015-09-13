@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -107,7 +108,7 @@ public class CardsView extends LinearLayout implements ViewPager.OnPageChangeLis
         View view = layoutInflater.inflate(R.layout.view_cards_item, null);
         TextView titleTv = (TextView) view.findViewById(R.id.cardTietleTv);
         titleTv.setText(cardEntity.getName());
-        MyBounceListview myListView = (MyBounceListview) view.findViewById(R.id.myListView);
+        ListView myListView = (ListView) view.findViewById(R.id.myListView);
         CardNewsAdapter cardNewsAdapter = new CardNewsAdapter(mainNewsPageActivity,cardEntity.getNewsData());
         myListView.setAdapter(cardNewsAdapter);
         return view;

@@ -110,6 +110,9 @@ public class BootActivity extends MyBaseActivity {
         String url = Protocol.CCCPCL;
         HashMap<String,String> map = new HashMap<String,String>();
         String customer_id = UserData.getInstance().getCustomerId(this);
+        if (MyUtils.isEmpty(customer_id)) {
+            return;
+        }
         map.put("customer_id", customer_id);
         doRequestString(url, map, new RequestResult() {
             @Override
