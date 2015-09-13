@@ -63,4 +63,7 @@ public class Protocol {
 
     //已登陆客户【客户偏好词同步】接口：
     public static final String CIS = HOST + PLAT +"api.customer_interests_sync.php";
+
+    //柱状图
+    public static final String WC = "http://yqzx.horizoom.cc/mobile/warning_chart.php";
 }

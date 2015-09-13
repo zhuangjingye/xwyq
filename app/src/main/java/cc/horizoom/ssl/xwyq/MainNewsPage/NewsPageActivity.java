@@ -33,6 +33,7 @@ import cn.com.myframe.BaseActivity;
 import cn.com.myframe.MyUtils;
 import cn.com.myframe.Mysharedperferences;
 import cn.com.myframe.network.volley.VolleyError;
+import cn.com.myframe.webVeiw.MyWebVeiwClient;
 
 /**
  * Created by pizhuang on 2015/9/7.
@@ -61,7 +62,7 @@ public class NewsPageActivity extends BaseActivity implements View.OnClickListen
         titleTv = (TextView) findViewById(R.id.titleTv);
         contentWebView = (WebView) findViewById(R.id.contentWebView);
         contentWebView.getSettings().setJavaScriptEnabled(true);
-        contentWebView.setWebViewClient(new MyWebViewClient());
+        contentWebView.setWebViewClient(new MyWebVeiwClient());
         contentWebView.getSettings().setDefaultTextEncodingName("utf-8");
         titleBackRl.setOnClickListener(this);
         myCheckBoxRl = (RelativeLayout) findViewById(R.id.myCheckBoxRl);
@@ -201,12 +202,4 @@ public class NewsPageActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
-    class MyWebViewClient extends WebViewClient{
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            MyUtils.log(NewsPageActivity.class,"url="+url);
-            view.loadUrl(url);
-            return true;
-        }
-    }
 }

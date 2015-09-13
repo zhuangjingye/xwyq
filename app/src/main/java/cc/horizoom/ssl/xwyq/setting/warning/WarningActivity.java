@@ -37,6 +37,7 @@ import cn.com.myframe.MyUtils;
 import cn.com.myframe.Mysharedperferences;
 import cn.com.myframe.network.volley.VolleyError;
 import cn.com.myframe.view.MyBounceListView.MyBounceListview;
+import cn.com.myframe.webVeiw.MyWebVeiwClient;
 
 /**
  * Created by pizhuang on 2015/9/11.
@@ -96,6 +97,14 @@ public class WarningActivity extends BaseActivity implements View.OnClickListene
         barDownLl.setOnClickListener(this);
         barUpLl.setOnClickListener(this);
         updataView();
+
+
+        String customer_id = UserData.getInstance().getCustomerId(this);
+        String url = Protocol.WC+"?customer_id="+customer_id;
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.setWebViewClient(new MyWebVeiwClient());
+        webView.getSettings().setDefaultTextEncodingName("utf-8");
+        webView.loadUrl(url);
     }
 
     /**
@@ -160,6 +169,8 @@ public class WarningActivity extends BaseActivity implements View.OnClickListene
         translateAnimation.setInterpolator(decelerateInterpolator);
         translateAnimation.setDuration(200);  //设置动画时间
         webView.startAnimation(translateAnimation);
+
+        barUpLl.setVisibility(View.GONE);
     }
 
     /**
@@ -199,6 +210,7 @@ public class WarningActivity extends BaseActivity implements View.OnClickListene
             @Override
             public void onAnimationEnd(Animation animation) {
                 webView.setVisibility(View.GONE);
+                barUpLl.setVisibility(View.VISIBLE);
             }
 
             @Override
