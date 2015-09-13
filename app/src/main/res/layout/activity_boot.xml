@@ -44,6 +44,14 @@
             </LinearLayout>
 
         </RelativeLayout>
+        <TextView
+            android:textSize="12sp"
+            android:paddingBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/c_3c3c3c"
+            android:text="@string/copyright"
+            android:gravity="center"/>
     </LinearLayout>
 
 </RelativeLayout>
