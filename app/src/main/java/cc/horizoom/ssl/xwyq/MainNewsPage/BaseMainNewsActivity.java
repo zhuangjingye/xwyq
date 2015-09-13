@@ -148,7 +148,6 @@ public abstract class BaseMainNewsActivity extends MyBaseActivity implements Vie
         headImg = (ImageView) findViewById(R.id.headImg);
         data = NewsListData.getInstance().getNewsData(this);
         newsAdapter = new NewsAdapter(this,data);
-        myListView.setAdapter(newsAdapter);
 
         headBitmap = resizeImage(getResources().getDrawable(R.mipmap.bg_list01));
         headImg.setImageBitmap(headBitmap);
@@ -157,6 +156,7 @@ public abstract class BaseMainNewsActivity extends MyBaseActivity implements Vie
         headView = getHeadview(headBitmap);
         myListView.addHeaderView(headView);
         myListView.addFooterView(getFooter());
+        myListView.setAdapter(newsAdapter);
         myListView.setOnItemClickListener(myListOnItemClickListener);
         onUpdataSearchEt(searchEt);
     }
@@ -584,6 +584,7 @@ public abstract class BaseMainNewsActivity extends MyBaseActivity implements Vie
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    showToast("Json格式错误");
                 }
                 hideWaitDialog();
             }

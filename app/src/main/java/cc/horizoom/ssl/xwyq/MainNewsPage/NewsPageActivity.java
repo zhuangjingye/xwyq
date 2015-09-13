@@ -62,6 +62,7 @@ public class NewsPageActivity extends BaseActivity implements View.OnClickListen
         contentWebView = (WebView) findViewById(R.id.contentWebView);
         contentWebView.getSettings().setJavaScriptEnabled(true);
         contentWebView.setWebViewClient(new MyWebViewClient());
+        contentWebView.getSettings().setDefaultTextEncodingName("utf-8");
         titleBackRl.setOnClickListener(this);
         myCheckBoxRl = (RelativeLayout) findViewById(R.id.myCheckBoxRl);
         myCheckBox = (CheckBox) findViewById(R.id.myCheckBox);

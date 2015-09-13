@@ -16,6 +16,7 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:clickable="true"
+            android:layout_gravity="top"
             android:layout_alignParentLeft="true"
             android:gravity="top">
 
