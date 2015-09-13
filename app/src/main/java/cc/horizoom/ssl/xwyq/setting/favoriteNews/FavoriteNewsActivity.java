@@ -51,13 +51,14 @@ public class FavoriteNewsActivity extends BaseActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite_news_activity);
         mListView = (ListViewCompat) findViewById(R.id.list);
+        mListView.addFooterView(getFooter());
         backRl = (RelativeLayout) findViewById(R.id.backRl);
         backRl.setOnClickListener(this);
         newsEntities = NewsListData.getInstance().getNewsData(this);
         favoriteNewsAdapter = new FavoriteNewsAdapter(this,newsEntities);
         mListView.setAdapter(favoriteNewsAdapter);
         mListView.setOnItemClickListener(this);
-        mListView.addFooterView(getFooter());
+
 //        setListViewHeight(mListView);
     }
 

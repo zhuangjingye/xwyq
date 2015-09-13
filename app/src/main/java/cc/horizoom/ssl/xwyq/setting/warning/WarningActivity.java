@@ -111,10 +111,10 @@ public class WarningActivity extends BaseActivity implements View.OnClickListene
      * 更新页面显示
      */
     private void updataView() {
-        data = NewsListData.getInstance().getNewsData(this);
-        newsAdapter = new NewsAdapter(this,data);
-        listview.setAdapter(newsAdapter);
         listview.addFooterView(getFooter());
+        data = NewsListData.getInstance().getNewsData(this);
+        newsAdapter = new NewsAdapter(this, data);
+        listview.setAdapter(newsAdapter);
         listview.setOnItemClickListener(myListOnItemClickListener);
         String a_value = WarningParatmer.getInstance().getA_value(this);
         String b_value = WarningParatmer.getInstance().getB_value(this);
