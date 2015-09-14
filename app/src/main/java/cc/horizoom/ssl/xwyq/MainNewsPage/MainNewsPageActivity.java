@@ -151,9 +151,11 @@ public class MainNewsPageActivity extends BaseActivity implements View.OnClickLi
                 showSettingPopUpWindow();
                 break;
             case R.id.leftRl:
+                if (null != cardsView)
                 cardsView.scrollToLeft();
                 break;
             case R.id.rightRl:
+                if (null != cardsView)
                 cardsView.scrollToRight();
                 break;
         }
