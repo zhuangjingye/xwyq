@@ -8,11 +8,21 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+
+import cc.horizoom.ssl.xwyq.DataManager.NewsListData;
 import cc.horizoom.ssl.xwyq.DataManager.UserData;
+import cc.horizoom.ssl.xwyq.Protocol;
 import cc.horizoom.ssl.xwyq.R;
+import cc.horizoom.ssl.xwyq.login.LoginActivity;
 import cn.com.myframe.BaseActivity;
 import cn.com.myframe.MyUtils;
 import cn.com.myframe.Mysharedperferences;
+import cn.com.myframe.network.volley.VolleyError;
 import cn.com.myframe.view.MyImageView;
 
 /**
@@ -139,6 +149,7 @@ public class MoreActivity extends BaseActivity implements View.OnClickListener{
                 startAboutActivity();
                 break;
             case R.id.logoutBtn:
+                logOut();
                 break;
             case R.id.backRl:
                 closeActivity(MoreActivity.class.getName());
@@ -209,4 +220,57 @@ public class MoreActivity extends BaseActivity implements View.OnClickListener{
         intent.setClass(this,FeedBackActivity.class);
         startActivity(intent);
     }
+
+    /**
+     * 退出
+     */
+    private void logOut() {
+        unLoginPushContentList();
+    }
+
+    /**
+     * 未登录新闻列表
+     */
+    private void unLoginPushContentList() {
+        UserData.getInstance().clearSaveData(this);
+        NewsListData.getInstance().clearSaveData(this);
+        String url = Protocol.UNLOGINPUSHCONTENTLIST;
+        HashMap<String,String> hashMap = new HashMap<String,String>();
+        showWaitDialog();
+        doRequestString(url, hashMap, new RequestResult() {
+            @Override
+            public void onResponse(String str) {
+                try {
+                    JSONArray jsonArray = new JSONArray(str);
+                    JSONObject jsonObject = jsonArray.optJSONObject(0);
+                    boolean success = jsonObject.optBoolean("success");
+                    if (success) {
+                        NewsListData.getInstance().clearData();
+                        NewsListData.getInstance().saveData(MoreActivity.this, str);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                hideWaitDialog();
+                startLoginActivity();
+            }
+
+            @Override
+            public void onErrResponse(VolleyError error) {
+                hideWaitDialog();
+                startLoginActivity();
+            }
+        });
+    }
+
+    /**
+     * 打开登录页
+     */
+    private void startLoginActivity() {
+        closeActivity(MoreActivity.class.getName());
+        Intent intent = new Intent();
+        intent.setClass(this, LoginActivity.class);
+        startActivity(intent);
+    }
+
 }

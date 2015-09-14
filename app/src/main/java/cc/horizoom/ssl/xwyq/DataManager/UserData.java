@@ -116,7 +116,7 @@ public class UserData implements DataInterface{
     @Override
     public void clearSaveData(BaseActivity baseActivity) {
         Mysharedperferences.getIinstance().putString(baseActivity,key,"");
-        ourInstance = null;
+        ourInstance = new UserData();
     }
 
     public String getCustomerId(BaseActivity baseActivity) {
