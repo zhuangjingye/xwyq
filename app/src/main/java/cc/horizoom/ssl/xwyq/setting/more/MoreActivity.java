@@ -16,6 +16,7 @@ import java.util.HashMap;
 
 import cc.horizoom.ssl.xwyq.DataManager.NewsListData;
 import cc.horizoom.ssl.xwyq.DataManager.UserData;
+import cc.horizoom.ssl.xwyq.MyBaseActivity;
 import cc.horizoom.ssl.xwyq.Protocol;
 import cc.horizoom.ssl.xwyq.R;
 import cc.horizoom.ssl.xwyq.login.LoginActivity;
@@ -29,7 +30,7 @@ import cn.com.myframe.view.MyImageView;
  * Created by pizhuang on 2015/9/9.
  * 更多设置
  */
-public class MoreActivity extends BaseActivity implements View.OnClickListener{
+public class MoreActivity extends MyBaseActivity implements View.OnClickListener{
 
     public static final String key = "font_size";
 

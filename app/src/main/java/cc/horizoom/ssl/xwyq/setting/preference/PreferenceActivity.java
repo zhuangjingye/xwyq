@@ -19,6 +19,7 @@ import java.util.HashMap;
 
 import cc.horizoom.ssl.xwyq.DataManager.NewsListData;
 import cc.horizoom.ssl.xwyq.DataManager.UserData;
+import cc.horizoom.ssl.xwyq.MyBaseActivity;
 import cc.horizoom.ssl.xwyq.Protocol;
 import cc.horizoom.ssl.xwyq.R;
 import cn.com.myframe.BaseActivity;
@@ -31,7 +32,7 @@ import cn.com.myframe.view.MyLinearLayout;
  * Created by pi on 15-9-12.
  * 偏好设置
  */
-public class PreferenceActivity extends BaseActivity implements View.OnClickListener{
+public class PreferenceActivity extends MyBaseActivity implements View.OnClickListener{
 
     private RelativeLayout backRl;
 

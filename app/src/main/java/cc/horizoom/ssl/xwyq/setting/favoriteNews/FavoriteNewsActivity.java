@@ -23,6 +23,7 @@ import cc.horizoom.ssl.xwyq.DataManager.NewsListData;
 import cc.horizoom.ssl.xwyq.DataManager.UserData;
 import cc.horizoom.ssl.xwyq.DataManager.entity.NewsEntity;
 import cc.horizoom.ssl.xwyq.MainNewsPage.NewsPageActivity;
+import cc.horizoom.ssl.xwyq.MyBaseActivity;
 import cc.horizoom.ssl.xwyq.Protocol;
 import cc.horizoom.ssl.xwyq.R;
 import cc.horizoom.ssl.xwyq.setting.more.MoreActivity;
@@ -36,7 +37,7 @@ import cn.com.myframe.view.deletelistview.ListViewCompat;
  * Created by pizhuang on 2015/9/10.
  * 收藏新闻列表
  */
-public class FavoriteNewsActivity extends BaseActivity implements View.OnClickListener,AdapterView.OnItemClickListener{
+public class FavoriteNewsActivity extends MyBaseActivity implements View.OnClickListener,AdapterView.OnItemClickListener{
 
     private RelativeLayout backRl;
 

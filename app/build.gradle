@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    buildToolsVersion '23.0.1'
 
     defaultConfig {
         applicationId "cc.horizoom.ssl.xwyq"
@@ -20,7 +20,7 @@ android {
 
     signingConfigs {
         debug {
-            storeFile file("D:\\simikongjian\\xiangmu1\\xwyq\\xwyq.jks");
+            storeFile file("/Users/pi/git/xwyq/xwyq.jks");
             storePassword "111111"
             keyAlias "xwyq"
             keyPassword "111111"
@@ -72,4 +72,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile project(':myframe')
     compile 'com.android.support:support-v4:22.2.0'
+    compile files('libs/umeng-analytics-v5.5.3.jar')
 }

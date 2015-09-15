@@ -29,6 +29,7 @@ import cc.horizoom.ssl.xwyq.DataManager.WarningParatmer;
 import cc.horizoom.ssl.xwyq.DataManager.entity.NewsEntity;
 import cc.horizoom.ssl.xwyq.MainNewsPage.NewsAdapter;
 import cc.horizoom.ssl.xwyq.MainNewsPage.NewsPageActivity;
+import cc.horizoom.ssl.xwyq.MyBaseActivity;
 import cc.horizoom.ssl.xwyq.Protocol;
 import cc.horizoom.ssl.xwyq.R;
 import cc.horizoom.ssl.xwyq.setting.more.MoreActivity;
@@ -43,7 +44,7 @@ import cn.com.myframe.webVeiw.MyWebVeiwClient;
  * Created by pizhuang on 2015/9/11.
  * 预警页面
  */
-public class WarningActivity extends BaseActivity implements View.OnClickListener {
+public class WarningActivity extends MyBaseActivity implements View.OnClickListener {
 
     private RelativeLayout backRl;//返回
 

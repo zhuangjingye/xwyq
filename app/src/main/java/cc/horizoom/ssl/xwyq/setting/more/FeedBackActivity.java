@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 import cc.horizoom.ssl.xwyq.DataManager.UserData;
+import cc.horizoom.ssl.xwyq.MyBaseActivity;
 import cc.horizoom.ssl.xwyq.Protocol;
 import cc.horizoom.ssl.xwyq.R;
 import cc.horizoom.ssl.xwyq.dialog.ApplyDialog;
@@ -25,7 +26,7 @@ import cn.com.myframe.network.volley.VolleyError;
  * Created by pi on 15-9-9.
  * 反馈
  */
-public class FeedBackActivity extends BaseActivity implements View.OnClickListener{
+public class FeedBackActivity extends MyBaseActivity implements View.OnClickListener{
     private RelativeLayout backRl;
     private Button commitBtn;//提交按钮
     private EditText feedbackEt;//意见输入框

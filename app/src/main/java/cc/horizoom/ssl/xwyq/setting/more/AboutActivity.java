@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import cc.horizoom.ssl.xwyq.MyBaseActivity;
 import cc.horizoom.ssl.xwyq.R;
 import cn.com.myframe.BaseActivity;
 
@@ -11,7 +12,7 @@ import cn.com.myframe.BaseActivity;
  * Created by pi on 15-9-9.
  * 关于
  */
-public class AboutActivity extends BaseActivity{
+public class AboutActivity extends MyBaseActivity {
 
     private RelativeLayout backRl;
 

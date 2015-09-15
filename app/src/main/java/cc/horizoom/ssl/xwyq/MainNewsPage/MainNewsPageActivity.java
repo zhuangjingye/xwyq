@@ -24,6 +24,7 @@ import cc.horizoom.ssl.xwyq.DataManager.UserData;
 import cc.horizoom.ssl.xwyq.DataManager.entity.CardEntity;
 import cc.horizoom.ssl.xwyq.DataManager.entity.FunctionEntity;
 import cc.horizoom.ssl.xwyq.MainNewsPage.view.CardsView;
+import cc.horizoom.ssl.xwyq.MyBaseActivity;
 import cc.horizoom.ssl.xwyq.Protocol;
 import cc.horizoom.ssl.xwyq.R;
 import cn.com.myframe.BaseActivity;
@@ -34,7 +35,7 @@ import cn.com.myframe.network.volley.VolleyError;
  * Created by pizhuang on 2015/9/8.
  * 主页带选项卡的新闻分类列表
  */
-public class MainNewsPageActivity extends BaseActivity implements View.OnClickListener{
+public class MainNewsPageActivity extends MyBaseActivity implements View.OnClickListener{
 
     private RelativeLayout settingRl;//设置
 

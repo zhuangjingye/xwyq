@@ -6,6 +6,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import cc.horizoom.ssl.xwyq.DataManager.UserData;
+import cc.horizoom.ssl.xwyq.MyBaseActivity;
 import cc.horizoom.ssl.xwyq.R;
 import cn.com.myframe.BaseActivity;
 import cn.com.myframe.MyUtils;
@@ -15,7 +16,7 @@ import cn.com.myframe.view.MyImageView;
  * Created by pizhuang on 2015/9/10.
  * 用户信息
  */
-public class UserInfoActivity extends BaseActivity {
+public class UserInfoActivity extends MyBaseActivity {
 
     private RelativeLayout backRl;//后退
 

@@ -4,6 +4,12 @@
     android:versionName="1.0"
     package="cc.horizoom.ssl.xwyq" >
 
+    <uses-sdk android:minSdkVersion="4"></uses-sdk>
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
+
     <application
         android:name=".MyApplaction"
         android:allowBackup="true"
@@ -11,6 +17,8 @@
         android:label="@string/app_name"
         android:theme="@style/AnimRightToLeftTheme" >
 
+
+        <meta-data android:name="UMENG_APPKEY" android:value="55f78853e0f55acf9500397a"></meta-data>
         <meta-data android:name="UMENG_CHANNEL" android:value="${CHANNEL_NAME}"/>
 
         <activity android:name=".boot.BootActivity"

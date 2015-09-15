@@ -26,6 +26,7 @@ import java.util.HashMap;
 
 import cc.horizoom.ssl.xwyq.DataManager.NewsData;
 import cc.horizoom.ssl.xwyq.DataManager.UserData;
+import cc.horizoom.ssl.xwyq.MyBaseActivity;
 import cc.horizoom.ssl.xwyq.Protocol;
 import cc.horizoom.ssl.xwyq.R;
 import cc.horizoom.ssl.xwyq.setting.more.MoreActivity;
@@ -39,7 +40,7 @@ import cn.com.myframe.webVeiw.MyWebVeiwClient;
  * Created by pizhuang on 2015/9/7.
  * 新闻显示页
  */
-public class NewsPageActivity extends BaseActivity implements View.OnClickListener{
+public class NewsPageActivity extends MyBaseActivity implements View.OnClickListener{
 
     private RelativeLayout titleBackRl;//返回
 
