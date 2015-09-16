@@ -10,12 +10,18 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.umeng.message.ALIAS_TYPE;
+import com.umeng.message.IUmengRegisterCallback;
+import com.umeng.message.PushAgent;
+import com.umeng.message.UmengRegistrar;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 import cc.horizoom.ssl.xwyq.DataManager.CardData;
 import cc.horizoom.ssl.xwyq.DataManager.FunctionListData;
@@ -64,6 +70,7 @@ public class MainNewsPageActivity extends MyBaseActivity implements View.OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initYoumengPush();
         setContentView(R.layout.activity_main_news_page);
         settingRl = (RelativeLayout) findViewById(R.id.settingRl);//设置
         leftRl = (RelativeLayout) findViewById(R.id.leftRl);//向左按钮
@@ -75,6 +82,8 @@ public class MainNewsPageActivity extends MyBaseActivity implements View.OnClick
         rightRl.setOnClickListener(this);
         ArrayList<CardEntity> data = CardData.getInstance().getCardDatas(MainNewsPageActivity.this);
     }
+
+
 
     @Override
     protected void onResume() {
@@ -179,4 +188,60 @@ public class MainNewsPageActivity extends MyBaseActivity implements View.OnClick
         intent.setClass(this,LoginNewsActivity.class);
         startActivity(intent);
     }
+
+    /**
+     * 初始化友盟推送
+     */
+    private void initYoumengPush() {
+        PushAgent mPushAgent = PushAgent.getInstance(this);
+        mPushAgent.enable(mRegisterCallback);
+        mPushAgent.onAppStart();
+//        getToken();
+    }
+
+    private void getToken() {
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                String device_token = "";
+                while (MyUtils.isEmpty(device_token)) {
+                    device_token = UmengRegistrar.getRegistrationId(MainNewsPageActivity.this);
+                    MyUtils.log(MainNewsPageActivity.class,"device_token="+device_token);
+                    try {
+                        sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    if (!MyUtils.isEmpty(device_token)) {
+                        String customer_id = UserData.getInstance().getCustomerId(MainNewsPageActivity.this);
+                        PushAgent mPushAgent = PushAgent.getInstance(MainNewsPageActivity.this);
+                        try {
+                            mPushAgent.addAlias(customer_id, "hz_passport");
+                            mPushAgent.addExclusiveAlias(customer_id, "hz_passport");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }.start();
+
+    }
+
+
+    public IUmengRegisterCallback mRegisterCallback = new IUmengRegisterCallback() {
+        @Override
+        public void onRegistered(String registrationId) {
+            String device_token = UmengRegistrar.getRegistrationId(MainNewsPageActivity.this);
+            String customer_id = UserData.getInstance().getCustomerId(MainNewsPageActivity.this);
+            PushAgent mPushAgent = PushAgent.getInstance(MainNewsPageActivity.this);
+            try {
+                mPushAgent.addAlias(customer_id, "hz_passport");
+                mPushAgent.addExclusiveAlias(customer_id, "hz_passport");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    };
 }

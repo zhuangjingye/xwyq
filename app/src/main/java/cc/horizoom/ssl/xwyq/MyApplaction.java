@@ -2,9 +2,19 @@ package cc.horizoom.ssl.xwyq;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Handler;
+import android.widget.Toast;
+
+import com.umeng.message.PushAgent;
+import com.umeng.message.UTrack;
+import com.umeng.message.UmengMessageHandler;
+import com.umeng.message.UmengNotificationClickHandler;
+import com.umeng.message.entity.UMessage;
 
 import java.io.File;
 
+import cc.horizoom.ssl.xwyq.MainNewsPage.MainNewsPageActivity;
+import cn.com.myframe.MyUtils;
 import cn.com.myframe.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import cn.com.myframe.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
 import cn.com.myframe.universalimageloader.cache.memory.impl.LruMemoryCache;
@@ -25,6 +35,8 @@ public class MyApplaction extends Application {
     public void onCreate() {
         super.onCreate();
         initImageLoader(this);
+        PushAgent mPushAgent = PushAgent.getInstance(this);
+        mPushAgent.setNotificationClickHandler(notificationClickHandler);
     }
 
     /**
@@ -56,4 +68,21 @@ public class MyApplaction extends Application {
         ImageLoader.getInstance().init(config);
 
     }
+
+    /**
+     * 消息处理
+     */
+    UmengNotificationClickHandler notificationClickHandler = new UmengNotificationClickHandler(){
+        @Override
+        public void openActivity(Context context, UMessage uMessage) {
+            super.openActivity(context, uMessage);
+            MyUtils.log(MainNewsPageActivity.class, "uMessage.extra="+uMessage.extra);
+        }
+
+        @Override
+        public void dealWithCustomAction(Context context, UMessage msg) {
+            Toast.makeText(context, msg.custom, Toast.LENGTH_LONG).show();
+        }
+    };
+
 }
