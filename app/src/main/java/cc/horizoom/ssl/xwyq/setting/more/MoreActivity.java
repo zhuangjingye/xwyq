@@ -8,6 +8,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.umeng.message.PushAgent;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -268,6 +270,15 @@ public class MoreActivity extends MyBaseActivity implements View.OnClickListener
      * 打开登录页
      */
     private void startLoginActivity() {
+
+        String customer_id = UserData.getInstance().getCustomerId(this);
+        PushAgent mPushAgent = PushAgent.getInstance(this);
+        try {
+            mPushAgent.removeAlias(customer_id, "hz_passport");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         closeActivity(MoreActivity.class.getName());
         Intent intent = new Intent();
         intent.setClass(this, LoginActivity.class);
