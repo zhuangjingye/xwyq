@@ -1,6 +1,8 @@
 package cc.horizoom.ssl.xwyq.MainNewsPage;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -9,11 +11,14 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.umeng.message.ALIAS_TYPE;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
+import com.umeng.message.UmengNotificationClickHandler;
 import com.umeng.message.UmengRegistrar;
+import com.umeng.message.entity.UMessage;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,6 +26,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import cc.horizoom.ssl.xwyq.DataManager.CardData;
@@ -194,6 +200,7 @@ public class MainNewsPageActivity extends MyBaseActivity implements View.OnClick
      */
     private void initYoumengPush() {
         PushAgent mPushAgent = PushAgent.getInstance(this);
+        mPushAgent.setNotificationClickHandler(notificationClickHandler);
         mPushAgent.enable(mRegisterCallback);
         mPushAgent.onAppStart();
 //        getToken();
@@ -234,6 +241,7 @@ public class MainNewsPageActivity extends MyBaseActivity implements View.OnClick
         @Override
         public void onRegistered(String registrationId) {
             String device_token = UmengRegistrar.getRegistrationId(MainNewsPageActivity.this);
+            MyUtils.log(MainNewsPageActivity.class,"device_token="+device_token);
             String customer_id = UserData.getInstance().getCustomerId(MainNewsPageActivity.this);
             PushAgent mPushAgent = PushAgent.getInstance(MainNewsPageActivity.this);
             try {
@@ -244,4 +252,60 @@ public class MainNewsPageActivity extends MyBaseActivity implements View.OnClick
             }
         }
     };
+
+    /**
+     * 消息处理
+     */
+    UmengNotificationClickHandler notificationClickHandler = new UmengNotificationClickHandler(){
+
+        @Override
+        public void launchApp(Context context, UMessage uMessage) {
+            super.launchApp(context, uMessage);
+
+        }
+
+        @Override
+        public void openActivity(Context context, UMessage uMessage) {
+            super.openActivity(context, uMessage);
+            MyUtils.log(MainNewsPageActivity.class, "uMessage.extra=" + uMessage.extra);
+            Map<String,String> map = uMessage.extra;
+            String action = map.get("action");
+            if ("software_update".equals(action)) {
+                updataSoftWare(map);
+            } else if ("warning_push_content".equals(action)) {
+                warningNews(map);
+            }
+        }
+
+        @Override
+        public void dealWithCustomAction(Context context, UMessage msg) {
+            Toast.makeText(context, msg.custom, Toast.LENGTH_LONG).show();
+        }
+    };
+
+    /**
+     * 更新软件
+     * @param map
+     */
+    private void updataSoftWare(Map<String,String> map) {
+        String url = map.get("update_url");
+        Intent intent = new Intent();
+        intent.setAction("android.intent.action.VIEW");
+        Uri content_url = Uri.parse(url);
+        intent.setData(content_url);
+        startActivity(intent);
+        startActivity(intent);
+    }
+
+    /**
+     * 预警新闻
+     * @param map
+     */
+    private void warningNews(Map<String,String> map) {
+        String newsId = map.get("news_id");
+        Intent intent = new Intent();
+        intent.setClass(this, NewsPageActivity.class);
+        intent.putExtra("newsId",newsId);
+        startActivity(intent);
+    }
 }

@@ -20,7 +20,7 @@ android {
 
     signingConfigs {
         debug {
-            storeFile file("D:\\simikongjian\\xiangmu1\\xwyq\\xwyq.jks");
+            storeFile file("/Users/pi/git/xwyq/xwyq.jks");
             storePassword "111111"
             keyAlias "xwyq"
             keyPassword "111111"

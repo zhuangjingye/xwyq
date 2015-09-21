@@ -101,7 +101,8 @@ public class NewsData implements DataInterface{
 
     @Override
     public void clearSaveData(BaseActivity baseActivity) {
-
+        Mysharedperferences.getIinstance().putString(baseActivity,key,"");
+        ourInstance = new NewsData();
     }
 
     public boolean isSuccess() {

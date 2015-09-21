@@ -1,5 +1,6 @@
 package cc.horizoom.ssl.xwyq.MainNewsPage;
 
+import android.content.Intent;
 import android.net.http.SslError;
 import android.os.Bundle;
 import android.text.Html;
@@ -26,6 +27,7 @@ import java.util.HashMap;
 
 import cc.horizoom.ssl.xwyq.DataManager.NewsData;
 import cc.horizoom.ssl.xwyq.DataManager.UserData;
+import cc.horizoom.ssl.xwyq.DataManager.entity.NewsEntity;
 import cc.horizoom.ssl.xwyq.MyBaseActivity;
 import cc.horizoom.ssl.xwyq.Protocol;
 import cc.horizoom.ssl.xwyq.R;
@@ -69,7 +71,15 @@ public class NewsPageActivity extends MyBaseActivity implements View.OnClickList
         myCheckBoxRl = (RelativeLayout) findViewById(R.id.myCheckBoxRl);
         myCheckBox = (CheckBox) findViewById(R.id.myCheckBox);
         myCheckBox.setOnClickListener(this);
-        updataView();
+
+        Intent intent = getIntent();
+        String newsId = intent.getStringExtra("newsId");
+        if (MyUtils.isEmpty(newsId)) {
+            updataView();
+        } else {
+            NewsData.getInstance(this).clearSaveData(this);
+            requestNews(newsId);
+        }
     }
 
     /**
@@ -201,6 +211,50 @@ public class NewsPageActivity extends MyBaseActivity implements View.OnClickList
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 获取新闻
+     * @param newsId
+     */
+    private void requestNews(String newsId) {
+        String url = Protocol.CPCD;
+        HashMap<String,String> map = new HashMap<String,String>();
+        String customer_id = UserData.getInstance().getCustomerId(this);
+        String news_id = newsId;
+        map.put("news_id",news_id);
+        String font_size = Mysharedperferences.getIinstance().getString(this, MoreActivity.key);
+        if (MyUtils.isEmpty(font_size)) {
+            font_size = MoreActivity.SMALL;
+        }
+        map.put("font_size",font_size);
+        map.put("customer_id", customer_id);
+        showWaitDialog();
+        doRequestString(url, map, new BaseActivity.RequestResult() {
+            @Override
+            public void onResponse(String str) {
+                try {
+                    JSONArray jsonArray = new JSONArray(str);
+                    JSONObject jsonObject = jsonArray.optJSONObject(0);
+                    boolean success = jsonObject.optBoolean("success");
+                    String message = jsonObject.optString("message");
+                    if (success) {
+                        NewsData.getInstance(NewsPageActivity.this).saveData(NewsPageActivity.this, str);
+                    } else {
+                        showToast(message);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                updataView();
+                hideWaitDialog();
+            }
+
+            @Override
+            public void onErrResponse(VolleyError error) {
+                hideWaitDialog();
+            }
+        });
     }
 
 }

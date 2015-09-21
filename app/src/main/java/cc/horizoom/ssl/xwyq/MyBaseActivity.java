@@ -3,7 +3,6 @@ package cc.horizoom.ssl.xwyq;
 import android.os.Bundle;
 
 import com.umeng.analytics.MobclickAgent;
-
 import cn.com.myframe.BaseActivity;
 
 public class MyBaseActivity extends BaseActivity {
