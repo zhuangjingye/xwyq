@@ -3,6 +3,7 @@ package cc.horizoom.ssl.xwyq;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Handler;
 import android.widget.Toast;
 
@@ -39,6 +40,8 @@ public class MyApplaction extends Application {
     public void onCreate() {
         super.onCreate();
         initImageLoader(this);
+        PushAgent mPushAgent = PushAgent.getInstance(this);
+        mPushAgent.setNotificationClickHandler(notificationClickHandler);
     }
 
     /**
@@ -69,6 +72,64 @@ public class MyApplaction extends Application {
 
         ImageLoader.getInstance().init(config);
 
+    }
+
+    /**
+     * 消息处理
+     */
+    UmengNotificationClickHandler notificationClickHandler = new UmengNotificationClickHandler(){
+
+        @Override
+        public void launchApp(Context context, UMessage uMessage) {
+            super.launchApp(context, uMessage);
+
+        }
+
+        @Override
+        public void openActivity(Context context, UMessage uMessage) {
+            super.openActivity(context, uMessage);
+            MyUtils.log(MainNewsPageActivity.class, "uMessage.extra=" + uMessage.extra);
+            Map<String,String> map = uMessage.extra;
+            String action = map.get("action");
+            if ("software_update".equals(action)) {
+                updataSoftWare(map);
+            } else if ("warning_push_content".equals(action)) {
+                warningNews(map);
+            }
+        }
+
+        @Override
+        public void dealWithCustomAction(Context context, UMessage msg) {
+            Toast.makeText(context, msg.custom, Toast.LENGTH_LONG).show();
+        }
+    };
+
+    /**
+     * 更新软件
+     * @param map
+     */
+    private void updataSoftWare(Map<String,String> map) {
+        String url = map.get("update_url");
+        Intent intent = new Intent();
+        intent.setAction("android.intent.action.VIEW");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Uri content_url = Uri.parse(url);
+        intent.setData(content_url);
+        startActivity(intent);
+        startActivity(intent);
+    }
+
+    /**
+     * 预警新闻
+     * @param map
+     */
+    private void warningNews(Map<String,String> map) {
+        String newsId = map.get("news_id");
+        Intent intent = new Intent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setClass(this, NewsPageActivity.class);
+        intent.putExtra("newsId",newsId);
+        startActivity(intent);
     }
 
 }

@@ -200,7 +200,6 @@ public class MainNewsPageActivity extends MyBaseActivity implements View.OnClick
      */
     private void initYoumengPush() {
         PushAgent mPushAgent = PushAgent.getInstance(this);
-        mPushAgent.setNotificationClickHandler(notificationClickHandler);
         mPushAgent.enable(mRegisterCallback);
         mPushAgent.onAppStart();
 //        getToken();
@@ -240,72 +239,26 @@ public class MainNewsPageActivity extends MyBaseActivity implements View.OnClick
     public IUmengRegisterCallback mRegisterCallback = new IUmengRegisterCallback() {
         @Override
         public void onRegistered(String registrationId) {
-            String device_token = UmengRegistrar.getRegistrationId(MainNewsPageActivity.this);
-            MyUtils.log(MainNewsPageActivity.class,"device_token="+device_token);
-            String customer_id = UserData.getInstance().getCustomerId(MainNewsPageActivity.this);
-            PushAgent mPushAgent = PushAgent.getInstance(MainNewsPageActivity.this);
-            try {
-                mPushAgent.addAlias(customer_id, "hz_passport");
-                mPushAgent.addExclusiveAlias(customer_id, "hz_passport");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            new Thread(){
+                @Override
+                public void run() {
+                    super.run();
+                    String device_token = UmengRegistrar.getRegistrationId(MainNewsPageActivity.this);
+                    String customer_id = UserData.getInstance().getCustomerId(MainNewsPageActivity.this);
+                    MyUtils.log(MainNewsPageActivity.class,"device_token="+device_token);
+                    MyUtils.log(MainNewsPageActivity.class,"customer_id="+customer_id);
+                    PushAgent mPushAgent = PushAgent.getInstance(MainNewsPageActivity.this);
+                    try {
+                        mPushAgent.removeAlias(customer_id, "hz_passport");
+                        mPushAgent.addAlias(customer_id, "hz_passport");
+//                mPushAgent.addExclusiveAlias(customer_id, "hz_passport");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }.start();
+
         }
     };
 
-    /**
-     * 消息处理
-     */
-    UmengNotificationClickHandler notificationClickHandler = new UmengNotificationClickHandler(){
-
-        @Override
-        public void launchApp(Context context, UMessage uMessage) {
-            super.launchApp(context, uMessage);
-
-        }
-
-        @Override
-        public void openActivity(Context context, UMessage uMessage) {
-            super.openActivity(context, uMessage);
-            MyUtils.log(MainNewsPageActivity.class, "uMessage.extra=" + uMessage.extra);
-            Map<String,String> map = uMessage.extra;
-            String action = map.get("action");
-            if ("software_update".equals(action)) {
-                updataSoftWare(map);
-            } else if ("warning_push_content".equals(action)) {
-                warningNews(map);
-            }
-        }
-
-        @Override
-        public void dealWithCustomAction(Context context, UMessage msg) {
-            Toast.makeText(context, msg.custom, Toast.LENGTH_LONG).show();
-        }
-    };
-
-    /**
-     * 更新软件
-     * @param map
-     */
-    private void updataSoftWare(Map<String,String> map) {
-        String url = map.get("update_url");
-        Intent intent = new Intent();
-        intent.setAction("android.intent.action.VIEW");
-        Uri content_url = Uri.parse(url);
-        intent.setData(content_url);
-        startActivity(intent);
-        startActivity(intent);
-    }
-
-    /**
-     * 预警新闻
-     * @param map
-     */
-    private void warningNews(Map<String,String> map) {
-        String newsId = map.get("news_id");
-        Intent intent = new Intent();
-        intent.setClass(this, NewsPageActivity.class);
-        intent.putExtra("newsId",newsId);
-        startActivity(intent);
-    }
 }
