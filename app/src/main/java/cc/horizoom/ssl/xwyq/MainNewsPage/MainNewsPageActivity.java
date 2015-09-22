@@ -1,24 +1,16 @@
 package cc.horizoom.ssl.xwyq.MainNewsPage;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
-
-import com.umeng.message.ALIAS_TYPE;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
-import com.umeng.message.UmengNotificationClickHandler;
 import com.umeng.message.UmengRegistrar;
-import com.umeng.message.entity.UMessage;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,20 +18,15 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 
 import cc.horizoom.ssl.xwyq.DataManager.CardData;
-import cc.horizoom.ssl.xwyq.DataManager.FunctionListData;
 import cc.horizoom.ssl.xwyq.DataManager.NewsListData;
 import cc.horizoom.ssl.xwyq.DataManager.UserData;
 import cc.horizoom.ssl.xwyq.DataManager.entity.CardEntity;
-import cc.horizoom.ssl.xwyq.DataManager.entity.FunctionEntity;
 import cc.horizoom.ssl.xwyq.MainNewsPage.view.CardsView;
 import cc.horizoom.ssl.xwyq.MyBaseActivity;
 import cc.horizoom.ssl.xwyq.Protocol;
 import cc.horizoom.ssl.xwyq.R;
-import cn.com.myframe.BaseActivity;
 import cn.com.myframe.MyUtils;
 import cn.com.myframe.network.volley.VolleyError;
 
