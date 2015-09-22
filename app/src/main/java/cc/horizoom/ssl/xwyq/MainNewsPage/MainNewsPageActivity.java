@@ -205,35 +205,35 @@ public class MainNewsPageActivity extends MyBaseActivity implements View.OnClick
 //        getToken();
     }
 
-    private void getToken() {
-        new Thread(){
-            @Override
-            public void run() {
-                super.run();
-                String device_token = "";
-                while (MyUtils.isEmpty(device_token)) {
-                    device_token = UmengRegistrar.getRegistrationId(MainNewsPageActivity.this);
-                    MyUtils.log(MainNewsPageActivity.class,"device_token="+device_token);
-                    try {
-                        sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    if (!MyUtils.isEmpty(device_token)) {
-                        String customer_id = UserData.getInstance().getCustomerId(MainNewsPageActivity.this);
-                        PushAgent mPushAgent = PushAgent.getInstance(MainNewsPageActivity.this);
-                        try {
-                            mPushAgent.addAlias(customer_id, "hz_passport");
-                            mPushAgent.addExclusiveAlias(customer_id, "hz_passport");
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-        }.start();
-
-    }
+//    private void getToken() {
+//        new Thread(){
+//            @Override
+//            public void run() {
+//                super.run();
+//                String device_token = "";
+//                while (MyUtils.isEmpty(device_token)) {
+//                    device_token = UmengRegistrar.getRegistrationId(MainNewsPageActivity.this);
+//                    MyUtils.log(MainNewsPageActivity.class,"device_token="+device_token);
+//                    try {
+//                        sleep(1000);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                    if (!MyUtils.isEmpty(device_token)) {
+//                        String customer_id = UserData.getInstance().getCustomerId(MainNewsPageActivity.this);
+//                        PushAgent mPushAgent = PushAgent.getInstance(MainNewsPageActivity.this);
+//                        try {
+//                            mPushAgent.addAlias(customer_id, "hz_passport");
+//                            mPushAgent.addExclusiveAlias(customer_id, "hz_passport");
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }
+//            }
+//        }.start();
+//
+//    }
 
 
     public IUmengRegisterCallback mRegisterCallback = new IUmengRegisterCallback() {
