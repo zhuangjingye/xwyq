@@ -270,16 +270,23 @@ public class MoreActivity extends MyBaseActivity implements View.OnClickListener
      * 打开登录页
      */
     private void startLoginActivity() {
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                String customer_id = UserData.getInstance().getCustomerId(MoreActivity.this);
+                PushAgent mPushAgent = PushAgent.getInstance(MoreActivity.this);
+                mPushAgent.disable();
+                try {
+                    mPushAgent.removeAlias(customer_id, "hz_passport");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
 
-        String customer_id = UserData.getInstance().getCustomerId(this);
-        PushAgent mPushAgent = PushAgent.getInstance(this);
-        try {
-            mPushAgent.removeAlias(customer_id, "hz_passport");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        closeActivity(MoreActivity.class.getName());
+        closeActivity("all");
         Intent intent = new Intent();
         intent.setClass(this, LoginActivity.class);
         startActivity(intent);
