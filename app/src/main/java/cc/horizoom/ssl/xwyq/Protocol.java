@@ -8,8 +8,9 @@ public class Protocol {
 
     public static final String HOST = "http://api-mobile.horizoom.cc/";
 
-    public static final String PLAT = "private/xwyq_iphone/";
+//    public static final String PLAT = "private/xwyq_iphone/";
 
+    public static final String PLAT = "private/xwyq_android_phone/";
     //注册
     public static final String APPLYACCOUNT = HOST + PLAT + "api.customer_apply_account.php";
 
