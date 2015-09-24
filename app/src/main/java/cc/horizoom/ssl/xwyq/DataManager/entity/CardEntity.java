@@ -16,6 +16,8 @@ public class CardEntity {
 
     private String name;
 
+    private long warning_push_content_nums;
+
     private ArrayList<NewsEntity> newsData;
 
     public CardEntity(String json) {
@@ -23,6 +25,7 @@ public class CardEntity {
             JSONObject jsonObject = new JSONObject(json);
             function_id = jsonObject.optString("function_id");
             name = jsonObject.optString("name");
+            warning_push_content_nums = jsonObject.optLong("warning_push_content_nums");
             newsData = new ArrayList<NewsEntity>();
             JSONArray news_list = jsonObject.optJSONArray("news_list");
             for (int i=0;i<news_list.length();i++) {
@@ -33,6 +36,10 @@ public class CardEntity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public long getWarning_push_content_nums() {
+        return warning_push_content_nums;
     }
 
     public String getFunction_id() {

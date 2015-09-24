@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UmengRegistrar;
@@ -22,11 +24,14 @@ import java.util.HashMap;
 import cc.horizoom.ssl.xwyq.DataManager.CardData;
 import cc.horizoom.ssl.xwyq.DataManager.NewsListData;
 import cc.horizoom.ssl.xwyq.DataManager.UserData;
+import cc.horizoom.ssl.xwyq.DataManager.WarningParatmer;
 import cc.horizoom.ssl.xwyq.DataManager.entity.CardEntity;
 import cc.horizoom.ssl.xwyq.MainNewsPage.view.CardsView;
 import cc.horizoom.ssl.xwyq.MyBaseActivity;
 import cc.horizoom.ssl.xwyq.Protocol;
 import cc.horizoom.ssl.xwyq.R;
+import cc.horizoom.ssl.xwyq.setting.warning.WarningActivity;
+import cn.com.myframe.BaseActivity;
 import cn.com.myframe.MyUtils;
 import cn.com.myframe.network.volley.VolleyError;
 
@@ -46,7 +51,30 @@ public class MainNewsPageActivity extends MyBaseActivity implements View.OnClick
 
     private ImageView settingIv;//设置
 
+    private TextView waringNumTv;//重要新闻个数
+
+    private RelativeLayout warningRl;//重要新闻入口
+
+    private RelativeLayout waringNumRl;//个数布局
+
     private CardsView cardsView;
+
+    private CardsView.OnChangeListener onChangeListener = new CardsView.OnChangeListener() {
+        @Override
+        public void onChangeListener(int num) {
+            if (num == 0) {
+                waringNumRl.setVisibility(View.GONE);
+            } else {
+                waringNumRl.setVisibility(View.VISIBLE);
+            }
+
+            if (num >= 99) {
+                waringNumTv.setText("99");
+            } else {
+                waringNumTv.setText(num+"");
+            }
+        }
+    };
 
     private Handler myHandler = new Handler() {
         @Override
@@ -70,6 +98,10 @@ public class MainNewsPageActivity extends MyBaseActivity implements View.OnClick
         rightRl = (RelativeLayout) findViewById(R.id.rightRl);//向右按钮
         contentFl = (FrameLayout) findViewById(R.id.contentFl);//内容
         settingIv = (ImageView) findViewById(R.id.settingIv);//设置
+        waringNumTv = (TextView) findViewById(R.id.waringNumTv);
+        warningRl = (RelativeLayout) findViewById(R.id.warningRl);
+        waringNumRl = (RelativeLayout) findViewById(R.id.waringNumRl);
+        warningRl.setOnClickListener(this);
         settingRl.setOnClickListener(this);
         leftRl.setOnClickListener(this);
         rightRl.setOnClickListener(this);
@@ -95,6 +127,7 @@ public class MainNewsPageActivity extends MyBaseActivity implements View.OnClick
     private void updataView() {
         if (cardsView == null) {
             cardsView = new CardsView(this);
+            cardsView.setOnChangeListener(onChangeListener);
             cardsView.updateView(this);
             contentFl.removeAllViews();
             contentFl.addView(cardsView);
@@ -161,8 +194,81 @@ public class MainNewsPageActivity extends MyBaseActivity implements View.OnClick
                 if (null != cardsView)
                 cardsView.scrollToRight();
                 break;
+            case R.id.warningRl:
+                requestWarningParameter();
+                break;
         }
     }
+
+    /**
+     * 获得安全参数
+     */
+    private void requestWarningParameter() {
+        String url = Protocol.CWP;
+        String customer_id = UserData.getInstance().getCustomerId(this);
+        HashMap<String,String> map = new HashMap<String,String>();
+        map.put("customer_id",customer_id);
+        showWaitDialog();
+        doRequestString(url, map, new BaseActivity.RequestResult() {
+            @Override
+            public void onResponse(String str) {
+                try {
+                    JSONArray jsonArray = new JSONArray(str);
+                    JSONObject jsonObject = jsonArray.optJSONObject(0);
+                    boolean success = jsonObject.optBoolean("success");
+                    String message = jsonObject.optString("message");
+                    if (success) {
+                        WarningParatmer.getInstance().saveData(MainNewsPageActivity.this, str);
+                        requestWarningNewList();
+                    } else {
+                        showToast(message);
+                        hideWaitDialog();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    hideWaitDialog();
+                }
+            }
+
+            @Override
+            public void onErrResponse(VolleyError error) {
+                hideWaitDialog();
+            }
+        });
+    }
+
+    /**
+     * 请求预警新闻列表
+     */
+    private void requestWarningNewList() {
+        String url = Protocol.CWPCL;
+        String customer_id = UserData.getInstance().getCustomerId(this);
+        HashMap<String,String> map = new HashMap<String, String>();
+        map.put("customer_id", customer_id);
+        doRequestString(url, map, new BaseActivity.RequestResult() {
+            @Override
+            public void onResponse(String str) {
+                NewsListData.getInstance().clearSaveData(MainNewsPageActivity.this);
+                NewsListData.getInstance().saveData(MainNewsPageActivity.this, str);
+                hideWaitDialog();
+                startWaringActivity();
+            }
+
+            @Override
+            public void onErrResponse(VolleyError error) {
+                hideWaitDialog();
+            }
+        });
+    }
+
+    /**
+     * 打开舆情页面
+     */
+    private void startWaringActivity() {
+        Intent intent = new Intent(this, WarningActivity.class);
+        startActivity(intent);
+    }
+
 
     /**
      * 显示设置窗口
