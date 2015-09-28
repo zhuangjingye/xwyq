@@ -45,6 +45,8 @@ public class CardsView extends LinearLayout implements ViewPager.OnPageChangeLis
 
     private int currentPosition;
 
+    private OnChangeListener onChangeListener;
+
     private MyPagerAdapter myPagerAdapter;
 
     public CardsView(Context context) {
@@ -64,6 +66,14 @@ public class CardsView extends LinearLayout implements ViewPager.OnPageChangeLis
         View view = layoutInflater.inflate(R.layout.view_cards, this);
         pager = (ViewPager) view.findViewById(R.id.viewpager);
         indicatorLl = (LinearLayout) view.findViewById(R.id.indicatorLl);
+    }
+
+    /**
+     * 设置监听器
+     * @param onChangeListener
+     */
+    public void setOnChangeListener(OnChangeListener onChangeListener) {
+        this.onChangeListener = onChangeListener;
     }
 
     /**
@@ -123,6 +133,10 @@ public class CardsView extends LinearLayout implements ViewPager.OnPageChangeLis
     public void onPageSelected(int position) {
         updateIndicatorLl(position);
         currentPosition = position;
+        int num = (int) cardEntities.get(position).getWarning_push_content_nums();
+        if (onChangeListener != null) {
+            onChangeListener.onChangeListener(num);
+        }
     }
 
     @Override
@@ -212,5 +226,8 @@ public class CardsView extends LinearLayout implements ViewPager.OnPageChangeLis
         }
     }
 
+    public interface OnChangeListener{
+        public void onChangeListener(int num);
+    }
 
 }
