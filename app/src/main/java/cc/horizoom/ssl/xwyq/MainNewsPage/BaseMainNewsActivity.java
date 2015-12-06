@@ -42,6 +42,8 @@ import cn.com.myframe.MyUtils;
 import cn.com.myframe.Mysharedperferences;
 import cn.com.myframe.network.httpmime_4_2_6.apache.http.entity.mime.content.StringBody;
 import cn.com.myframe.network.volley.VolleyError;
+import cn.com.myframe.universalimageloader.core.assist.FailReason;
+import cn.com.myframe.universalimageloader.core.listener.ImageLoadingListener;
 import cn.com.myframe.view.MyBounceListView.MyBounceListview;
 
 /**
@@ -159,8 +161,36 @@ public abstract class BaseMainNewsActivity extends MyBaseActivity implements Vie
         myListView.setAdapter(newsAdapter);
         myListView.setOnItemClickListener(myListOnItemClickListener);
         onUpdataSearchEt(searchEt);
+        getBackImageView();
     }
 
+    /**
+     * 从网络获得头图
+     */
+    private void getBackImageView () {
+        doImageRequest(Protocol.CFTBI, headImg, new ImageLoadingListener() {
+            @Override
+            public void onLoadingStarted(String imageUri, View view) {
+                headImg.setImageBitmap(headBitmap);
+            }
+
+            @Override
+            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                headImg.setImageBitmap(headBitmap);
+            }
+
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                headBitmap = resizeImage(loadedImage);
+                headImg.setImageBitmap(headBitmap);
+            }
+
+            @Override
+            public void onLoadingCancelled(String imageUri, View view) {
+                headImg.setImageBitmap(headBitmap);
+            }
+        });
+    }
 
     @Override
     protected void onResume() {
@@ -345,6 +375,31 @@ public abstract class BaseMainNewsActivity extends MyBaseActivity implements Vie
         return resizedBitmap;
     }
 
+    /**
+     * 从新计算图片大小
+     * @param bitmap
+     * @return
+     */
+    public Bitmap resizeImage(Bitmap bitmap) {
+        Bitmap bitmapOrg = bitmap;
+
+        int width = bitmapOrg.getWidth();
+        int height = bitmapOrg.getHeight();
+        WindowManager wm = this.getWindowManager();
+        int newWidth = wm.getDefaultDisplay().getWidth();
+        int newHeight = height;
+
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaleWidth, scaleHeight);
+        Bitmap resizedBitmap = Bitmap.createBitmap(bitmapOrg, 0, 0, width,
+                height, matrix, true);
+        bitmapOrg.recycle();
+        return resizedBitmap;
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -493,13 +548,13 @@ public abstract class BaseMainNewsActivity extends MyBaseActivity implements Vie
     private void requestNewsList(String functionId) {
         HashMap<String,String> map = getNewsListParameter();
         if (!MyUtils.isEmpty(functionId)) {
-            map.put("function_id",functionId);
+            map.put("ht_id",functionId);
             NewsListData.getInstance().clearData();
             newsAdapter.notifyDataSetChanged();
         } else {
             String fId = NewsListData.getInstance().getFunctionId(this);
             long page = NewsListData.getInstance().getPage(this);
-            map.put("function_id",fId);
+            map.put("ht_id",fId);
             map.put("page", (page + 1) + "");
         }
         requestNewsList(map);

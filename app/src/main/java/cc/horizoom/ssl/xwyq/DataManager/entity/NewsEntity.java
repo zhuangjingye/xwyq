@@ -30,19 +30,24 @@ public class NewsEntity extends MessageItem{
 
     private String status;
 
+    private int likeNums;
+
     public NewsEntity(String json) {
         try {
             JSONObject jsonObject = new JSONObject(json);
             newsId = jsonObject.optString("news_id");
             title = jsonObject.optString("title");
-            source = jsonObject.optString("source");
-            pupushLevel = jsonObject.optInt("push_level");
+            source = jsonObject.optString("spider_site");
+            pupushLevel = jsonObject.optInt("warning_leve");
             publishTime = jsonObject.optString("publish_time");
+            likeNums = jsonObject.optInt("like_nums");
             status = jsonObject.optString("status");
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
+
+    public int getLikeNums() { return likeNums; }
 
     public String getNewsId() {
         return newsId;

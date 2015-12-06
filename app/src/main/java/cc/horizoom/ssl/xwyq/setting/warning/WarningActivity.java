@@ -287,7 +287,7 @@ public class WarningActivity extends MyBaseActivity implements View.OnClickListe
         long page = NewsListData.getInstance().getPage(this);
         HashMap<String,String> map = new HashMap<String,String>();
         map.put("customer_id", customer_id);
-        map.put("function_id", function_id);
+        map.put("ht_id", function_id);
         map.put("page", (page+1)+"");
         showWaitDialog();
         doRequestString(url, map, new BaseActivity.RequestResult() {

@@ -23,11 +23,11 @@ public class CardEntity {
     public CardEntity(String json) {
         try {
             JSONObject jsonObject = new JSONObject(json);
-            function_id = jsonObject.optString("function_id");
-            name = jsonObject.optString("name");
+            function_id = jsonObject.optString("ht_id");
+            name = jsonObject.optString("ht_title");
             warning_push_content_nums = jsonObject.optLong("warning_push_content_nums");
             newsData = new ArrayList<NewsEntity>();
-            JSONArray news_list = jsonObject.optJSONArray("news_list");
+            JSONArray news_list = jsonObject.optJSONArray("main_news_list");
             for (int i=0;i<news_list.length();i++) {
                 JSONObject jsonObject1 = news_list.optJSONObject(i);
                 NewsEntity newsEntity = new NewsEntity(jsonObject1.toString());

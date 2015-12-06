@@ -60,4 +60,5 @@
     <string name="base_word">备选关键词</string>
     <string name="base_word_tip">点击增加关键词</string>
     <string name="copyright">© 2015 horizoom.com,all rights reserved</string>
+    <string name="title_activity_menu_list">MenuListActivity</string>
 </resources>

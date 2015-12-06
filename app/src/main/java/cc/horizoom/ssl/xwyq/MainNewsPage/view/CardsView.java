@@ -3,6 +3,7 @@ package cc.horizoom.ssl.xwyq.MainNewsPage.view;
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +16,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import cc.horizoom.ssl.xwyq.DataManager.CardData;
+import cc.horizoom.ssl.xwyq.DataManager.MenuListData;
 import cc.horizoom.ssl.xwyq.DataManager.entity.CardEntity;
 import cc.horizoom.ssl.xwyq.MainNewsPage.CardNewsAdapter;
 import cc.horizoom.ssl.xwyq.MainNewsPage.MainNewsPageActivity;
+import cc.horizoom.ssl.xwyq.MainNewsPage.MenuAdapter;
+import cc.horizoom.ssl.xwyq.MainNewsPage.MenuListActivity;
 import cc.horizoom.ssl.xwyq.MainNewsPage.NewsAdapter;
 import cc.horizoom.ssl.xwyq.R;
 import cn.com.myframe.MyUtils;
@@ -88,8 +92,29 @@ public class CardsView extends LinearLayout implements ViewPager.OnPageChangeLis
         myPagerAdapter = new MyPagerAdapter();
         pager.setAdapter(myPagerAdapter);
         pager.setOnPageChangeListener(this);
-        pager.setCurrentItem(1, false);
-        updateIndicatorLl(0);
+        pager.setCurrentItem(getCardPosition(), false);
+        updateIndicatorLl(getCardPosition()-1);
+    }
+
+    /**
+     * 返回卡片位置
+     * @return
+     */
+    private int getCardPosition() {
+        CardEntity selecedCardEntity = MenuListData.getInstance().getSelectedCardEntity();
+        if (cardEntities == null
+                || cardEntities.size() == 0
+                || selecedCardEntity == null) {
+            return 1;
+        }
+
+        for (int i=0;i<cardEntities.size();i++) {
+            CardEntity tmp = cardEntities.get(i);
+            if (TextUtils.equals(selecedCardEntity.getName(),tmp.getName())) {
+                return i+1;
+            }
+        }
+        return 1;
     }
 
     /**

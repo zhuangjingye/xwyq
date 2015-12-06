@@ -20,7 +20,7 @@ android {
 
     signingConfigs {
         debug {
-            storeFile file("/Users/pi/git/xwyq/xwyq.jks");
+            storeFile file("../xwyq.jks");
             storePassword "111111"
             keyAlias "xwyq"
             keyPassword "111111"
@@ -68,7 +68,7 @@ def getVersionNameFromManifest() {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
+    androidTestCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile project(':myframe')
     compile 'com.android.support:support-v4:22.2.0'

@@ -92,7 +92,7 @@ public class FeedBackActivity extends MyBaseActivity implements View.OnClickList
      * 显示结果框
      */
     private void showAppleyDialog(boolean result,String message) {
-        ApplyDialog applyDialog = new ApplyDialog(this,true,message);
+        ApplyDialog applyDialog = new ApplyDialog(this,result,message);
         showDialog(applyDialog);
     }
 

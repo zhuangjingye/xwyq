@@ -35,6 +35,7 @@ import cn.com.myframe.toast.MyToast;
 import cn.com.myframe.universalimageloader.core.DisplayImageOptions;
 import cn.com.myframe.universalimageloader.core.assist.ImageScaleType;
 import cn.com.myframe.universalimageloader.core.display.SimpleBitmapDisplayer;
+import cn.com.myframe.universalimageloader.core.listener.ImageLoadingListener;
 
 import org.json.JSONObject;
 
@@ -452,6 +453,16 @@ public class BaseActivity extends FragmentActivity {
     public void doImageRequest(String imageUrl, ImageView mImageView, int default_image, int failed_image) {
         cn.com.myframe.universalimageloader.core.ImageLoader.getInstance().displayImage(imageUrl, mImageView,
                 getDisplayImageOptions(default_image, failed_image, false));
+    }
+
+    /**
+     * 从网络获取图片
+     * @param imageUrl
+     * @param mImageView
+     * @param listener
+     */
+    public void doImageRequest(String imageUrl, ImageView mImageView,ImageLoadingListener listener){
+        cn.com.myframe.universalimageloader.core.ImageLoader.getInstance().displayImage(imageUrl,mImageView,listener);
     }
 
     /**

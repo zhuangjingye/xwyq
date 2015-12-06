@@ -102,7 +102,9 @@ public class LoginNewsActivity extends BaseMainNewsActivity {
         String url = Protocol.CPCSL;
         HashMap<String,String> map = new HashMap<String,String>();
         String customer_id = UserData.getInstance().getCustomerId(this);
+        String fId = NewsListData.getInstance().getFunctionId(this);
         map.put("customer_id",customer_id);
+        map.put("ht_id",fId);
         map.put("keyword",myKey);
         map.put("page",(page+1)+"");
         showWaitDialog();

@@ -17,6 +17,7 @@ import cc.horizoom.ssl.xwyq.DataManager.NewsListData;
 import cc.horizoom.ssl.xwyq.DataManager.UserData;
 import cc.horizoom.ssl.xwyq.DataManager.entity.NewsEntity;
 import cc.horizoom.ssl.xwyq.MainNewsPage.MainNewsPageActivity;
+import cc.horizoom.ssl.xwyq.MainNewsPage.MenuListActivity;
 import cc.horizoom.ssl.xwyq.MainNewsPage.UnLoginNewsActivity;
 import cc.horizoom.ssl.xwyq.MyBaseActivity;
 import cc.horizoom.ssl.xwyq.Protocol;

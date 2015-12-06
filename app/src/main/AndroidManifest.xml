@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="cc.horizoom.ssl.xwyq"
     android:versionCode="1"
-    android:versionName="1.0"
-    package="cc.horizoom.ssl.xwyq" >
+    android:versionName="1.0" >
 
-    <uses-sdk android:minSdkVersion="12"></uses-sdk>
+    <uses-sdk android:minSdkVersion="12" />
 
     <!-- 必选 -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -19,7 +19,8 @@
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
-    <!--【必选】用以设置前台是否显示通知>
+    <!--
+    【必选】用以设置前台是否显示通知>
     <uses-permission android:name="android.permission.GET_TASKS" />
     -->
     <!-- 可选 -->
@@ -28,7 +29,9 @@
     <uses-permission android:name="android.permission.BROADCAST_PACKAGE_INSTALL" />
     <uses-permission android:name="android.permission.BROADCAST_PACKAGE_REPLACED" />
     <uses-permission android:name="android.permission.RESTART_PACKAGES" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />;
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+
+    <android:uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".MyApplaction"
@@ -36,14 +39,18 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AnimRightToLeftTheme" >
-
-
-        <meta-data android:name="UMENG_APPKEY" android:value="55f78853e0f55acf9500397a"></meta-data>
-        <meta-data android:name="UMENG_CHANNEL" android:value="${CHANNEL_NAME}"/>
-        <meta-data android:name="UMENG_MESSAGE_SECRET" android:value="97224f4b4ea4f9a6aeecdf3c3b7ed1ec" >
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="55f78853e0f55acf9500397a" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="${CHANNEL_NAME}" />
+        <meta-data
+            android:name="UMENG_MESSAGE_SECRET"
+            android:value="97224f4b4ea4f9a6aeecdf3c3b7ed1ec" >
         </meta-data>
 
-        <!--友盟开始-->
+        <!-- 友盟开始 -->
         <!-- 监听通知点击或者忽略处理的广播 -->
         <receiver
             android:name="com.umeng.message.NotificationProxyBroadcastReceiver"
@@ -62,6 +69,7 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
                 <data android:scheme="package" />
             </intent-filter>
         </receiver>
@@ -82,6 +90,7 @@
             android:process=":push" >
             <intent-filter>
                 <action android:name="org.agoo.android.intent.action.ELECTION_RESULT_V4" />
+
                 <category android:name="umeng" />
             </intent-filter>
         </receiver>
@@ -100,14 +109,15 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <!--可以根据需要自行设置 android:label 中的服务名 ：-->
+        <!-- 可以根据需要自行设置 android:label 中的服务名 ： -->
+
 
         <!-- Umeng的长连服务，用来建立推送的长连接的 -->
         <!-- 【应用包名】字符串需要替换成本应用的应用包名 -->
         <service
             android:name="com.umeng.message.UmengService"
-            android:label="PushService"
             android:exported="true"
+            android:label="PushService"
             android:process=":push" >
             <intent-filter>
                 <action android:name="cc.horizoom.ssl.xwyq.intent.action.START" />
@@ -117,19 +127,21 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="org.agoo.android.intent.action.PING_V4" />
+
                 <category android:name="umeng" />
             </intent-filter>
         </service>
 
         <!-- Umeng的消息接收服务 -->
-        <service android:name="com.umeng.message.UmengIntentService"
+        <service
+            android:name="com.umeng.message.UmengIntentService"
             android:process=":push" />
 
         <!-- Umeng的消息路由服务 -->
         <service
             android:name="com.umeng.message.UmengMessageIntentReceiverService"
-            android:process=":push"
-            android:exported="true" >
+            android:exported="true"
+            android:process=":push" >
             <intent-filter>
                 <action android:name="org.android.agoo.client.MessageReceiverService" />
             </intent-filter>
@@ -139,19 +151,20 @@
         </service>
 
         <!-- v2.4.1添加的Service，Umeng的消息接收后的处理服务 -->
-        <service android:name="com.umeng.message.UmengMessageCallbackHandlerService"
-            android:exported="false">
+        <service
+            android:name="com.umeng.message.UmengMessageCallbackHandlerService"
+            android:exported="false" >
             <intent-filter>
                 <action android:name="com.umeng.messge.registercallback.action" />
             </intent-filter>
             <intent-filter>
-                <action android:name="com.umeng.message.unregistercallback.action"/>
+                <action android:name="com.umeng.message.unregistercallback.action" />
             </intent-filter>
             <intent-filter>
-                <action android:name="com.umeng.message.message.handler.action"/>
+                <action android:name="com.umeng.message.message.handler.action" />
             </intent-filter>
             <intent-filter>
-                <action android:name="com.umeng.message.autoupdate.handler.action"/>
+                <action android:name="com.umeng.message.autoupdate.handler.action" />
             </intent-filter>
         </service>
 
@@ -160,16 +173,15 @@
 
         <!-- V2.5.0添加的Service，用于本地通知 -->
         <!-- 如果不使用本地通知，可以注释掉本地通知服务的配置 -->
-        <service android:name="com.umeng.message.local.UmengLocalNotificationService"
+        <service
+            android:name="com.umeng.message.local.UmengLocalNotificationService"
             android:exported="false" />
-        <!--友盟结束-->
+        <!-- 友盟结束 -->
 
-
-
-
-        <activity android:name=".boot.BootActivity"
+        <activity
+            android:name=".boot.BootActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden">
+            android:windowSoftInputMode="adjustResize|stateHidden" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -177,75 +189,80 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".login.LoginActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            android:name=".login.LoginActivity" >
+            android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
         <activity
+            android:name=".login.RegistActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            android:name=".login.RegistActivity" >
+            android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
         <activity
+            android:name=".MainNewsPage.UnLoginNewsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            android:name=".MainNewsPage.UnLoginNewsActivity" >
+            android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
         <activity
+            android:name=".MainNewsPage.LoginNewsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            android:name=".MainNewsPage.LoginNewsActivity" >
+            android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
         <activity
+            android:name=".MainNewsPage.NewsPageActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            android:name=".MainNewsPage.NewsPageActivity" >
+            android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
         <activity
+            android:name=".MainNewsPage.MainNewsPageActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            android:name=".MainNewsPage.MainNewsPageActivity" >
+            android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
         <activity
+            android:name=".setting.more.MoreActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            android:name=".setting.more.MoreActivity" >
+            android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
         <activity
+            android:name=".setting.more.HelpActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            android:name=".setting.more.HelpActivity" >
+            android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
         <activity
+            android:name=".setting.more.AboutActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            android:name=".setting.more.AboutActivity" >
+            android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
         <activity
+            android:name=".setting.more.FeedBackActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            android:name=".setting.more.FeedBackActivity" >
+            android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
         <activity
+            android:name=".setting.more.UserInfoActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            android:name=".setting.more.UserInfoActivity" >
+            android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
         <activity
+            android:name=".setting.favoriteNews.FavoriteNewsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            android:name=".setting.favoriteNews.FavoriteNewsActivity" >
+            android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
         <activity
+            android:name=".setting.warning.WarningActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            android:name=".setting.warning.WarningActivity" >
+            android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
         <activity
+            android:name=".setting.preference.PreferenceActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            android:name=".setting.preference.PreferenceActivity" >
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+        <activity
+            android:name=".MainNewsPage.MenuListActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_menu_list" >
         </activity>
     </application>
 

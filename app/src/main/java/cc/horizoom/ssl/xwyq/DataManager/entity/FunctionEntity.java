@@ -25,9 +25,9 @@ public class FunctionEntity {
     public FunctionEntity(String json) {
         try {
             JSONObject jsonObject = new JSONObject(json);
-            functionId = jsonObject.optString("function_id");
-            name = jsonObject.optString("name");
-            description = jsonObject.optString("description");
+            functionId = jsonObject.optString("ht_id");
+            name = jsonObject.optString("ht_title");
+//            description = jsonObject.optString("description");
             isPublic = jsonObject.optBoolean("is_public");
         } catch (JSONException e) {
             e.printStackTrace();
