@@ -55,7 +55,7 @@ public class BaseActivity extends FragmentActivity {
     private RequestQueue requestQueue;
 
     //设置请求超时时间
-    private DefaultRetryPolicy defaultRetryPolicy = new DefaultRetryPolicy(10000,
+    private DefaultRetryPolicy defaultRetryPolicy = new DefaultRetryPolicy(60000,
             DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
             DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
 

@@ -32,6 +32,11 @@ public class MenuAdapter extends BaseAdapter {
         this.data = data;
     }
 
+    public void setData(ArrayList<CardEntity> data) {
+        this.data = data;
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getCount() {
         return data.size();

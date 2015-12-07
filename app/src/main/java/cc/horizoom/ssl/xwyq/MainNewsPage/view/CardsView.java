@@ -93,7 +93,7 @@ public class CardsView extends LinearLayout implements ViewPager.OnPageChangeLis
         pager.setAdapter(myPagerAdapter);
         pager.setOnPageChangeListener(this);
         pager.setCurrentItem(getCardPosition(), false);
-        updateIndicatorLl(getCardPosition()-1);
+        updateIndicatorLl(getCardPosition());
     }
 
     /**
@@ -111,10 +111,10 @@ public class CardsView extends LinearLayout implements ViewPager.OnPageChangeLis
         for (int i=0;i<cardEntities.size();i++) {
             CardEntity tmp = cardEntities.get(i);
             if (TextUtils.equals(selecedCardEntity.getName(),tmp.getName())) {
-                return i+1;
+                return i;
             }
         }
-        return 1;
+        return 0;
     }
 
     /**

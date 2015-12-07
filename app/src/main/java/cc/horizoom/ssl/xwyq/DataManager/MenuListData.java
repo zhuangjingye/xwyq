@@ -50,6 +50,7 @@ public class MenuListData implements DataInterface {
     public void analyze(BaseActivity baseActivity) {
         String json = Mysharedperferences.getIinstance().getString(baseActivity,key);
         try {
+            MyUtils.log(MenuListData.class,"json="+json);
             JSONArray jsonArray = new JSONArray(json);
             JSONObject jsonObject = jsonArray.optJSONObject(0);
             boolean success = jsonObject.optBoolean("success");

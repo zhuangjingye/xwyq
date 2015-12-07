@@ -143,7 +143,7 @@ public class LoginActivity extends MyBaseActivity implements View.OnClickListene
      */
     private void loginSuccessed(String json) {
         UserData.getInstance().saveData(this,json);
-        Intent intent = new Intent(this, MainNewsPageActivity.class);
+        Intent intent = new Intent(this, MenuListActivity.class);
         startActivity(intent);
         closeActivity(LoginActivity.class.getName());
     }

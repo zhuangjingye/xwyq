@@ -41,7 +41,8 @@ public class MenuListActivity extends MyBaseActivity {
      * 更新页面
      */
     private void updateView () {
-        menuAdapter.notifyDataSetChanged();
+        ArrayList<CardEntity> menuData = MenuListData.getInstance().getMenuDatas(this);
+        menuAdapter.setData(menuData);
     }
 
     /**
