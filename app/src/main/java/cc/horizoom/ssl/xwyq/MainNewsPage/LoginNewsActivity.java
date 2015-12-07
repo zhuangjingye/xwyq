@@ -76,8 +76,8 @@ public class LoginNewsActivity extends BaseMainNewsActivity {
                                           KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     String key = searchEt.getText().toString();
-
-                    NewsListData.getInstance().clearData();
+                    NewsListData.getInstance().clearSaveData(LoginNewsActivity.this);
+                    newsAdapter.notifyDataSetChanged();
                     requestCPCSL(key);
                 }
                 return false;
@@ -95,9 +95,13 @@ public class LoginNewsActivity extends BaseMainNewsActivity {
             myKey = NewsListData.getInstance().getKeyWord();
         } else {
             myKey = keyword;
+            NewsListData.getInstance().setKeyWord(keyword);
         }
 
         long page = NewsListData.getInstance().getPage(this);
+        if (page == -1) {
+            page = 0;
+        }
 
         String url = Protocol.CPCSL;
         HashMap<String,String> map = new HashMap<String,String>();
@@ -106,7 +110,7 @@ public class LoginNewsActivity extends BaseMainNewsActivity {
         map.put("customer_id",customer_id);
         map.put("ht_id",fId);
         map.put("keyword",myKey);
-        map.put("page",(page+1)+"");
+        map.put("page",(page+1)+"");//page从1开始
         showWaitDialog();
         doRequestString(url, map, new RequestResult() {
             @Override
@@ -123,8 +127,6 @@ public class LoginNewsActivity extends BaseMainNewsActivity {
                             hideWaitDialog();
                             return;
                         }
-
-                        NewsListData.getInstance().setKeyWord(myKey);
                         NewsListData.getInstance().saveData(LoginNewsActivity.this, str);
                         newsAdapter.notifyDataSetChanged();
                     } else {

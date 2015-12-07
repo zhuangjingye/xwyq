@@ -210,6 +210,8 @@ public abstract class BaseMainNewsActivity extends MyBaseActivity implements Vie
                 map.put("customer_id",customer_id);
                 String keyword = NewsListData.getInstance().getKeyWord();
                 map.put("keyword",keyword);
+                map.put("page","1");
+                map.put("ht_id","all");
             }
             requestNewsList(map);
         }
@@ -549,13 +551,18 @@ public abstract class BaseMainNewsActivity extends MyBaseActivity implements Vie
         HashMap<String,String> map = getNewsListParameter();
         if (!MyUtils.isEmpty(functionId)) {
             map.put("ht_id",functionId);
+            map.put("page", "1");
+            map.put("keyWord", selectFunctionEntity.getName());
             NewsListData.getInstance().clearData();
+            NewsListData.getInstance().setKeyWord(selectFunctionEntity.getName());
             newsAdapter.notifyDataSetChanged();
         } else {
             String fId = NewsListData.getInstance().getFunctionId(this);
+            String keyWord = NewsListData.getInstance().getKeyWord();
             long page = NewsListData.getInstance().getPage(this);
             map.put("ht_id",fId);
             map.put("page", (page + 1) + "");
+            map.put("keyWord", keyWord);
         }
         requestNewsList(map);
     }

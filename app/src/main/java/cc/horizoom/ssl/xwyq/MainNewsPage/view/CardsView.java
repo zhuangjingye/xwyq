@@ -169,6 +169,9 @@ public class CardsView extends LinearLayout implements ViewPager.OnPageChangeLis
         if (lastState == 1 && state==0 && currentPosition == (cardEntities.size()-1)) {
             mainNewsPageActivity.startLoginNewsActivity();
         }
+        if (lastState == 1 && state==0 && currentPosition == 0) {
+            mainNewsPageActivity.closeActivity(MainNewsPageActivity.class.getName());
+        }
         lastState = state;
 
     }
@@ -180,6 +183,8 @@ public class CardsView extends LinearLayout implements ViewPager.OnPageChangeLis
 
         if (pager.getCurrentItem() >= 1) {
             pager.setCurrentItem(pager.getCurrentItem() - 1, true);
+        } else {
+            mainNewsPageActivity.closeActivity(MainNewsPageActivity.class.getName());
         }
     }
 

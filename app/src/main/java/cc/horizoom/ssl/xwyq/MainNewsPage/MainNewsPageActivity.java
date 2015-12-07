@@ -245,6 +245,8 @@ public class MainNewsPageActivity extends MyBaseActivity implements View.OnClick
         String customer_id = UserData.getInstance().getCustomerId(this);
         HashMap<String,String> map = new HashMap<String, String>();
         map.put("customer_id", customer_id);
+        map.put("ht_id","all");
+        map.put("page","1");
         doRequestString(url, map, new BaseActivity.RequestResult() {
             @Override
             public void onResponse(String str) {

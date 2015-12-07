@@ -36,7 +36,7 @@ public class NewsListData implements DataInterface{
 
     private String key = NewsListData.class.getName();
 
-    private String functionId;
+    private String functionId = "all";
 
     private long page = -1;
 
@@ -69,7 +69,7 @@ public class NewsListData implements DataInterface{
      */
     public void clearSaveData(BaseActivity baseActivity) {
         Mysharedperferences.getIinstance().putString(baseActivity,key,"");
-        ourInstance = new NewsListData();
+        clearData();
     }
 
     /**
@@ -78,7 +78,7 @@ public class NewsListData implements DataInterface{
     public void clearData() {
         if(newsData != null) {
             newsData.clear();
-            functionId = "";
+            functionId = "all";
             page = -1;
             keyWord = "";
         }

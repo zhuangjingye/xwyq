@@ -98,7 +98,6 @@ public class MenuAdapter extends BaseAdapter {
         intent.setClass(baseActivity,MainNewsPageActivity.class);
         MenuListData.getInstance().setSelectedCardEntity(cardEntity);
         baseActivity.startActivity(intent);
-        baseActivity.closeActivity(MenuListActivity.class.getName());
     }
 
     class HolderView {
