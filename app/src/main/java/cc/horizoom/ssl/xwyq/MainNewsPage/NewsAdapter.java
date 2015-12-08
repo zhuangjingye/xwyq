@@ -1,5 +1,6 @@
 package cc.horizoom.ssl.xwyq.MainNewsPage;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,6 +65,7 @@ public class NewsAdapter extends BaseAdapter{
             holderView.numTv = (TextView) view.findViewById(R.id.numTv);
             holderView.timeTv = (TextView) view.findViewById(R.id.timeTv);
             holderView.smallBellIv = (ImageView) view.findViewById(R.id.smallBellIv);
+            holderView.sourceTv = (TextView) view.findViewById(R.id.sourceTv);
             view.setTag(holderView);
         } else {
             holderView = (HolderView) view.getTag();
@@ -72,6 +74,12 @@ public class NewsAdapter extends BaseAdapter{
 //        holderView.numTv.setText(i+"");
         holderView.contentTv.setText(newsEntity.getTitle());
         holderView.timeTv.setText(newsEntity.getPublishTime());
+        if (TextUtils.isEmpty(newsEntity.getSource())) {
+            holderView.sourceTv.setText("来源：未知");
+        } else {
+            holderView.sourceTv.setText("来源："+newsEntity.getSource());
+        }
+
         if (newsEntity.getPupushLevel() >= 5) {
             holderView.smallBellIv.setVisibility(View.VISIBLE);
         } else {
@@ -86,6 +94,7 @@ public class NewsAdapter extends BaseAdapter{
         TextView contentTv;//内容
         TextView timeTv;//时间
         ImageView smallBellIv;//铃铛
+        TextView sourceTv;//信息源
     }
 
 }

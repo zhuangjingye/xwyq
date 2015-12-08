@@ -46,8 +46,18 @@
                     android:id="@+id/timeTv"
                     android:textSize="10sp"
                     android:layout_weight="1"
+                    android:singleLine="true"
                     android:textColor="@color/c_3b3b3b"
                     android:text="2015-02-08 10:20"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/sourceTv"
+                    android:textSize="10sp"
+                    android:layout_weight="1"
+                    android:textColor="@color/c_3b3b3b"
+                    android:text="来源：搜狐新闻"
+                    android:singleLine="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <ImageView
