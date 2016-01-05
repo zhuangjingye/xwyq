@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cc.horizoom.ssl.xwyq.DataManager.CardData;
 import cc.horizoom.ssl.xwyq.DataManager.UserData;
 import cn.com.myframe.BaseActivity;
 import cn.com.myframe.network.volley.VolleyError;
@@ -33,6 +34,7 @@ public class MyBaseActivity extends BaseActivity {
             //app 从后台唤醒，进入前台
             isActive = true;
             pushWarningContentReadStatus();
+            onBackToForeground();
         }
     }
     @Override
@@ -99,6 +101,14 @@ public class MyBaseActivity extends BaseActivity {
 
             }
         });
+    }
+
+
+    /**
+     * 从后台恢复 清楚特殊数据
+     */
+    public void onBackToForeground() {
+        CardData.getInstance().clearSaveData(MyBaseActivity.this);
     }
 
 }
