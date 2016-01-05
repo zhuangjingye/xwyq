@@ -105,7 +105,8 @@ public class MainNewsPageActivity extends MyBaseActivity implements View.OnClick
         settingRl.setOnClickListener(this);
         leftRl.setOnClickListener(this);
         rightRl.setOnClickListener(this);
-        ArrayList<CardEntity> data = CardData.getInstance().getCardDatas(MainNewsPageActivity.this);
+//        ArrayList<CardEntity> data = CardData.getInstance().getCardDatas(MainNewsPageActivity.this);
+        CardData.getInstance().clearSaveData(MainNewsPageActivity.this);
     }
 
 
