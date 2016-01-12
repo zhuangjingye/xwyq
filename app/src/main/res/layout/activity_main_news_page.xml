@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"></FrameLayout>
 
-    <!--设置-->
+    <!--預警-->
     <RelativeLayout
         android:id="@+id/warningRl"
         android:layout_width="45dp"
@@ -23,7 +23,7 @@
         android:clickable="true">
 
         <ImageView
-            android:id="@+id/waringIv"
+            android:id="@+id/warningIv"
             android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

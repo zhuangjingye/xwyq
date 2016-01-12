@@ -43,6 +43,17 @@ public class NewsListData implements DataInterface{
     private String keyWord;//关键字
 
     private ArrayList<NewsEntity> newsData;
+
+    private int warningColor = -1;//消息级别
+
+    public void setWarningColor(int warningColor) {
+        this.warningColor = warningColor;
+    }
+
+    public int getWarningColor() {
+        return warningColor;
+    }
+
     /**
      * 保存数据
      * @param baseActivity
@@ -80,6 +91,7 @@ public class NewsListData implements DataInterface{
             newsData.clear();
             functionId = "all";
             page = -1;
+            warningColor = -1;
             keyWord = "";
         }
     }

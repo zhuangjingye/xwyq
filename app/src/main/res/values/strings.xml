@@ -53,6 +53,7 @@
     <string name="user_sell_name">对口销售称：</string>
     <string name="user_custom_tip">客户简介：</string>
     <string name="security_score">安全得分</string>
+    <string name="waring_new_num">今日预警新闻总数</string>
     <string name="waring_news">预警新闻</string>
     <string name="complate">完成</string>
     <string name="my_word">我的关键词</string>

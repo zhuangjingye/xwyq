@@ -57,6 +57,8 @@ public class MainNewsPageActivity extends MyBaseActivity implements View.OnClick
 
     private RelativeLayout waringNumRl;//个数布局
 
+    private ImageView warningIv;
+
     private CardsView cardsView;
 
     private CardsView.OnChangeListener onChangeListener = new CardsView.OnChangeListener() {
@@ -64,8 +66,10 @@ public class MainNewsPageActivity extends MyBaseActivity implements View.OnClick
         public void onChangeListener(int num) {
             if (num == 0) {
                 waringNumRl.setVisibility(View.GONE);
+                warningIv.setImageResource(R.mipmap.warning_bell);
             } else {
                 waringNumRl.setVisibility(View.VISIBLE);
+                warningIv.setImageResource(R.mipmap.warning_bell_red);
             }
 
             if (num >= 99) {
@@ -101,6 +105,7 @@ public class MainNewsPageActivity extends MyBaseActivity implements View.OnClick
         waringNumTv = (TextView) findViewById(R.id.waringNumTv);
         warningRl = (RelativeLayout) findViewById(R.id.warningRl);
         waringNumRl = (RelativeLayout) findViewById(R.id.waringNumRl);
+        warningIv = (ImageView) findViewById(R.id.warningIv);
         warningRl.setOnClickListener(this);
         settingRl.setOnClickListener(this);
         leftRl.setOnClickListener(this);

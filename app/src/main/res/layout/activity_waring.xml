@@ -33,42 +33,51 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/securityScoreTv"
+                android:background="@drawable/color_btn_00000000"
+                android:id="@+id/num_news_tv"
                 android:layout_marginTop="20dp"
                 android:gravity="center"
                 android:textSize="47sp"
                 android:text="8.5"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
                 android:textColor="@color/c_ffffff"
-                android:layout_width="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
-                android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:textSize="12sp"
-                android:text="@string/security_score"
+                android:text="@string/waring_new_num"
                 android:textColor="@color/c_a29aac"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <LinearLayout
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
-                android:layout_marginBottom="25dp"
+                android:layout_marginBottom="20dp"
                 android:layout_height="wrap_content">
 
 
                 <LinearLayout
+                    android:id="@+id/red_ll"
+                    android:padding="5dp"
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:gravity="center"
+                    android:background="@drawable/color_btn_00000000"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <ImageView
+                        android:id="@+id/bell_red_iv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/socer_img"/>
+                        android:src="@mipmap/waring_bell_red_uncheck"/>
                     <TextView
-                        android:id="@+id/socerTv"
+                        android:id="@+id/redNumTv"
                         android:layout_marginTop="15dp"
                         android:textColor="@color/c_eff4f3"
                         android:text="8.9"
@@ -78,17 +87,21 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/orange_ll"
+                    android:padding="5dp"
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:gravity="center"
+                    android:background="@drawable/color_btn_00000000"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <ImageView
+                        android:id="@+id/bell_orange_iv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/histogram"/>
+                        android:src="@mipmap/waring_bell_orange_uncheck"/>
                     <TextView
-                        android:id="@+id/histogramTv"
+                        android:id="@+id/orangeNumTv"
                         android:layout_marginTop="15dp"
                         android:textColor="@color/c_eff4f3"
                         android:text="129"
@@ -99,17 +112,21 @@
 
 
                 <LinearLayout
+                    android:id="@+id/blue_ll"
+                    android:padding="5dp"
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:gravity="center"
+                    android:background="@drawable/color_btn_00000000"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <ImageView
+                        android:id="@+id/bell_blue_iv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/message"/>
+                        android:src="@mipmap/waring_bell_blue_uncheck"/>
                     <TextView
-                        android:id="@+id/messageTv"
+                        android:id="@+id/blueNumTv"
                         android:layout_marginTop="15dp"
                         android:textColor="@color/c_eff4f3"
                         android:text="318"

@@ -11,6 +11,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.webkit.WebView;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -50,13 +51,13 @@ public class WarningActivity extends MyBaseActivity implements View.OnClickListe
 
     private RelativeLayout headRl;//上半部分
 
-    private TextView securityScoreTv;//安全得分
+    private TextView numNewstv;//安全得分
 
-    private TextView socerTv;//得分
+    private TextView redNumTv;//红色级别数量
 
-    private TextView histogramTv;//柱状图
+    private TextView orangeNumTv;//橙色级别数量
 
-    private TextView messageTv;//消息
+    private TextView blueNumTv;//蓝色级别数量
 
     private LinearLayout barDownLl;//向下啦
 
@@ -69,6 +70,18 @@ public class WarningActivity extends MyBaseActivity implements View.OnClickListe
     private ArrayList<NewsEntity> data;
 
     protected NewsAdapter newsAdapter;//新闻适配起
+
+    private ImageView bellRedIv;//红色级别
+
+    private ImageView bellOrangeIv;//橙色级别
+
+    private ImageView bellBlueIv;//蓝色级别
+
+    private LinearLayout redLl;//红色级别按钮
+
+    private LinearLayout orangeLl;//橙色级别按钮
+
+    private LinearLayout blueLl;//蓝色级别按钮
 
     private AdapterView.OnItemClickListener myListOnItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
@@ -85,18 +98,28 @@ public class WarningActivity extends MyBaseActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_waring);
         backRl = (RelativeLayout) findViewById(R.id.backRl);//返回
-        securityScoreTv = (TextView) findViewById(R.id.securityScoreTv);//安全得分
-        socerTv = (TextView) findViewById(R.id.socerTv);//得分
-        histogramTv = (TextView) findViewById(R.id.histogramTv);//柱状图
-        messageTv = (TextView) findViewById(R.id.messageTv);//消息
+        numNewstv = (TextView) findViewById(R.id.num_news_tv);//新闻总数
+        redNumTv = (TextView) findViewById(R.id.redNumTv);
+        orangeNumTv = (TextView) findViewById(R.id.orangeNumTv);
+        blueNumTv = (TextView) findViewById(R.id.blueNumTv);
         barDownLl = (LinearLayout) findViewById(R.id.barDownLl);//向下啦
         barUpLl = (LinearLayout) findViewById(R.id.barUpLl);//向上拉
         listview = (MyBounceListview) findViewById(R.id.listView);//消息列表
         webView = (WebView) findViewById(R.id.webView);//柱状图
         headRl = (RelativeLayout) findViewById(R.id.headRl);
+        redLl = (LinearLayout) findViewById(R.id.red_ll);//红色级别按钮
+        orangeLl = (LinearLayout) findViewById(R.id.orange_ll);//橙色级别按钮
+        blueLl = (LinearLayout) findViewById(R.id.blue_ll);//蓝色级别按钮
+        bellRedIv = (ImageView) findViewById(R.id.bell_red_iv);//红色级别
+        bellOrangeIv = (ImageView) findViewById(R.id.bell_orange_iv);//橙色级别
+        bellBlueIv = (ImageView) findViewById(R.id.bell_blue_iv);//蓝色级别
+        redLl.setOnClickListener(this);
+        orangeLl.setOnClickListener(this);
+        blueLl.setOnClickListener(this);
         backRl.setOnClickListener(this);
         barDownLl.setOnClickListener(this);
         barUpLl.setOnClickListener(this);
+        numNewstv.setOnClickListener(this);
         updataView();
 
 
@@ -121,10 +144,10 @@ public class WarningActivity extends MyBaseActivity implements View.OnClickListe
         String b_value = WarningParatmer.getInstance().getB_value(this);
         String c_value = WarningParatmer.getInstance().getC_value(this);
         String d_value = WarningParatmer.getInstance().getD_value(this);
-        securityScoreTv.setText(a_value);
-        socerTv.setText(b_value);
-        histogramTv.setText(c_value);
-        messageTv.setText(d_value);
+        numNewstv.setText(a_value);
+        redNumTv.setText(b_value);
+        orangeNumTv.setText(c_value);
+        blueNumTv.setText(d_value);
     }
 
     /**
@@ -154,7 +177,52 @@ public class WarningActivity extends MyBaseActivity implements View.OnClickListe
             case R.id.loadTv:
                 requestWarningNewList();
                 break;
+            case R.id.red_ll:
+                setBellStatus(2);
+                requestWarningListBuyLevel(2);
+                break;
+            case R.id.orange_ll:
+                setBellStatus(1);
+                requestWarningListBuyLevel(1);
+                break;
+            case R.id.blue_ll:
+                setBellStatus(0);
+                requestWarningListBuyLevel(0);
+                break;
+            case R.id.num_news_tv:
+                setBellStatus(-1);
+                requestWarningListBuyLevel(-1);
+                break;
 
+        }
+    }
+
+    /**
+     * 设置铃铛的显示状态 -1 未选 2 红色 1 橙色 0蓝色
+     * @param status
+     */
+    private void setBellStatus(int status) {
+        switch (status) {
+            case 0:
+                bellRedIv.setImageResource(R.mipmap.waring_bell_red_uncheck);//红色级别
+                bellOrangeIv.setImageResource(R.mipmap.waring_bell_orange_uncheck);//橙色级别
+                bellBlueIv.setImageResource(R.mipmap.waring_bell_blue_checked);//蓝色级别
+                break;
+            case 1:
+                bellRedIv.setImageResource(R.mipmap.waring_bell_red_uncheck);//红色级别
+                bellOrangeIv.setImageResource(R.mipmap.waring_bell_orange_checked);//橙色级别
+                bellBlueIv.setImageResource(R.mipmap.waring_bell_blue_uncheck);//蓝色级别
+                break;
+            case 2:
+                bellRedIv.setImageResource(R.mipmap.waring_bell_red_checked);//红色级别
+                bellOrangeIv.setImageResource(R.mipmap.waring_bell_orange_uncheck);//橙色级别
+                bellBlueIv.setImageResource(R.mipmap.waring_bell_blue_uncheck);//蓝色级别
+                break;
+            case -1:
+                bellRedIv.setImageResource(R.mipmap.waring_bell_red_uncheck);//红色级别
+                bellOrangeIv.setImageResource(R.mipmap.waring_bell_orange_uncheck);//橙色级别
+                bellBlueIv.setImageResource(R.mipmap.waring_bell_blue_uncheck);//蓝色级别
+                break;
         }
     }
 
@@ -278,6 +346,17 @@ public class WarningActivity extends MyBaseActivity implements View.OnClickListe
     }
 
     /**
+     * 根据级别查询
+     * @param level
+     */
+    private void requestWarningListBuyLevel(int level) {
+        NewsListData.getInstance().clearSaveData(this);
+        newsAdapter.notifyDataSetChanged();
+        NewsListData.getInstance().setWarningColor(level);
+        requestWarningNewList();
+    }
+
+    /**
      * 请求预警新闻列表
      */
     private void requestWarningNewList() {
@@ -289,6 +368,10 @@ public class WarningActivity extends MyBaseActivity implements View.OnClickListe
         map.put("customer_id", customer_id);
         map.put("ht_id", function_id);
         map.put("page", (page+1)+"");
+        int warningColor = NewsListData.getInstance().getWarningColor();
+        if (-1 != warningColor) {
+            map.put("warning_color",warningColor+"");
+        }
         showWaitDialog();
         doRequestString(url, map, new BaseActivity.RequestResult() {
             @Override

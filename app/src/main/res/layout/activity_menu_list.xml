@@ -5,12 +5,49 @@
     android:background="@mipmap/menu_list_bg"
     android:orientation="vertical"
     tools:context="cc.horizoom.ssl.xwyq.MainNewsPage.MenuListActivity">
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
+        <!--預警-->
+        <RelativeLayout
+            android:id="@+id/warningRl"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="1dp"
+            android:layout_marginTop="110dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/color_btn_00000000"
+            android:clickable="true">
 
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/waringIv"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/warning_bell" />
+            <RelativeLayout
+                android:id="@+id/waringNumRl"
+                android:visibility="visible"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/focus_point_red"
+                android:gravity="center"
+                android:layout_width="20dp"
+                android:layout_height="20dp">
+                <TextView
+                    android:id="@+id/waringNumTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:textColor="@color/c_ffffff"
+                    android:text="0"/>
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+    </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"

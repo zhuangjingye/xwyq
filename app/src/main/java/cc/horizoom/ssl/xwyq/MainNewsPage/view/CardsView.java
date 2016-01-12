@@ -92,8 +92,15 @@ public class CardsView extends LinearLayout implements ViewPager.OnPageChangeLis
         myPagerAdapter = new MyPagerAdapter();
         pager.setAdapter(myPagerAdapter);
         pager.setOnPageChangeListener(this);
-        pager.setCurrentItem(getCardPosition(), false);
-        updateIndicatorLl(getCardPosition());
+        int cardPosition = getCardPosition();
+        pager.setCurrentItem(cardPosition, false);
+        updateIndicatorLl(cardPosition);
+        if (cardPosition == 0) {
+            int num = (int) cardEntities.get(cardPosition).getWarning_push_content_nums();
+            if (onChangeListener != null) {
+                onChangeListener.onChangeListener(num);
+            }
+        }
     }
 
     /**
