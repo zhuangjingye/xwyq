@@ -73,11 +73,12 @@ public class MenuListActivity extends MyBaseActivity implements View.OnClickList
         long num = 0;//预警消息总数
         ArrayList<CardEntity> menuData = MenuListData.getInstance().getMenuDatas(this);
         if (menuData != null && menuData.size() != 0) {
-            for (CardEntity cardEntity:menuData) {
-                if (cardEntity != null) {
-                    num += cardEntity.getWarning_push_content_nums();
-                }
-            }
+//            for (CardEntity cardEntity:menuData) {
+//                if (cardEntity != null) {
+//                    num += cardEntity.getWarning_push_content_nums();
+//                }
+//            }
+            num = menuData.get(0).getWarning_push_content_nums();
         }
         if (num == 0) {
             waringNumRl.setVisibility(View.GONE);

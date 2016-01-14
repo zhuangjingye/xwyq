@@ -99,9 +99,6 @@ public class LoginNewsActivity extends BaseMainNewsActivity {
         }
 
         long page = NewsListData.getInstance().getPage(this);
-        if (page == -1) {
-            page = 0;
-        }
 
         String url = Protocol.CPCSL;
         HashMap<String,String> map = new HashMap<String,String>();

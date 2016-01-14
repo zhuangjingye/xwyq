@@ -38,7 +38,7 @@ public class NewsListData implements DataInterface{
 
     private String functionId = "all";
 
-    private long page = -1;
+    private long page = 0;
 
     private String keyWord;//关键字
 
@@ -90,7 +90,7 @@ public class NewsListData implements DataInterface{
         if(newsData != null) {
             newsData.clear();
             functionId = "all";
-            page = -1;
+            page = 0;
             warningColor = -1;
             keyWord = "";
         }
@@ -129,7 +129,7 @@ public class NewsListData implements DataInterface{
     }
 
     public long getPage(BaseActivity baseActivity) {
-        if (page == -1) {
+        if (page == 0) {
             analyze(baseActivity);
         }
 
