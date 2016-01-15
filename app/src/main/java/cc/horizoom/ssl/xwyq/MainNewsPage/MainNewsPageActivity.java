@@ -252,7 +252,7 @@ public class MainNewsPageActivity extends MyBaseActivity implements View.OnClick
         HashMap<String,String> map = new HashMap<String, String>();
         map.put("customer_id", customer_id);
         map.put("ht_id","all");
-        map.put("page","1");
+        map.put("page","0");
         doRequestString(url, map, new BaseActivity.RequestResult() {
             @Override
             public void onResponse(String str) {

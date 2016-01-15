@@ -136,6 +136,14 @@ public class NewsListData implements DataInterface{
         return page;
     }
 
+    /**
+     * 设置页数
+     * @param page
+     */
+    public void setPage(long page) {
+        this.page = page;
+    }
+
     public ArrayList<NewsEntity> getNewsData(BaseActivity baseActivity) {
         if (newsData.size() == 0) {
             analyze(baseActivity);

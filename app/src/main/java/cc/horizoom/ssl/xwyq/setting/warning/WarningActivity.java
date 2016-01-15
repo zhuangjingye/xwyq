@@ -353,6 +353,7 @@ public class WarningActivity extends MyBaseActivity implements View.OnClickListe
         NewsListData.getInstance().clearSaveData(this);
         newsAdapter.notifyDataSetChanged();
         NewsListData.getInstance().setWarningColor(level);
+        NewsListData.getInstance().setPage(-1);
         requestWarningNewList();
     }
 
