@@ -2,6 +2,7 @@ package cc.horizoom.ssl.xwyq.setting.warning;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -158,6 +159,7 @@ public class WarningActivity extends MyBaseActivity implements View.OnClickListe
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         View v = layoutInflater.inflate(R.layout.view_news_footer, null);
         TextView loadTv = (TextView) v.findViewById(R.id.loadTv);
+        loadTv.setText("点击查看更多历史预警");
         loadTv.setOnClickListener(this);
         return v;
     }
@@ -175,6 +177,10 @@ public class WarningActivity extends MyBaseActivity implements View.OnClickListe
                 hideWebView();
                 break;
             case R.id.loadTv:
+                long page = NewsListData.getInstance().getPage(this);
+                if (page == -1) {
+                    NewsListData.getInstance().setPage(0);
+                }
                 requestWarningNewList();
                 break;
             case R.id.red_ll:
@@ -384,7 +390,7 @@ public class WarningActivity extends MyBaseActivity implements View.OnClickListe
                     String message = jsonObject.optString("message");
                     if (success) {
 
-                        if ("没有更多内容了！".equals(message)) {
+                        if (!TextUtils.isEmpty(message)) {
                             showToast(message);
                             hideWaitDialog();
                             return;
