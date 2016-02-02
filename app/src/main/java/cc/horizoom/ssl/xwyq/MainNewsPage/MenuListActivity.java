@@ -9,6 +9,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.umeng.message.IUmengRegisterCallback;
+import com.umeng.message.PushAgent;
+import com.umeng.message.UmengRegistrar;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,8 +56,10 @@ public class MenuListActivity extends MyBaseActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_list);
-        myListView = (MyBounceListview) findViewById(R.id.myListView);
 
+        initYoumengPush();
+
+        myListView = (MyBounceListview) findViewById(R.id.myListView);
         waringNumTv = (TextView) findViewById(R.id.waringNumTv);
         warningRl = (RelativeLayout) findViewById(R.id.warningRl);
         waringNumRl = (RelativeLayout) findViewById(R.id.waringNumRl);
@@ -64,6 +70,16 @@ public class MenuListActivity extends MyBaseActivity implements View.OnClickList
         myListView.setAdapter(menuAdapter);
         customerMenuFunctionTopicList();
         updateView();
+    }
+
+    /**
+     * 初始化友盟推送
+     */
+    private void initYoumengPush() {
+        PushAgent mPushAgent = PushAgent.getInstance(this);
+        mPushAgent.enable(mRegisterCallback);
+        mPushAgent.onAppStart();
+//        getToken();
     }
 
     /**
@@ -207,5 +223,31 @@ public class MenuListActivity extends MyBaseActivity implements View.OnClickList
         Intent intent = new Intent(this, WarningActivity.class);
         startActivity(intent);
     }
+
+    public IUmengRegisterCallback mRegisterCallback = new IUmengRegisterCallback() {
+        @Override
+        public void onRegistered(String registrationId) {
+            new Thread(){
+                @Override
+                public void run() {
+                    super.run();
+                    String device_token = UmengRegistrar.getRegistrationId(MenuListActivity.this);
+                    String customer_id = UserData.getInstance().getCustomerId(MenuListActivity.this);
+                    MyUtils.log(MainNewsPageActivity.class,"device_token="+device_token);
+                    MyUtils.log(MainNewsPageActivity.class,"customer_id="+customer_id);
+                    PushAgent mPushAgent = PushAgent.getInstance(MenuListActivity.this);
+                    try {
+                        mPushAgent.removeAlias(customer_id, "hz_passport");
+                        mPushAgent.addAlias(customer_id, "hz_passport");
+//                mPushAgent.addExclusiveAlias(customer_id, "hz_passport");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }.start();
+
+        }
+    };
+
 
 }
