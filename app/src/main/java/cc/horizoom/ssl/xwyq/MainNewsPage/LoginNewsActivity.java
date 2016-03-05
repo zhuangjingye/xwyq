@@ -11,6 +11,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
+import cc.horizoom.ssl.xwyq.DataManager.FunctionListData;
 import cc.horizoom.ssl.xwyq.DataManager.NewsListData;
 import cc.horizoom.ssl.xwyq.DataManager.UserData;
 import cc.horizoom.ssl.xwyq.Protocol;
@@ -99,8 +100,12 @@ public class LoginNewsActivity extends BaseMainNewsActivity {
         }
 
         long page = NewsListData.getInstance().getPage(this);
-
-        String url = Protocol.CPCSL;
+        String url;
+        if (FunctionListData.getInstance().isFunctionStr(myKey)) {
+            url = Protocol.CPCL;
+        } else {
+            url = Protocol.CPCSL;
+        }
         HashMap<String,String> map = new HashMap<String,String>();
         String customer_id = UserData.getInstance().getCustomerId(this);
         String fId = NewsListData.getInstance().getFunctionId(this);

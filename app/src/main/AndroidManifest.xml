@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cc.horizoom.ssl.xwyq"
     android:versionCode="3"
-    android:versionName="2.1" >
+    android:versionName="2.2" >
 <!--
     versionCode 每次发版加1
     versionname 大的改版整数加1  小的改版小数加1

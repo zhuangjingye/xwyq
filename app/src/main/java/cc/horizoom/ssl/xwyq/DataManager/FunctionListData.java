@@ -1,5 +1,7 @@
 package cc.horizoom.ssl.xwyq.DataManager;
 
+import android.text.TextUtils;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -68,5 +70,26 @@ public class FunctionListData implements DataInterface {
     public void clearSaveData(BaseActivity baseActivity) {
         Mysharedperferences.getIinstance().putString(baseActivity,key,"");
         data.clear();
+    }
+
+    /**
+     *  判断一个字符串是否是默认的关键字
+     * @param str
+     * @return
+     */
+    public boolean isFunctionStr(String str) {
+        if (TextUtils.equals("全部",str)) {
+            return true;
+        }
+        if (data!=null && data.size()>0) {
+            for (int i=0;i<data.size();i++) {
+                FunctionEntity functionEntity = data.get(i);
+                if (TextUtils.equals(functionEntity.getName(),str)) {
+                    return true;
+                }
+            }
+
+        }
+        return false;
     }
 }
